@@ -1,6 +1,7 @@
 'use strict';
 
-let db = require('...');
+let db = require('../_db');
+var Sequelize = require('sequelize');
 
 module.exports = db.define('user', {
     firstName: {
