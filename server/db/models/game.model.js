@@ -19,8 +19,5 @@ module.exports = db.define('game', {
     pledge: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    thread: {
-        type: Sequelize.INTEGER
     }
 });
