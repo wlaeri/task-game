@@ -1,17 +1,16 @@
 'use strict';
 
 let db = require('../_db');
-var Sequelize = require('sequelize');
 let crypto = require('crypto');
+var Sequelize = require('sequelize');
+
 
 module.exports = db.define('user', {
     firstName: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
     },
     lastName: {
-        type: Sequelize.STRING,
-        allowNull: false
+        type: Sequelize.STRING
     },
     email: {
         type: Sequelize.STRING,

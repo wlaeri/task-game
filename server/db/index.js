@@ -6,6 +6,12 @@ db.Game = require('./models/game.model.js');
 db.Task = require('./models/task.model.js');
 db.Event = require('./models/event.model.js');
 
+db.Thread = require('./models/thread.model.js');
+
+
+
+// db.User.hasMany(db.Game);
+// db.User.hasMany(db.Event, {as: 'completedTask'});
 
 
 // db.User.hasMany(db.Game);
@@ -19,8 +25,16 @@ db.Game.belongsToMany(db.User, {through: 'GamePlayers'});
 db.Task.belongsTo(db.Game);
 // db.Task.hasMany(db.Event);
 
+
+
 db.Event.belongsTo(db.User, {as: 'completedBy'});
 db.Event.belongsTo(db.Game);
 db.Event.belongsTo(db.Task);
 
+db.Game.belongsToMany(db.Thread, {through: 'threadGames'});
+
+
 module.exports = db;
+
+
+
