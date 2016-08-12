@@ -2,26 +2,25 @@
 var db = require('./_db');
 module.exports = db;
 
-let user = require('./models/user.model.js');
-let game = require('./models/game.model.js');
-let task = require('./models/task.model.js');
-let event = require('./models/event.model.js');
-
-// Cyclicality error: User is dependent upon itself 
+let User = require('./models/user.model.js');
+let Game = require('./models/game.model.js');
+let Task = require('./models/task.model.js');
+let Event = require('./models/event.model.js');
 
 
-// user.hasMany(game);
-// user.hasMany(event, {as: 'completedTask'});
 
-// game.hasOne(user, {as: 'commissioner'});
-// game.hasMany(user, {as: 'player'});
-// game.hasMany(task);
-// game.hasMany(event);
+User.hasMany(Game);
+User.hasMany(Event, {as: 'completedTask'});
 
-// task.hasOne(game);
-// task.hasMany(event);
+Game.belongsTo(User, {as: 'commissioner'});
+Game.belongsToMany(User, {through: 'GamePlayers'});
+Game.hasMany(Task);
+Game.hasMany(Event);
 
-// event.hasMany(user, {as: 'completedBy'});
-// event.hasOne(game);
-// event.hasOne(task);
+Task.belongsTo(Game);
+Task.hasMany(Event);
+
+Event.belongsTo(User, {as: 'completedBy'});
+Event.belongsTo(Game);
+Event.belongsTo(Task);
 
