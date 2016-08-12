@@ -16,9 +16,5 @@ module.exports = db.define('game', {
     points: {
         type: Sequelize.INTEGER,
         allowNull: false
-    },
-    pledge: {
-        type: Sequelize.INTEGER,
-        allowNull: false
     }
 });
