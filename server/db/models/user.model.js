@@ -2,6 +2,7 @@
 
 let db = require('../_db');
 var Sequelize = require('sequelize');
+let crypto = require('crypto');
 
 module.exports = db.define('user', {
     firstName: {

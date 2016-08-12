@@ -1,26 +1,26 @@
 'use strict';
 var db = require('./_db');
+
+db.User = require('./models/user.model.js');
+db.Game = require('./models/game.model.js');
+db.Task = require('./models/task.model.js');
+db.Event = require('./models/event.model.js');
+
+
+
+// db.User.hasMany(db.Game);
+// db.User.hasMany(db.Event, {as: 'db.Task'});
+
+db.Game.belongsTo(db.User, {as: 'commissioner'});
+db.Game.belongsToMany(db.User, {through: 'GamePlayers'});
+// db.Game.hasMany(db.Task);
+// db.Game.hasMany(db.Event);
+
+db.Task.belongsTo(db.Game);
+// db.Task.hasMany(db.Event);
+
+db.Event.belongsTo(db.User, {as: 'completedBy'});
+db.Event.belongsTo(db.Game);
+db.Event.belongsTo(db.Task);
+
 module.exports = db;
-
-let User = require('./models/user.model.js');
-let Game = require('./models/game.model.js');
-let Task = require('./models/task.model.js');
-let Event = require('./models/event.model.js');
-
-
-
-// User.hasMany(Game);
-// User.hasMany(Event, {as: 'completedTask'});
-
-Game.belongsTo(User, {as: 'commissioner'});
-Game.belongsToMany(User, {through: 'GamePlayers'});
-// Game.hasMany(Task);
-// Game.hasMany(Event);
-
-Task.belongsTo(Game);
-// Task.hasMany(Event);
-
-Event.belongsTo(User, {as: 'completedBy'});
-Event.belongsTo(Game);
-Event.belongsTo(Task);
-
