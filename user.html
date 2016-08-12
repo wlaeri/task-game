@@ -122,7 +122,94 @@ app.controller('MyController', function($scope, $mdSidenav, $mdMedia) {
         <main class="md-padding" layout="row" flex>
             <md-content flex id="content" style="color:#FFFEFA">
                 <div class="fade-view">
-                <ui-view></ui-view>
+                <div>
+  <!-- <md-slider ng-model="gameType" -->
+  <div class="row" layout="row">
+<div class="col s2 offset-s8"style="position:fixed;">
+<table class="responsive" flex class='table' style="width:25%;display:inline-block">
+<caption style="color:black;font-size:24px; font-weight:bold; opacity:1">Leaderboard</caption>
+   <col width="10%">
+   <col width="20%">
+   <col width="70%">
+
+    <thead style="color:black">
+<!--       <tr>
+      <th></th>
+        <th>Time</th>
+        <th>User</th>
+        <th>Task Completed</th>
+        <th>Points</th>
+      </tr> -->
+    </thead>
+    <tbody>
+      <tr flex ng-repeat="player in game.players" style="color:black; opacity:1; background-color:#FFFEFA">
+      <td></td>
+        <td>{{player.name}}</td>
+        <td style="text-align:right">{{ player.points }}</td>
+      </tr>
+    </tbody>
+</table>
+</div>
+  <div class="col s9">
+   <table class='table responsive' style="width:80%; display:inline-block">
+   <caption style="color:black;font-size:24px; font-weight:bold">{{game.name}}</caption>
+   <col width="3%">
+   <col width="30%">
+   <col width="60%">
+   <col width="7%">
+    <thead style="color:black">
+      <tr>
+        <th></th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="task in game.tasks" style="color:black">
+        <td></td>
+        <td style="border-left-width:30px">{{ task.name }}</td>
+        <td>{{task.description}}</span></td>
+        <td>{{task.points}}</td>
+      </tr>
+    </tbody>
+</table>
+</div>
+</div>
+<md-divider></md-divider>
+<md-container layout="row" layout-align="center center">
+<table class="responsive" flex class='table' style="width:75%; align-self:center; display:inline-block">
+<caption style="color:black;font-size:24px; font-weight:bold">Newsfeed</caption>
+<col width="3%">
+   <col width="25%">
+   <col width="5%">
+   <col width="10%">
+   <col width="50%">
+   <col width="7%">
+    <thead style="color:black">
+<!--       <tr>
+      <th></th>
+        <th>Time</th>
+        <th>User</th>
+        <th>Task Completed</th>
+        <th>Points</th>
+      </tr> -->
+    </thead>
+    <tbody>
+      <tr flex ng-repeat="event in game.events" style="color:black">
+      <td></td>
+        <td>{{event.time}}</td>
+        <td></td>
+        <td style="border-left-width:30px">{{ event.user }}</td>
+        <td>{{event.task}}</span></td>
+        <td>{{event.points}}</td>
+      </tr>
+    </tbody>
+</table>
+
+</md-container>
+</div>
+
                 </div>
             </md-content>
         </main>
