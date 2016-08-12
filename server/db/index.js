@@ -9,16 +9,16 @@ let Event = require('./models/event.model.js');
 
 
 
-User.hasMany(Game);
-User.hasMany(Event, {as: 'completedTask'});
+// User.hasMany(Game);
+// User.hasMany(Event, {as: 'completedTask'});
 
 Game.belongsTo(User, {as: 'commissioner'});
 Game.belongsToMany(User, {through: 'GamePlayers'});
-Game.hasMany(Task);
-Game.hasMany(Event);
+// Game.hasMany(Task);
+// Game.hasMany(Event);
 
 Task.belongsTo(Game);
-Task.hasMany(Event);
+// Task.hasMany(Event);
 
 Event.belongsTo(User, {as: 'completedBy'});
 Event.belongsTo(Game);
