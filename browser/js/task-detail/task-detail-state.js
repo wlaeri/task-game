@@ -1,7 +1,10 @@
 app.config(function ($stateProvider) {
-    $stateProvider.state('taskDetail', {
-        url: '/taskDetail',
+    $stateProvider.state('u.task', {
+        url: '/taskDetail/:taskId',
         templateUrl: 'js/task-detail/task-detail.html',
-        controller: 'TaskDeetsCtrl'
+        controller: 'TaskDeetsCtrl',
+        resolve: {
+          taskId: $stateParams => $stateParams.taskId
+        }
     });
 });
