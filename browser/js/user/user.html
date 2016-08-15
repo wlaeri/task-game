@@ -17,11 +17,11 @@
         <md-button class="md-raised" align="center" style="background-color:#00B5CD;color:#FFFEFA; margin:30px; font-size:22px">Create Game</md-button>
         <div style="color:#FFFEFA;font-size:20px;" align="center">CURRENT GAMES</div>
         <md-list-item ng-repeat="item in menuItems" ng-click="go(item.path,item.name);menuToggle();">
-            <h4 class="truncate" style="font-size:18px;color:#FFFEFA;">{{item.name}}</h4>
+            <h4 class="truncate" style="font-size:18px;color:#FFFEFA;" ui-sref="u.game({gameId: item.id})">{{item.name}}</h4>
         </md-list-item>
         </md-list>
-        <md-button style="color:#FFFEFA; font-size:20px;margin: 10px" align="center">COMPLETED GAMES</div>
-        <div style="color:#FFFEFA; font-size:20px; margin:10px" align="center">ACCOUNT SETTINGS</div>
+        <md-button style="color:#FFFEFA; font-size:20px;margin: 10px" align="center">COMPLETED GAMES</md-button>
+        <md-button style="color:#FFFEFA; font-size:20px; margin:10px" align="center" ui-sref="u.account">ACCOUNT SETTINGS</md-button>
     </md-sidenav>
     <div layout="column" layout-fill>
         <header style="background-color:#FFFEFA;">
@@ -34,7 +34,7 @@
         </header>
         <main class="md-padding" layout="row" flex>
             <md-content flex id="content" style="color:#FFFEFA">
-                <div class="fade-view" ui-view="">
+                <div class="fade-view" ui-view>
                 </div>
             </md-content>
         </main>

@@ -1,6 +1,6 @@
 app.config(function ($stateProvider) {
-    $stateProvider.state('user', {
-        url: '/users',
+    $stateProvider.state('u', {
+        url: '/user',
         templateUrl: 'js/user/user.html',
         controller: 'UserCtrl'
     });
