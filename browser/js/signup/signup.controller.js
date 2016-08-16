@@ -1,26 +1,24 @@
-app.controller('LoginCtrl', function($scope, $mdDialog, $state, AuthService){
+app.controller('SignupCtrl', function($scope, $mdDialog, $state, $http){
     $scope.email = null;
     $scope.password = null;
 
     $scope.handleSubmit = function () {
         $scope.error = null;
 
-        let loginInfo = {
+        let signupInfo = {
             email: $scope.email,
             password: $scope.password
-        }
+        };
 
-        AuthService.login(loginInfo)
-        .then(function () {
-            console.log("login successful");
+        $http.post('/signup', signupInfo)
+        .then(function(){
             $state.go('u');
             return $mdDialog.hide();
         })
-        .catch(function (err) {
-            console.log(err);
-            $scope.error = 'Invalid login credentials.';
+        .catch(function(err){
+            $scope.error = err.message;
         });
-    }
+    };
 
     $scope.handleCancel = function () {
         return $mdDialog.hide();
