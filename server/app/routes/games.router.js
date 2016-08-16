@@ -8,15 +8,19 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
-router.get('/game/:id', function(req, res, next){
+router.get('/:id', function(req, res, next){
+  console.log('Hello....give me something here. Please :(')
   Game.findById(req.params.id, {
     include: [{model: Task},{model: Event}, {model: User}]
             })
-  .then(game=> res.send(game))
+  .then(game=> {
+    console.log('******** Got to this point');
+    res.send(game)
+  })
   .catch(next);
 })
 
-router.post('/game', function(req, res, next){
+router.post('/', function(req, res, next){
   Game.create(req.body)
   .then(game=> res.send(game))
   .catch(next)

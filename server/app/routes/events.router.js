@@ -8,7 +8,7 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
-router.post('/events', function(req, res, next){
+router.post('/', function(req, res, next){
   Event.create(req.body)
   .then(event=> res.send(event))
   .catch(next);

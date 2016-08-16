@@ -5,44 +5,17 @@
   <script>
     $(document).ready(function() {
       $('.carousel.carousel-slider').carousel({full_width: true});
-      $('.modal-trigger').leanModal();
     });
   </script>
-  <div class="carousel carousel-slider center">
-      <div class="carousel-fixed-item center">
-        <a id="loginButton" class="btn btn-large modal-trigger waves-effect darken-text-2" href="#modal1">Login</a>
-      </div>
+  <div class="carousel carousel-slider center" ng-controller="HomeCtrl">
       <div class="carousel-fixed-item center">
         <a id="signupButton" class="btn btn-large modal-trigger waves-effect darken-text-2" href="#modal2">Signup</a>
     </div>
     <a class="carousel-item" href="#one!"><img src="background1.jpg"></a>
     <a class="carousel-item" href="#two!"><img src="background2.jpg"></a>
     <a class="carousel-item" href="#three!"><img src="background3.jpg"></a>
+     <md-button class="md-primary md-raised" ng-click="login()"  >
+      Login
+    </md-button>
   </div>
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <form>
-        Email:
-        <input type="text" name="email"><br>
-        Password:
-        <input type="password" name="psw">
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close btn-flat">Agree</a>
-      <a href="#!" class="modal-action modal-close btn-flat">Forgot Password</a>
-    </div>
-  </div>
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-      <form>
-        Email:
-        <input type="text" name="email"><br>
-        Password:
-        <input type="password" name="psw">
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close btn-flat">Sumbit</a>
-    </div>
   </div>
