@@ -15,7 +15,7 @@ app.factory('GameFactory', function($http) {
 
   GameFactory.completeTask = function(data) {
     return $http.post('api/events', data)
-    .then(newTask => newTask.data);
+    .then(newEvent => newEvent.data);
   }
 
   return GameFactory;
