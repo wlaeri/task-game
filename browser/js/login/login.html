@@ -1,16 +1,47 @@
-<form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
+<md-dialog aria-label="Login" ng-cloak>
 
-    <alert type="danger" ng-show="error">
-        {{ error }}
-    </alert>
+    <form name="loginForm" data-ng-submit="handleSubmit()">
 
-    <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
-    </div>
-    <div class="form-group">
-        <label for="login-password">Password</label>
-        <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
+        <md-toolbar style="background-color:#00B5CD">
+            <div class="md-toolbar-tools" >
+                <h2>Login</h2>
+                <span flex></span>
+                <md-button type="button" class="md-icon-button" ng-click="handleCancel(); $event.stopPropagation();">
+                    <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block">
+                    <label>Email:</label>
+                    <input ng-model="email" required>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Password:</label>
+                    <input ng-model="password" type="password" required>
+                    <div style="color:red">
+                        <span ng-show="{{error !== ''}}">{{error}}</span>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button style="background-color:#00B5CD" type="submit" class="md-primary"
+                       ng-class="{'md-raised md-hue-1': (loginForm.$dirty && loginForm.$valid) }"
+                       aria-label="OK">
+                OK
+            </md-button>
+            <md-button type="button" ng-click="handleCancel(); $event.stopPropagation();"
+                       aria-label="Cancel">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+
+    </form>
+
+</md-dialog>
