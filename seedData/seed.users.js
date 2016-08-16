@@ -1,5 +1,5 @@
 module.exports = {users: [{"id":1,"firstName":"Anne","lastName":"Jordan","email":"ajordan0@sciencedirect.com","password":"UNq0lVPEU6"},
-{"id":2,"firstName":"Angela","lastName":"Gibson","email":"agibson1@rediff.com","password":"kcrtA0v3"},
+{"id":2,"firstName":"Angela","lastName":"Gibson","email":"test@test.com","password":"123"},
 {"id":3,"firstName":"Martha","lastName":"Mccoy","email":"mmccoy2@tmall.com","password":"MT3Blf4cFWB"},
 {"id":4,"firstName":"Jimmy","lastName":"Romero","email":"jromero3@technorati.com","password":"qFY60iBs"},
 {"id":5,"firstName":"Keith","lastName":"Washington","email":"kwashington4@360.cn","password":"8tX33nLJT0Jz"},

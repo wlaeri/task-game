@@ -8,41 +8,29 @@
       $('.modal-trigger').leanModal();
     });
   </script>
-  <div class="carousel carousel-slider center">
-      <div class="carousel-fixed-item center">
-        <a id="loginButton" class="btn btn-large modal-trigger waves-effect darken-text-2" href="#modal1">Login</a>
-      </div>
+  <div class="carousel carousel-slider center" ng-controller="HomeCtrl">
       <div class="carousel-fixed-item center">
         <a id="signupButton" class="btn btn-large modal-trigger waves-effect darken-text-2" href="#modal2">Signup</a>
     </div>
     <a class="carousel-item" href="#one!"><img src="background1.jpg"></a>
     <a class="carousel-item" href="#two!"><img src="background2.jpg"></a>
     <a class="carousel-item" href="#three!"><img src="background3.jpg"></a>
+     <md-button class="md-primary md-raised" ng-click="login()"  >
+      Login
+    </md-button>
   </div>
-  <div id="modal1" class="modal">
+  <!-- <div id="modal1" class="modal">
     <div class="modal-content">
-      <form>
+      <form name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
         Email:
-        <input type="text" name="email"><br>
+        <input type="text" name="email" ng-model="login.Email"><br>
         Password:
-        <input type="password" name="psw">
+        <input type="password" name="psw" ng-model="login.Password">
+        <div class="modal-footer">
+      <a ng-submit="loginForm.$valid && sendLogin(login)" class="modal-action modal-close btn-flat">Agree</a>
+      <a href="/login" class="modal-action modal-close btn-flat">Forgot Password</a>
+    </div>
       </form>
     </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close btn-flat">Agree</a>
-      <a href="#!" class="modal-action modal-close btn-flat">Forgot Password</a>
-    </div>
-  </div>
-  <div id="modal2" class="modal">
-    <div class="modal-content">
-      <form>
-        Email:
-        <input type="text" name="email"><br>
-        Password:
-        <input type="password" name="psw">
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close btn-flat">Sumbit</a>
-    </div>
+  </div> -->
   </div>
