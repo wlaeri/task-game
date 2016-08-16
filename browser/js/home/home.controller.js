@@ -3,8 +3,7 @@ app.controller('HomeCtrl', function($scope, $mdDialog){
         console.log("login function");
         $mdDialog.show({
             templateUrl: 'js/login/login.html',
-            controller: 'LoginCtrl',
-            controllerAs: 'vm'
+            controller: 'LoginCtrl'
         });
     }
 })

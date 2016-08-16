@@ -5,7 +5,6 @@
   <script>
     $(document).ready(function() {
       $('.carousel.carousel-slider').carousel({full_width: true});
-      $('.modal-trigger').leanModal();
     });
   </script>
   <div class="carousel carousel-slider center" ng-controller="HomeCtrl">
@@ -19,18 +18,4 @@
       Login
     </md-button>
   </div>
-  <!-- <div id="modal1" class="modal">
-    <div class="modal-content">
-      <form name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
-        Email:
-        <input type="text" name="email" ng-model="login.Email"><br>
-        Password:
-        <input type="password" name="psw" ng-model="login.Password">
-        <div class="modal-footer">
-      <a ng-submit="loginForm.$valid && sendLogin(login)" class="modal-action modal-close btn-flat">Agree</a>
-      <a href="/login" class="modal-action modal-close btn-flat">Forgot Password</a>
-    </div>
-      </form>
-    </div>
-  </div> -->
   </div>
