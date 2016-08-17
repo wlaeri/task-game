@@ -1,22 +1,19 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('u', {
-        url: '/user',
+        url: '/user/:id',
         templateUrl: 'js/user/user.html',
-        controller: 'UserCtrl'
+        controller: 'UserCtrl',
+        resolve:{
+            usersGames: function($stateParams, GameFactory){
+                return GameFactory.getUsersGames($stateParams.id);
+            }
+        }
     });
 });
 
-app.controller('UserCtrl', function($scope, $mdSidenav, $mdMedia) {
+app.controller('UserCtrl', function($scope, $mdSidenav, $mdMedia, usersGames) {
     $scope.openLeftMenu = function() {
         $mdSidenav('left').toggle()
     }
-    $scope.menuItems = [{
-        name: "Keep Apartment PHA Clean"
-    }, {
-        name: "Game2"
-    }, {
-        name: "Game3"
-    }, {
-        name: "Game4"
-    }]
+    $scope.menuItems = usersGames;
 })
