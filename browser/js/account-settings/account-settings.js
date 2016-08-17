@@ -7,5 +7,5 @@ app.config(function($stateProvider){
 });
 
 app.controller('AccountSettingsCtrl', function($scope){
-  $scope.hello = "hello";
+  $scope.hello = "hello"+$scope.user.email;
 });
