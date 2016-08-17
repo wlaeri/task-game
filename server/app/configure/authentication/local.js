@@ -31,7 +31,7 @@ module.exports = function (app, db) {
     // A POST /login route is created to handle login.
     app.post('/login', function (req, res, next) {
 
-        var authCb = function (err, user) {
+        let authCb = function (err, user) {
 
             if (err) return next(err);
 
@@ -54,6 +54,43 @@ module.exports = function (app, db) {
 
         passport.authenticate('local', authCb)(req, res, next);
 
+    });
+
+    app.post('/signup', function(req, res, next){
+        console.log(req.body);
+        User.findOrCreate({
+            where: {
+                email: req.body.email,
+                password: req.body.password
+            }
+        })
+        .then(function(user){
+            let authCb = function (err, user) {
+
+                if (err) return next(err);
+
+                if (!user) {
+                    var error = new Error('Invalid login credentials.');
+                    error.status = 401;
+                    return next(error);
+                }
+
+                // req.logIn will establish our session.
+                req.logIn(user, function (loginErr) {
+                    if (loginErr) return next(loginErr);
+                    // We respond with a response object that has user with _id and email.
+                    res.status(200).send({
+                        user: user.sanitize()
+                    });
+                });
+            }
+
+            passport.authenticate('local', authCb)(req, res, next);
+
+        })
+        .catch(function(err){
+            console.log(err);
+        })
     });
 
 };

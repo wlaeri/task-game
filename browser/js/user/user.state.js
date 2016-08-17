@@ -1,8 +1,11 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('u', {
-        url: '/user/:id',
+        url: '/',
         templateUrl: 'js/user/user.html',
         controller: 'UserCtrl',
+        params: {
+            user: null
+        },
         resolve:{
             usersGames: function($stateParams, GameFactory){
                 return GameFactory.getUsersGames($stateParams.id);
@@ -10,10 +13,3 @@ app.config(function ($stateProvider) {
         }
     });
 });
-
-app.controller('UserCtrl', function($scope, $mdSidenav, $mdMedia, usersGames) {
-    $scope.openLeftMenu = function() {
-        $mdSidenav('left').toggle()
-    }
-    $scope.menuItems = usersGames;
-})
