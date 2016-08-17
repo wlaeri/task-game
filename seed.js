@@ -89,10 +89,22 @@ var createGameUserAssociations = function(games) {
     var creatingAssociations = games.map(function(game) {
         var users = randomArrayGenerator(5, 10, 1, 100);
         return game.setCommissioner(users[0])
-            .then(function() {
-                return game.setUsers(users);
-            })
-        // return game.setUsers(users)
+        .then(function() {
+            return game.setUsers(users);
+        });
+    });
+
+    return Promise.all(creatingAssociations);
+}
+
+var createTaskGameAssociations = function(tasks) {
+    // tasks is an array of all tasks in db
+    var count = 0;
+    var creatingAssociations = tasks.map(function(task, index) {
+        if (index % 10 === 0) {
+            count++;
+        }
+        return task.setGame(count);
     });
 
     return Promise.all(creatingAssociations);
@@ -113,6 +125,12 @@ db.sync({ force: true })
     })
     .then(function(games) {
         return createGameUserAssociations(games);
+    })
+    .then(function() {
+        return Task.findAll();
+    })
+    .then(function(tasks) {
+        return createTaskGameAssociations(tasks);
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
