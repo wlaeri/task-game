@@ -116,17 +116,11 @@ function randomArrayIndex(arr) {
 }
 
 var createEvents = function(games) {
-    var start, end, tasks, users, events, length;
-
-    // need game tasks and users...both are promises from mixin methods
+    var events, length;
 
     var creatingEvents = games.map(function(game) {
-        start = game.start;
-        end = game.end;
         return Promise.all([game.getTasks(), game.getUsers()])
         .spread(function(gameTasks, gameUsers) {
-            // tasks = gameTasks;
-            // users = gameUsers;
             events = [];
             length = randomNumInRange(0, 20);
             for (var i = 0; i < length; i++) {
@@ -138,7 +132,6 @@ var createEvents = function(games) {
             return;
         })
         .then(function() {
-            // for loop to create a number of events on the current game
             var eventCreation = events.map(function(event) {
                 return Event.create({
                     gameId: game.id,
