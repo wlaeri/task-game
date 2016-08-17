@@ -54,34 +54,6 @@
 </div>
 <md-divider></md-divider>
 <md-container layout="row" layout-align="center center">
-    <table class="responsive" flex class='table' style="width:75%; align-self:center; display:inline-block">
-        <caption style="color:black;font-size:24px; font-weight:bold">Newsfeed</caption>
-        <col width="3%">
-        <col width="25%">
-        <col width="5%">
-        <col width="10%">
-        <col width="50%">
-        <col width="7%">
-        <thead style="color:black">
-            <!--       <tr>
-      <th></th>
-        <th>Time</th>
-        <th>User</th>
-        <th>Task Completed</th>
-        <th>Points</th>
-      </tr> -->
-        </thead>
-        <tbody>
-            <tr flex ng-repeat="event in game.events" style="color:black">
-                <td></td>
-                <td>{{event.time}}</td>
-                <td></td>
-                <td style="border-left-width:30px">{{ event.user }}</td>
-                <td>{{event.task}}</span>
-                </td>
-                <td>{{event.points}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events"></tg-newsfeed>
 </md-container>
 </div>
