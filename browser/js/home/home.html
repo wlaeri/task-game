@@ -1,6 +1,9 @@
-
-  <md-toolbar layout="row" class="md-whiteframe-z3" style="padding:0px;margin:0px;background-color:#00B5CD">
-  	<h2 class="navbar title">Welcome to Chore Score</h2>
+ <md-toolbar ng-controller="HomeCtrl" layout="row" class="md-whiteframe-z3" style="padding:0px;margin:0px;background-color:#00B5CD">
+    <h3 style="padding-left: 8%"class="navbar title">GAMR</h3>
+      <span flex></span>
+      <md-button class="md-primary" style="background-color:#00B5CD; color:#FFFEFA; font-size: 20px; padding-right: 10%" ng-click="login()">
+      Log In
+    </md-button>
   </md-toolbar>
   <script>
     $(document).ready(function() {
@@ -9,15 +12,15 @@
   </script>
   <div class="carousel carousel-slider center" ng-controller="HomeCtrl">
       <div class="carousel-fixed-item center">
-        <a id="signupButton" class="btn btn-large modal-trigger waves-effect darken-text-2" href="#modal2">Signup</a>
     </div>
     <a class="carousel-item" href="#one!"><img src="background1.jpg"></a>
     <a class="carousel-item" href="#two!"><img src="background2.jpg"></a>
     <a class="carousel-item" href="#three!"><img src="background3.jpg"></a>
-     <md-button class="md-primary md-raised" ng-click="login()"  >
-      Log In
-    </md-button>
-    <md-button class="md-primary md-raised" ng-click="signup()"  >
+    <div class="carousel-fixed-item center">
+
+    </div>
+    <!-- <div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div> -->
+    <md-button class="md-primary md-raised" style="height:80px; width:200px; margin-top:14em" ng-click="signup()">
       Sign Up
     </md-button>
 
