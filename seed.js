@@ -16,6 +16,7 @@ fsg scaffolding, keep in mind that fsg always uses the same database
 name in the environment files.
 
 */
+'use strict';
 
 var chalk = require('chalk');
 var db = require('./server/db');
@@ -64,6 +65,51 @@ var seedTasks = function () {
 
 };
 
+function randomNumInRange(min, max) {
+    return Math.floor(Math.random() * (max- min + 1)) + min;
+}
+
+function randomArrayGenerator(minLength, maxLength, minNum, maxNum) {
+    var length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+    var arr = [];
+
+    for (var i = 0; i < length; i++) {
+        var num = randomNumInRange(minNum, maxNum);
+        while (arr.indexOf(num) > -1) {
+            num = randomNumInRange(minNum, maxNum);
+        }
+        arr.push(num);
+    }
+
+    return arr;
+}
+
+var createGameUserAssociations = function(games) {
+    // games is an array of all games in db
+    var creatingAssociations = games.map(function(game) {
+        var users = randomArrayGenerator(5, 10, 1, 100);
+        return game.setCommissioner(users[0])
+        .then(function() {
+            return game.setUsers(users);
+        });
+    });
+
+    return Promise.all(creatingAssociations);
+}
+
+var createTaskGameAssociations = function(tasks) {
+    // tasks is an array of all tasks in db
+    var count = 0;
+    var creatingAssociations = tasks.map(function(task, index) {
+        if (index % 10 === 0) {
+            count++;
+        }
+        return task.setGame(count);
+    });
+
+    return Promise.all(creatingAssociations);
+}
+
 db.sync({ force: true })
     .then(function () {
         return seedUsers();
@@ -73,6 +119,18 @@ db.sync({ force: true })
     })
     .then(function() {
         return seedTasks();
+    })
+    .then(function() {
+        return Game.findAll();
+    })
+    .then(function(games) {
+        return createGameUserAssociations(games);
+    })
+    .then(function() {
+        return Task.findAll();
+    })
+    .then(function(tasks) {
+        return createTaskGameAssociations(tasks);
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
