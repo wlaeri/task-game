@@ -8,6 +8,22 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
+router.get('/user/:id', function(req, res, next){
+  let gmap;
+  User.findById(req.params.id)
+  .tap(user=>console.log(user))
+  .then(user=>user.getGames({attributes:['id', 'name']}))
+  .then(function(games){
+    return games.map(function(e){
+      return{id: e.dataValues.id, name: e.dataValues.name}
+    })
+  })
+  .tap(games=> console.log("&&&&&&&&finally", games))
+  .then(games=>res.send(games))
+  .catch(next);
+})
+
+
 router.get('/:id', function(req, res, next){
   console.log('Hello....give me something here. Please :(')
   Game.findById(req.params.id, {

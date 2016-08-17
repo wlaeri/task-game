@@ -11,10 +11,12 @@ app.controller('LoginCtrl', function($scope, $mdDialog, $state, AuthService){
         }
 
         AuthService.login(loginInfo)
-        .then(function () {
-            $state.go('user');
+        .then(function (user) {
+            $state.go('u.dash', {user: user});
+            return $mdDialog.hide();
         })
-        .catch(function () {
+        .catch(function (err) {
+            console.log(err);
             $scope.error = 'Invalid login credentials.';
         });
     }
