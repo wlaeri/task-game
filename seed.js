@@ -23,6 +23,7 @@ var db = require('./server/db');
 var User = db.model('user');
 var Game = db.model('game');
 var Task = db.model('task');
+var Event = db.model('event');
 var Promise = require('sequelize').Promise;
 
 var seedDataUsers = require('./seedData/seed.users.js');
@@ -110,6 +111,50 @@ var createTaskGameAssociations = function(tasks) {
     return Promise.all(creatingAssociations);
 }
 
+function randomArrayIndex(arr) {
+    return Math.floor(Math.random() * (arr.length - 0));
+}
+
+var createEvents = function(games) {
+    var start, end, tasks, users, events, length;
+
+    // need game tasks and users...both are promises from mixin methods
+
+    var creatingEvents = games.map(function(game) {
+        start = game.start;
+        end = game.end;
+        return Promise.all([game.getTasks(), game.getUsers()])
+        .spread(function(gameTasks, gameUsers) {
+            // tasks = gameTasks;
+            // users = gameUsers;
+            events = [];
+            length = randomNumInRange(0, 20);
+            for (var i = 0; i < length; i++) {
+                events.push({
+                    task: gameTasks[randomArrayIndex(gameTasks)],
+                    user: gameUsers[randomArrayIndex(gameUsers)]
+                });
+            }
+            return;
+        })
+        .then(function() {
+            // for loop to create a number of events on the current game
+            var eventCreation = events.map(function(event) {
+                return Event.create({
+                    gameId: game.id,
+                    completedById: event.user.id,
+                    taskId: event.task.id
+                });
+            })
+
+            return Promise.all(eventCreation);
+        })
+
+    })
+
+    return Promise.all(creatingEvents);
+}
+
 db.sync({ force: true })
     .then(function () {
         return seedUsers();
@@ -131,6 +176,12 @@ db.sync({ force: true })
     })
     .then(function(tasks) {
         return createTaskGameAssociations(tasks);
+    })
+    .then(function() {
+        return Game.findAll();
+    })
+    .then(function(games) {
+        return createEvents(games);
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));
