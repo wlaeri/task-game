@@ -1,4 +1,4 @@
-app.controller('SignupCtrl', function($scope, $mdDialog, $state, $http){
+app.controller('SignupCtrl', function($scope, $mdDialog, $state, UserFactory){
     $scope.email = null;
     $scope.password = null;
 
@@ -10,9 +10,9 @@ app.controller('SignupCtrl', function($scope, $mdDialog, $state, $http){
             password: $scope.password
         };
 
-        $http.post('/signup', signupInfo)
-        .then(function(){
-            $state.go('u.account');
+        UserFactory.createNewUser(signupInfo)
+        .then(function(user){
+            $state.go('u.account', {user: user});
             return $mdDialog.hide();
         })
         .catch(function(err){

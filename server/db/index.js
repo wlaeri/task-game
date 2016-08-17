@@ -14,7 +14,7 @@ db.Thread = require('./models/thread.model.js');
 // db.User.hasMany(db.Event, {as: 'completedTask'});
 
 
-// db.User.hasMany(db.Game);
+db.User.belongsToMany(db.Game, {through: 'GamePlayers'});
 // db.User.hasMany(db.Event, {as: 'db.Task'});
 
 db.Game.belongsTo(db.User, {as: 'commissioner'});
