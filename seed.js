@@ -87,7 +87,12 @@ function randomArrayGenerator(minLength, maxLength, minNum, maxNum) {
 var createGameUserAssociations = function(games) {
     // games is an array of all games in db
     var creatingAssociations = games.map(function(game) {
-        return game.setUsers(randomArrayGenerator(5, 10, 1, 100))
+        var users = randomArrayGenerator(5, 10, 1, 100);
+        return game.setCommissioner(users[0])
+            .then(function() {
+                return game.setUsers(users);
+            })
+        // return game.setUsers(users)
     });
 
     return Promise.all(creatingAssociations);
