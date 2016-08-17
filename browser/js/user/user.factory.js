@@ -12,10 +12,10 @@ app.factory('UserFactory', function($state, $http){
         })
     }
 
-    UserFactory.createNewUser = function(){
-        return $http.post('/api/user')
+    UserFactory.createNewUser = function(signupInfo){
+        return $http.post('/signup', signupInfo)
         .then(function(newUser){
-            return newUser.data;
+            return newUser.data.user;
         })
     }
 
@@ -25,5 +25,6 @@ app.factory('UserFactory', function($state, $http){
             return updatedUser.data
         })
     }
+
         return UserFactory;
 })
