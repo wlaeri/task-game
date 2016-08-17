@@ -1,4 +1,5 @@
-<ui-view></ui-view>
+<ui-view>
+</ui-view>
 <main class="md-padding" layout="row" flex>
     <md-content flex id="content" style="color:#FFFEFA">
         <div class="fade-view" ui-view="">
@@ -8,7 +9,7 @@
                         <div class="col s3">
                         </div>
                         <div class="col s6">
-                            <md-input-container layout-gt-sm="row">
+                            <md-input-container class="md-block" layout-gt-sm="row">
                                 <label class="align-center">Game Name</label>
                                 <input name="gameName" ng-model="gameName" required>
                                 <div ng-messages="newGameForm.gameName.$error">
@@ -33,7 +34,7 @@
                     </div>
                     <div class="row" ng-repeat="task in tasks">
                         <div class="col s3">
-                            <md-input-container layout-gt-sm="row">
+                            <md-input-container class="md-block" layout-gt-sm="row">
                                 <label>Task Name</label>
                                 <input name="taskName" ng-model="task.name" required>
                                 <div ng-messages="newGameForm.task.name.$error">
@@ -42,16 +43,16 @@
                             </md-input-container>
                         </div>
                         <div class="col s6">
-                            <md-input-container layout-gt-sm="row">
+                            <md-input-container class="md-block" layout-gt-sm="row">
                                 <label>Description</label>
-                                <input name="taskDescription" ng-model="task.description" required>
+                                <textarea ng-model="task.description" md-maxlength="250" rows="2" md-select-on-focus></textarea>
                                 <div ng-messages="newGameForm.task.description.$error">
                                     <div ng-message="required">This field is required.</div>
                                 </div>
                             </md-input-container>
                         </div>
                         <div class="col s2">
-                            <md-input-container layout-gt-sm="row">
+                            <md-input-container class="md-block" layout-gt-sm="row">
                                 <label>Points</label>
                                 <input name="taskPoints" ng-model="task.points" required>
                                 <div ng-messages="newGameForm.task.points.$error">

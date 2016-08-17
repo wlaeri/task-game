@@ -1,6 +1,14 @@
 app.controller('CreateGameCtrl', function($scope, $mdDialog){
 
-    $scope.players = '';
+    $scope.players = [{
+        id: 'player1',
+        email: $scope.user.email
+    }];
+
+    $scope.friends = [{
+        id: 'friend1',
+        email: $scope.user.email
+    }];
 
     $scope.tasks = [{
         id: 'task1',
@@ -24,9 +32,13 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog){
     };
 
     $scope.addFriends = function() {
+        // $state.go('u.create.friends', {
+        //     friends: $scope.players
+        // });
         $mdDialog.show({
             templateUrl: 'js/add-friends/add-friends.html',
-            controller: 'AddFriendsCtrl'
+            controller: 'AddFriendsCtrl',
+            scope: $scope
         });
     }
 

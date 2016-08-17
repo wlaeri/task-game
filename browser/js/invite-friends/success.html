@@ -1,0 +1,30 @@
+<md-dialog aria-label="Invite Success"  ng-cloak>
+
+    <md-toolbar style="background-color:#00B5CD">
+        <div class="md-toolbar-tools" >
+            <h2>Invites Sent</h2>
+            <span flex></span>
+            <md-button type="button" class="md-icon-button" ng-click="close(); $event.stopPropagation();">
+                <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content layout="row" style="margin:15px">
+        <h7> Invites have been sent to the following: </h7>
+    </md-dialog-content>
+
+    <md-dialog-content layout="row" style="margin:15px">
+        <ul>
+            <li ng-repeat="friend in friends">{{friend.email}}</li>
+        </ul>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <md-button style="background-color:#00B5CD;display:block;margin:auto" ng-click="close()" class="md-primary"
+                   aria-label="OK">
+            OK
+        </md-button>
+    </md-dialog-actions>
+
+</md-dialog>
