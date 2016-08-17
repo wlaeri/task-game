@@ -1,6 +1,4 @@
-const nodemailer = require('nodemailer');
-
-app.controller('InviteFriendsCtrl', function($scope, $state, $mdDialog){
+app.controller('InviteFriendsCtrl', function($scope, $state, $mdDialog, $http){
 
     $scope.friends = [];
 
@@ -21,14 +19,26 @@ app.controller('InviteFriendsCtrl', function($scope, $state, $mdDialog){
     };
 
     $scope.handleSubmit = function () {
-
-
-        $mdDialog.show({
-            templateUrl: 'js/invite-friends/success.html',
-            controller: 'InviteSuccessCtrl',
-            locals : {dataToPass : $scope.friends}
-        });
-        return $mdDialog.hide();
+        let emails = [];
+        $scope.friends.forEach(friend => emails.push(friend.email));
+        $http.post('/api/invite', {
+            emails: emails,
+            user: {
+                firstName: $scope.user.firstName,
+                lastName: $scope.user.lastName
+            }
+        })
+        .then(function(){
+            $mdDialog.show({
+                templateUrl: 'js/invite-friends/success.html',
+                controller: 'InviteSuccessCtrl',
+                locals : {dataToPass : $scope.friends}
+            });
+            return $mdDialog.hide();
+        })
+        .catch(function(error){
+            console.log(error);
+        })
     }
 
     $scope.handleCancel = function () {
