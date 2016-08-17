@@ -14,7 +14,7 @@
             </svg>
         </div>
         <div style="align-self:center; color:#FFFEFA; font-size:40px; font-weight:bold">GAMR</div>
-        <md-button class="md-raised" align="center" style="background-color:#00B5CD;color:#FFFEFA; margin:30px; font-size:22px">Create Game</md-button>
+        <md-button class="md-raised" align="center" style="background-color:#00B5CD;color:#FFFEFA; margin:30px; font-size:22px" ui-sref="u.create">Create Game</md-button>
         <div style="color:#FFFEFA;font-size:20px;" align="center">CURRENT GAMES</div>
         <md-list-item ng-repeat="item in menuItems" ng-click="go(item.path,item.name);menuToggle();">
             <h4 class="truncate" style="font-size:18px;color:#FFFEFA;" ui-sref="u.game({gameId: item.id})">{{item.name}}</h4>
@@ -28,14 +28,13 @@
             <md-toolbar layout="row" style="background-color:#00B5CD">
                 <div flex="85"></div>
                 <ul>
-                <li><md-button style="align-self:right; display:inline; font-size:20px; color:#FFFEFA";>Logout</md-button></li>
+                <li><md-button style="align-self:right; display:inline; font-size:20px; color:#FFFEFA;" ng-click="logout()">Logout</md-button></li>
                 </ul>
             </md-toolbar>
         </header>
         <main class="md-padding" layout="row" flex>
             <md-content flex id="content" style="color:#FFFEFA">
                 <div class="fade-view" ui-view>
-                    <div>{{user}}</div>
                 </div>
             </md-content>
         </main>
