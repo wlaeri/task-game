@@ -58,6 +58,9 @@ module.exports = function (app, db) {
 
     app.post('/signup', function(req, res, next){
         console.log(req.body);
+        if (!req.body.password) {
+            res.sendStatus(401);
+        }
         User.findOrCreate({
             where: {
                 email: req.body.email,
