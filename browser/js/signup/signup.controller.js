@@ -12,7 +12,7 @@ app.controller('SignupCtrl', function($scope, $mdDialog, $state, $http){
 
         $http.post('/signup', signupInfo)
         .then(function(){
-            $state.go('u');
+            $state.go('u.account');
             return $mdDialog.hide();
         })
         .catch(function(err){

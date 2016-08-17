@@ -13,7 +13,7 @@ app.controller('LoginCtrl', function($scope, $mdDialog, $state, AuthService){
         AuthService.login(loginInfo)
         .then(function () {
             console.log("login successful");
-            $state.go('u');
+            $state.go('u.dash');
             return $mdDialog.hide();
         })
         .catch(function (err) {
