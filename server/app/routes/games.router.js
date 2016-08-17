@@ -37,7 +37,8 @@ router.get('/:id', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
-  Game.create(req.body)
+  Game.create(req.body.game)
+  .then(game=>game.setPlayers(req.body.players))
   .then(game=> res.send(game))
   .catch(next)
 })
