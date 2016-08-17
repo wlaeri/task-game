@@ -11,9 +11,8 @@ app.controller('LoginCtrl', function($scope, $mdDialog, $state, AuthService){
         }
 
         AuthService.login(loginInfo)
-        .then(function () {
-            console.log("login successful");
-            $state.go('u.dash');
+        .then(function (user) {
+            $state.go('u.dash', {user: user});
             return $mdDialog.hide();
         })
         .catch(function (err) {

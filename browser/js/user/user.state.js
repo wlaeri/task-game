@@ -1,7 +1,10 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('u', {
-        url: '/user',
+        url: '/',
         templateUrl: 'js/user/user.html',
-        controller: 'UserCtrl'
+        controller: 'UserCtrl',
+        params: {
+            user: null
+        }
     });
 });
