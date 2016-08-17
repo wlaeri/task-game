@@ -10,7 +10,7 @@ app.controller('SignupCtrl', function($scope, $mdDialog, $state, $http){
             password: $scope.password
         };
 
-        $http.post('/user', signupInfo)
+        $http.post('/signup', signupInfo)
         .then(function(){
             $state.go('u.account');
             return $mdDialog.hide();
@@ -21,7 +21,6 @@ app.controller('SignupCtrl', function($scope, $mdDialog, $state, $http){
     };
 
     $scope.handleCancel = function () {
-        console.log("Triggered handleCancel function!")
         return $mdDialog.hide();
     };
 });
