@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
         },
         resolve:{
             usersGames: function($stateParams, GameFactory){
-                return GameFactory.getUsersGames($stateParams.id);
+                return GameFactory.getUsersGames($stateParams.user.id);
             }
         }
     });
