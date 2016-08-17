@@ -16,7 +16,7 @@
         <div style="align-self:center; color:#FFFEFA; font-size:40px; font-weight:bold">GAMR</div>
         <md-button class="md-raised" align="center" style="background-color:#00B5CD;color:#FFFEFA; margin:30px; font-size:22px" ui-sref="u.create">Create Game</md-button>
         <div style="color:#FFFEFA;font-size:20px;" align="center">CURRENT GAMES</div>
-        <md-list-item ng-repeat="item in menuItems" ng-click="go(item.path,item.name);menuToggle();">
+        <md-list-item ng-repeat="item in menuItems">
             <h4 class="truncate" style="font-size:18px;color:#FFFEFA;" ui-sref="u.game({gameId: item.id})">{{item.name}}</h4>
         </md-list-item>
         </md-list>

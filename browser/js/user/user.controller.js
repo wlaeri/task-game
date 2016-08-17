@@ -1,5 +1,6 @@
-app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService) {
+app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, usersGames) {
     $scope.user = $stateParams.user;
+    $scope.menuItems = usersGames;
     $scope.logout = function() {
         console.log("In the logout function on scope.")
         AuthService.logout()

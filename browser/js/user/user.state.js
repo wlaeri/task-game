@@ -5,6 +5,11 @@ app.config(function ($stateProvider) {
         controller: 'UserCtrl',
         params: {
             user: null
+        },
+        resolve:{
+            usersGames: function($stateParams, GameFactory){
+                return GameFactory.getUsersGames($stateParams.id);
+            }
         }
     });
 });
