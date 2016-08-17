@@ -1,0 +1,68 @@
+<md-dialog aria-label="Invite Friends" ng-cloak>
+    <script>
+        $(document).ready(function() {
+          $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+              event.preventDefault();
+              return true;
+            }
+          });
+        });
+    </script>
+
+    <form name="inviteForm" data-ng-submit="handleSubmit()">
+
+        <md-toolbar style="background-color:#00B5CD">
+            <div class="md-toolbar-tools" >
+                <h2>Invite Friends</h2>
+                <span flex></span>
+                <md-button type="button" class="md-icon-button" ng-click="handleCancel(); $event.stopPropagation();">
+                    <md-icon md-svg-icon="navigation:close" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content layout="row" ng-repeat="friend in friends">
+            <div class="md-dialog-content">
+                <h7>{{friend.email}}</h7>
+            </div>
+            <span flex></span>
+            <div>
+                <md-button ng-click="removeFriend(friend.id)" style="color:#00B5CD;
+                    display:block;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    min-height: 100%"> Remove </md-button>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-block">
+                    <label>Email:</label>
+                    <input ng-enter="addFriend(friend.email)" ng-model="friend.email" type="email" required>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                        <md-button type="button" ng-click="addFriend(friend.email)" style="color:#00B5CD;display:block;margin:auto">Add Friend</md-button>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button style="background-color:#00B5CD;display:block;margin:auto" type="submit" class="md-primary"
+                       ng-class="{'md-raised md-hue-1': (inviteForm.$dirty && inviteForm.$valid) }"
+                       aria-label="OK">
+                Invite
+            </md-button>
+            <md-button type="button" ng-click="handleCancel(); $event.stopPropagation();"
+                       aria-label="Cancel">
+                Cancel
+            </md-button>
+        </md-dialog-actions>
+
+    </form>
+
+</md-dialog>
