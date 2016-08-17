@@ -15,7 +15,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-  <script type="text/javascript">  
+  <script type="text/javascript">
   $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
@@ -56,15 +56,15 @@ app.controller('MyController', function($scope, $mdSidenav, $mdMedia) {
     $scope.games = [{
         name: "Keep Apartment PHA Clean",
         start: new Date("August 14, 2016 11:13:00"),
-        end: new Date("November 14, 2016 11:13:00"), 
-        currentStatus: "Current", 
+        end: new Date("November 14, 2016 11:13:00"),
+        currentStatus: "Current",
         winnings: 8.40
-        }, 
+        },
     {
         name: "Keep FullStack Fresh",
         start: new Date("February 14, 2016 11:13:00"),
         end: new Date("May 14, 2016 11:13:00"),
-        currentStatus: "Completed", 
+        currentStatus: "Completed",
         winnings: -.80
     }];
 
@@ -131,6 +131,7 @@ $scope.testDate = $scope.dateConverter(new Date("August 14, 2016 11:13:00"));
                     <ul id='dropdown1' class='dropdown-content'>
                         <li ng-repeat="game in games"><a>{{game.currentStatus}}</a></li>
                     </ul>
+
                 </div>
                 <br>
                  <div>

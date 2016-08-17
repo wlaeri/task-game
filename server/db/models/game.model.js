@@ -19,5 +19,8 @@ module.exports = db.define('game', {
     pledge: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    invitedPlayers: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     }
 });
