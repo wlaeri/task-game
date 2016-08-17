@@ -20,20 +20,17 @@ name in the environment files.
 var chalk = require('chalk');
 var db = require('./server/db');
 var User = db.model('user');
+var Game = db.model('game');
+var Task = db.model('task');
 var Promise = require('sequelize').Promise;
+
+var seedDataUsers = require('./seedData/seed.users.js');
+var seedDataGames = require('./seedData/seed.games.js');
+var seedDataTasks = require('./seedData/seed.tasks.js');
 
 var seedUsers = function () {
 
-    var users = [
-        {
-            email: 'testing@fsa.com',
-            password: 'password'
-        },
-        {
-            email: 'obama@gmail.com',
-            password: 'potus'
-        }
-    ];
+    var users = seedDataUsers.users;
 
     var creatingUsers = users.map(function (userObj) {
         return User.create(userObj);
@@ -43,9 +40,39 @@ var seedUsers = function () {
 
 };
 
+var seedGames = function () {
+
+    var games = seedDataGames.games;
+
+    var creatingGames = games.map(function (gameObj) {
+        return Game.create(gameObj);
+    });
+
+    return Promise.all(creatingGames);
+
+};
+
+var seedTasks = function () {
+
+    var tasks = seedDataTasks.tasks;
+
+    var creatingTasks = tasks.map(function (taskObj) {
+        return Task.create(taskObj);
+    });
+
+    return Promise.all(creatingTasks);
+
+};
+
 db.sync({ force: true })
     .then(function () {
         return seedUsers();
+    })
+    .then(function() {
+        return seedGames();
+    })
+    .then(function() {
+        return seedTasks();
     })
     .then(function () {
         console.log(chalk.green('Seed successful!'));

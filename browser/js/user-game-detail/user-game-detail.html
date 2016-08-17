@@ -1,0 +1,29 @@
+<main class="md-padding" layout="row" flex>
+    <md-content flex id="content" style="color:black">
+        <div class="fade-view">
+            <div layout="row" layout-align="center center">
+                <h1>User</h1>
+            </div>
+            <div layout="row" layout-align="center center">
+                <h3 flex-offset="10" flex="40">Current Game</h3>
+                <h3 flex-offset="5" flex="20">Total: {{ totalPoints }}</h3>
+                <h3 flex-offset="5" flex="20">Up +5</h3>
+            </div>
+        <table>
+            <thead>
+                <th data-field="time">Time Completed</th>
+                <th data-field="task">Task</th>
+                <th data-field="points">Points</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in tasks">
+                    <td>{{ task.time }}</td>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.points }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ui-view></ui-view>
+        </div>
+    </md-content>
+</main>

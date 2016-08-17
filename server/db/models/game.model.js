@@ -20,7 +20,7 @@ module.exports = db.define('game', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    thread: {
-        type: Sequelize.INTEGER
+    invitedPlayers: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     }
 });
