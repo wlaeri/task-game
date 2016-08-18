@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="task in game.tasks" style="color:black" ui-sref="u.task({taskId: task.id})">
+                <tr ng-repeat="task in game.tasks" style="color:black" ui-sref="u.task({task: task})">
                     <td></td>
                     <td style="border-left-width:30px">{{ task.name }}</td>
                     <td>{{task.description}}</span>

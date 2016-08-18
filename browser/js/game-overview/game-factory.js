@@ -23,5 +23,10 @@ app.factory('GameFactory', function($http) {
     .then(games=>games.data);
   }
 
+  GameFactory.getEventsbyId = function(taskId){
+    return $http.get('api/events/task/' + taskId)
+    .then(newEvent => newEvent.data);
+  }
+
   return GameFactory;
 })
