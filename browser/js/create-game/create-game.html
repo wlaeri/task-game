@@ -8,10 +8,11 @@
                     <div class="row">
                         <div class="col s3">
                         </div>
+                        <h3h6>{{comm}}</h6>
                         <div class="col s6">
                             <md-input-container class="md-block" layout-gt-sm="row">
                                 <label class="align-center">Game Name</label>
-                                <input name="gameName" ng-model="gameName" required>
+                                <input name="game.name" ng-model="comm.game.name" required>
                                 <div ng-messages="newGameForm.gameName.$error">
                                     <div ng-message="required">This field is required.</div>
                                 </div>
@@ -24,15 +25,15 @@
                         <div class="col s3">
                         </div>
                         <div class="col s3" flex>
-                            <input type="date" class="datepicker" ng-model="startDate">
+                            <input type="date" class="datepicker" ng-model="comm.game.start">
                         </div>
                         <div class="col s3">
-                            <input type="date" class="datepicker" ng-model="endDate">
+                            <input type="date" class="datepicker" ng-model="comm.game.end">
                         </div>
                         <div class="col s3">
                         </div>
                     </div>
-                    <div class="row" ng-repeat="task in tasks">
+                    <div class="row" ng-repeat="task in comm.tasks">
                         <div class="col s3">
                             <md-input-container class="md-block" layout-gt-sm="row">
                                 <label>Task Name</label>
@@ -72,8 +73,16 @@
                     <div class="row">
                         <md-button style="color:#00B5CD" ng-click="addFriends()">Invite Friends</md-button>
                     </div>
+                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" ng-keyup="searchText.length>2 ? getMatches(searchText):null">
+                      <md-item-template>
+                        <span md-highlight-text="searchText">{{item.display}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                        No matches found.
+                      </md-not-found>
+                </md-autocomplete>
                     <div>
-                        <md-button style="color:#FFFEFA;background-color:#00B5CD">Create Game</md-button>
+                        <md-button type="submit" ng-click="create()" style="color:#FFFEFA;background-color:#00B5CD">Create Game</md-button>
                     </div>
                 </form>
             </div>

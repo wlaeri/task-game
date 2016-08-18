@@ -17,6 +17,10 @@ module.exports = db.define('user', {
         type: Sequelize.STRING,
         allowNull: false
     },
+    username:{
+        type: Sequelize.STRING,
+        unique: true
+    },
     password: {
         type: Sequelize.STRING,
     },
