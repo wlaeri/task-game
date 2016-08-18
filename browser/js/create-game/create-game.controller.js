@@ -1,4 +1,4 @@
-app.controller('CreateGameCtrl', function($scope, $mdDialog, $state){
+app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory, $log){
     $scope.comm = {};
     $scope.comm.commissioner = $scope.user.id;
     $scope.comm.players = [{
@@ -43,7 +43,9 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state){
         });
     }
     $scope.getMatches = function() {
-
+        UserFactory.autocomplete($scope.searchText)
+        .then(users=>$scope.foundMatches = users)
+        .catch(err=>$log.error)
 
     }
 

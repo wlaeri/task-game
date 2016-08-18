@@ -73,6 +73,14 @@
                     <div class="row">
                         <md-button style="color:#00B5CD" ng-click="addFriends()">Invite Friends</md-button>
                     </div>
+                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" ng-keyup="searchText.length>2 ? getMatches():null">
+                      <md-item-template>
+                        <span md-highlight-text="searchText">{{item.display}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                        No matches found.
+                      </md-not-found>
+                </md-autocomplete>
                     <div>
                         <md-button type="submit" ng-click="create()" style="color:#FFFEFA;background-color:#00B5CD">Create Game</md-button>
                     </div>
