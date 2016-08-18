@@ -14,11 +14,13 @@ db.Thread = require('./models/thread.model.js');
 // db.User.hasMany(db.Event, {as: 'completedTask'});
 
 
-db.User.belongsToMany(db.Game, {through: 'GamePlayers'});
+db.User.belongsToMany(db.Game, {as: "Players", through: 'GamePlayers', foreignKey: "userId"});
+db.User.belongsToMany(db.Game, {as: "Invites", through: 'InvitedPlayers', foreignKey: "userId"});
 // db.User.hasMany(db.Event, {as: 'db.Task'});
 
 db.Game.belongsTo(db.User, {as: 'commissioner'});
 db.Game.belongsToMany(db.User, {through: 'GamePlayers'});
+db.Game.belongsToMany(db.User, {as: "Invitations", through: 'InvitedPlayers', foreignKey: "gameId"});
 db.Game.hasMany(db.Task);
 db.Game.hasMany(db.Event);
 
