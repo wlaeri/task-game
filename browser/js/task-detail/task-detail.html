@@ -1,6 +1,6 @@
 <div style="line-height=20px; color:#00B5CD; background-color:#FFFEFA" class="center-align" >
         <div style="font-size:20px">{{task.name}} </div>
-            <p style="font-size:15px">Description: {{task.description}}<br> Points: {{task.points}}</p>
+            <p style="font-size:15px">Description: {{task.description}}<br> Points: {{task.points}} {{eventTest}}</p>
         </div>
         <br>
         <div class="center-align"flex id="content" style="background-color:#FFFEFA">
@@ -16,10 +16,10 @@
           </tr>
         </thead>
 
-        <tbody ng-repeat="player in task">
+        <tbody ng-repeat="event in events">
           <tr>
-            <td style="font-size:15px" class="left-align">{{player.date}}</td>
-            <td ng-class="{'color-blue': player.player === currentWinner}"style="font-size:15px" class="right-align">{{player.player}}</td>
+            <td style="font-size:15px" class="left-align">{{event.date}}</td>
+            <td ng-class="{'color-blue': player.player === currentWinner}"style="font-size:15px" class="right-align">{{event.completedById}}</td>
           </tr>
         </tbody>
       </table><!-- 

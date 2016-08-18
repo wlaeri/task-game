@@ -18,4 +18,7 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
             console.log(err);
         });
     }
+    $scope.dashBoard = function(){
+        $state.go('u.dash')
+    }
 })

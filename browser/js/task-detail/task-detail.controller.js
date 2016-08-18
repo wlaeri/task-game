@@ -1,16 +1,9 @@
-app.controller('TaskDeetsCtrl', function($scope, $mdSidenav, $mdMedia, $stateParams, task) {
-
+app.controller('TaskDeetsCtrl', function($scope, $mdSidenav, $mdMedia, $stateParams, task, GameFactory) {
 
 
     $scope.task = task;
-    
-    $scope.console = function (){
-        console.log("Task **********", $scope.task)
-        console.log('Task1 **********', $scope.task1);
-    }
-    $scope.console();
 
-    $scope.task1 = $stateParams.task;
+    $scope.events = GameFactory.getEventsbyId($scope.task.id).then(function(events){console.log(events)}).then(events=>events);
 
     $scope.exampleTasks = [{
         name: "Took out trash", 
