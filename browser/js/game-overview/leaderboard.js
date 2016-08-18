@@ -8,17 +8,11 @@ app.directive('tgLeaderboard', function(){
       tasks: '='
     },
     link: function(scope){
-      scope.players = scope.players.map(function(player, i) {
-        scope.players[i].points = scope.events.filter(function(event) {
-          return event.completedById === player.id;
-        }).map(function(event) {
-          return scope.tasks.filter(function(task) {
-            return task.id === event.taskId;
-          })[0].points;
-        }).reduce(function(prev, curr) { return prev + curr; }, 0);
-        return scope.players[i];
-      }).sort(function(a,b) {
-        return b.points - a.points;
-      });
+      scope.players = scope.players.map(player => {
+        player.points = scope.events.filter(event => event.completedById === player.id)
+        .map(event => scope.tasks.find(task => task.id === event.taskId).points)
+        .reduce((prev, curr) => prev + curr, 0);
+        return player;
+      }).sort((a,b) => b.points - a.points);
     }
 }});
