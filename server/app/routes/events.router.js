@@ -16,7 +16,9 @@ router.get('/task/:id', function(req, res, next){
 	});
 
 router.post('/', function(req, res, next){
+console.log("***************In create event route");
   Event.create(req.body)
+  .tap(event=> console.log("******************New Event", event))
   .then(event=> res.send(event))
   .catch(next);
 })

@@ -4,7 +4,7 @@
         </div>
         <br>
         <div class="center-align"flex id="content" style="background-color:#FFFEFA">
-                <a class="waves-effect waves-light btn" style="align: center; color:#FFFEFA; background-color:#00B5CD; bottom: 5px; right: 5px;"><i class="material-icons left">complete task</i></a>
+                 <md-button class="md-primary md-raised"  ng-click="showConfirm($event)" style="align: center; color:#FFFEFA; background-color:#00B5CD; bottom: 5px; right: 5px;">complete task</md-button>
             <!-- <ui-view></ui-view> -->
         </div>
             <h4 class="center-align"style="color:#00B5CD; background-color:#FFFEFA">Recent history</h4>
@@ -12,14 +12,14 @@
         <thead>
           <tr>
               <th data-field="id" style="font-size:20px; color:#00B5CD" class="left-align">Completed On</th>
-              <th data-field="name" style="font-size:20px; color:#00B5CD" class="right-align">Player</th>
+              <th data-field="name" style="font-size:20px; color:#00B5CD" class="right-align" ng-click="testEventObj()"}>Player</th>
           </tr>
         </thead>
 
-        <tbody ng-repeat="event in events">
+        <tbody ng-repeat="event in events | orderBy:createdAt:true | limitTo:5">
           <tr>
-            <td style="font-size:15px" class="left-align">{{event.date}}</td>
-            <td ng-class="{'color-blue': player.player === currentWinner}"style="font-size:15px" class="right-align">{{event.completedById}}</td>
+            <td style="font-size:15px; color:#00B5CD" class="left-align">{{event.createdAt}}</td>
+            <td style="font-size:15px; color:#00B5CD" class="right-align">{{event.name}}</td>
           </tr>
         </tbody>
       </table><!-- 
