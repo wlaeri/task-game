@@ -1,4 +1,4 @@
-<div ng-controller="HomeCtrl">
+<div ng-controller="HomeCtrl" style="position:relative; width:100%">
   <md-toolbar layout="row" class="md-whiteframe-z3" style="padding:0px;margin:0px;background-color:#00B5CD">
     <svg style="margin-top: 10px; margin-left: 10%" class="center-align" version="1.0" xmlns="http://www.w3.org/2000/svg" width="48pt" height="48pt" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
       <metadata></metadata>
@@ -25,10 +25,9 @@
     <a class="carousel-item" href="#two!"><img src="background2.jpg"></a>
     <a class="carousel-item" href="#three!"><img src="background3.jpg"></a>
     <div class="carousel-fixed-item center"></div> -->
-  <div style="position:relative">
-    <img src="background1.jpg" style="min-width:100%">
-    <div style="position:absolute; top:0; left:0; min-width:100%">
-      <div style="display:block; margin-left: auto; margin-right:auto; margin-top: 120px" class="md-primary md-raised">
+  <div style="position:relative;height:70vh">
+    <div id="main-image">
+      <div style="display:block; margin-left: auto; margin-right:auto;margin-top: 10vh" class="md-primary md-raised">
         <h1 class="header center teal-text text-lighten-2" style="color: #FFFEFA !important">Gamify everything.</h1>
       </div>
 
@@ -36,13 +35,18 @@
         <h5 class="header center light" style="color: #FFFEFA !important">A universal gamification app for everyday life. </h5>
       </div>
 
-      <md-button style="display:block; margin-left: auto; margin-right:auto; margin-top: 100px; font-size: 20px; background-color:#00B5CD;min-height:60px; min-width:120px" class="md-primary md-raised" ng-click="signup()"> Sign Up </md-button>
-
-      <div style="margin-top: 120px; min-height:60px; min-width:100%; background-color:#00B5CD">
-      </div>
-      <div style="min-height:400px; min-width:100%; background-color:#00D4EB">
-      </div>
+      <md-button style="display:block; margin-left: auto; margin-right:auto; margin-top: 10%; font-size: 20px; background-color:#00B5CD;min-height:60px; min-width:120px" class="md-primary md-raised" ng-click="signup()"> Sign Up </md-button>
     </div>
   </div>
+
+  <footer>
+    <div style="min-height:60px; min-width:100%; background-color:#00B5CD">
+    </div>
+    <div style="min-height:120px; min-height:25vh; min-width:100%; background-color:#00D4EB">
+      <div class="center" style="color:#FFFEFA; padding-top:60px"> © 2016 GAMR
+      <div>
+    </div>
+  </footer>
+
 </div>
 
