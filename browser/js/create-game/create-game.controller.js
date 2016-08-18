@@ -1,6 +1,7 @@
-app.controller('CreateGameCtrl', function($scope, $mdDialog){
-
-    $scope.players = [{
+app.controller('CreateGameCtrl', function($scope, $mdDialog, $state){
+    $scope.comm = {};
+    $scope.comm.commissioner = $scope.user.id;
+    $scope.comm.players = [{
         id: 'player1',
         email: $scope.user.email
     }];
@@ -10,7 +11,7 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog){
         email: $scope.user.email
     }];
 
-    $scope.tasks = [{
+    $scope.comm.tasks = [{
         id: 'task1',
         name: '',
         decription: '',
@@ -18,8 +19,8 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog){
     }];
 
     $scope.addTask = function() {
-        let newTaskNum = $scope.tasks.length + 1;
-        $scope.tasks.push({
+        let newTaskNum = $scope.comm.tasks.length + 1;
+        $scope.comm.tasks.push({
             id:'task'+newTaskNum,
             name: '',
             decription: '',
@@ -28,7 +29,7 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog){
     };
 
     $scope.removeTask = function(taskId) {
-        $scope.tasks = $scope.tasks.filter(e=>e.id !== taskId);
+        $scope.comm.tasks = $scope.comm.tasks.filter(e=>e.id !== taskId);
     };
 
     $scope.addFriends = function() {
@@ -40,6 +41,15 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog){
             controller: 'AddFriendsCtrl',
             scope: $scope
         });
+    }
+    $scope.getMatches = function() {
+
+
+    }
+
+    $scope.create = function(){
+        GameFactory.createGame($scope.comm)
+        .then(gameId=>$state.go('u.game', {gameId:gameId}))
     }
 
 })

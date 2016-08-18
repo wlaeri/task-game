@@ -8,8 +8,17 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
+
+//For use in autocomplete to invite players
+router.get('/invite', function(req,res, next){
+  User.findAll({where:{
+    username: {$like:req.query.username}
+  }})
+  .then(users=>res.send(users))
+  .catch(next);
+})
+
 router.get('/:id', function(req, res, next){
-  console.log("**************", "In get user route!!")
   User.findById(req.params.id)
   .then(user=> res.send(user))
   .catch(next);
