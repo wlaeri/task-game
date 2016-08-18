@@ -10,6 +10,16 @@
   }
 }
 
+#main-image {
+  background-image: url('background1.jpg');
+  background-size: cover;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 70vh;
+}
+
 #signupButton {
   margin-top: -50em;
   background-color: #00B5CD;
