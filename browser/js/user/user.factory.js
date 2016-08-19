@@ -3,7 +3,6 @@ app.factory('UserFactory', function($state, $http){
     let UserFactory = {};
 
     UserFactory.getUserInfo = function(id){
-        console.log("Called getUserInfo")
         return $http.get('/api/user/' + id)
         .then(function(user){
             return user.data
