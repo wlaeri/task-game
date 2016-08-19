@@ -1,10 +1,16 @@
 app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory, $log, GameFactory){
+    $scope.selectedItem;
+    $scope.searchText = "";
+
     $scope.comm = {};
     $scope.comm.commissioner = $scope.user.id;
-    $scope.comm.players = [{
-        id: 'player1',
-        email: $scope.user.email
-    }];
+    $scope.comm.players = {
+        unconfirmed: [{
+            id: 'player1',
+            email: $scope.user.email}],
+        invited: []
+
+    };
 
     $scope.friends = [{
         id: 'friend1',
@@ -52,6 +58,12 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
             )
         .catch(err=>$log.error)
 
+    }
+    $scope.addPlayer= function(selectedItem){
+        if(selectedItem){
+        $scope.comm.players.invited.push(selectedItem);
+        $scope.foundMatches = [];
+    }
     }
 
     $scope.create = function(){
