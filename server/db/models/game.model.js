@@ -24,7 +24,6 @@ module.exports = db.define('game', {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },
-
     status: {
         type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Completed'),
         defaultValue: 'Pending',

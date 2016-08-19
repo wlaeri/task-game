@@ -1,4 +1,4 @@
-app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory, $log){
+app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory, $log, GameFactory){
     $scope.comm = {};
     $scope.comm.commissioner = $scope.user.id;
     $scope.comm.players = [{
