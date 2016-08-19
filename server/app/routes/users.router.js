@@ -13,7 +13,7 @@ var Event = db.Event;
 router.get('/invite', function(req,res, next){
   User.findAll({where:{
     username: {$like:req.query.username}
-  }})
+  }, attributes:['username', 'id']})
   .then(users=>res.send(users))
   .catch(next);
 })

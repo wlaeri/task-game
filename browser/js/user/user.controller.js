@@ -1,5 +1,10 @@
 app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, usersGames, $mdDialog) {
     $scope.user = $stateParams.user;
+
+    $scope.isLoggedIn = function () {
+                return AuthService.isAuthenticated();
+            };
+
     $scope.menuItems = usersGames;
     $scope.invite = function() {
         $mdDialog.show({

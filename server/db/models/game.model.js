@@ -24,11 +24,10 @@ module.exports = db.define('game', {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },
-    invitedPlayers: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
-    },
+
     status: {
-        type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Complete'),
+        type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Completed'),
+        defaultValue: 'Pending',
         get: function() {
             var now = new Date();
             return this.start < now && !this.locked ? 'Pending' : this.start < now && this.locked ? 'Confirmed' : this.end < now ? 'Complete' : 'Active';
