@@ -11,10 +11,12 @@ var Event = db.Event;
 router.get('/user/:id', function(req, res, next){
   let gmap;
   User.findById(req.params.id)
-  .then(user=>user.getGames({where:{status:{$not: "Completed"}}}, {include: [{model: Task},{model: Event}, {model: User}]}))
+  .then(user=>user.getGames({include: [{model: Task},{model: Event}, {model: User}]}))
   .then(function(games){
-    return games.map(function(e){
-      return{id: e.dataValues.id, name: e.dataValues.name}
+    return games.filter(function(game) {
+      return game.status !== 'Completed';
+    }).map(function(game){
+      return{id: game.dataValues.id, name: game.dataValues.name}
     })
   })
   .tap(games=> console.log("&&&&&&&&finally", games))
