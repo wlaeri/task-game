@@ -1,4 +1,4 @@
-cron.router.js'use strict';
+'use strict';
 var schedule = require('node-schedule');
 var underscore require('_');
 var models = require("../../db/models");
@@ -25,7 +25,7 @@ var DailyGameCheck = schedule.scheduleJob(rule, function(){
 		}
 	})
 	for(var i = 0; i<scheduledCrons.length; i++){
-		schedule.scheduleJob(scheduledCrons[i].date, function(){
+		schedule.scheduleJob(scheduledCrons[i].startDate, function(){
 			console.log("Cron created: ", i);
 			//Cron sends notification to players
 		})
@@ -78,10 +78,10 @@ function removeTask(tracker){
 	delete cronRecord[tracker]
 }
 
-
-
-router.get('/cron', function(req, res){
-	scheduleCron(req.date); 
-	console.log("cron Record should be updated", cronRecord);
-	res.send("Task scheduled");
+router.post('/cron', function(req, res){
+	Cron.create(req.body.cron)
+	.then(function(cron){
+		console.log("*****", cron)
+		res.status(200);
+	})
 })
