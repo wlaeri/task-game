@@ -1,5 +1,13 @@
 'use strict';
-window.app = angular.module('Gamr', ['fsaPreBuilt', 'ui.router', 'ui.bootstrap', 'ngAnimate', 'ngMaterial', 'ngAria']);
+window.app = angular.module('Gamr', [
+    'fsaPreBuilt',
+    'ui.router',
+    'ui.bootstrap',
+    'ngAnimate',
+    'ngMaterial',
+    'ngAria',
+    'ngMaterialDatePicker'
+]);
 
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
