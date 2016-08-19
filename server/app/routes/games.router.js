@@ -35,10 +35,10 @@ router.get('/:id', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
-  let invitedPlayers = req.body.players.invited.forEach(u=>u.id);
+  let invitedPlayers = req.body.players.invited.map(u=>u.id);
   Game.create(req.body.game)
   .tap(game=>game.setInvitees(invitedPlayers))
-  .tap(game=>game.setPlayers(req.body.players.accepted))
+  .tap(game=>game.setPlayers(req.body.players.unconfirmed[0].id))
   .then(game=>game.setCommissioner(req.body.commissioner))
   .tap(game=>{
     let taskProms = req.body.tasks.map(taskObj=>Task.create(taskObj));
