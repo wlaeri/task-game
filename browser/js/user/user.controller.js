@@ -34,4 +34,9 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
     $scope.dashBoard = function(){
         $state.go('u.dash')
     }
+
+    $scope.allGames = function(){
+        $state.go('u.allGames', {games: $scope.menuItems})
+    }
+
 })

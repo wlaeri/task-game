@@ -1,0 +1,59 @@
+        <main class="md-padding" layout="row" style="background-color:#FFFEFA"flex>
+            <md-content flex id="content" style="background-color:#FFFEFA">
+            <div class="fade-view">
+                <h3 >Game History</h3>
+                <div ng-app="TaskApp" layout="row" ng-controller="AllGamesCtrl">
+                    <a style="background-color: #00B5CD; color: #FFFEFA; font-size:15px; font-weight:bold" class='dropdown-button btn' href='#' data-activates='dropdown1'>Filter by Status</a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li ng-repeat="game in games"><a>{{game.currentStatus}}</a></li>
+                    </ul>
+
+                </div>
+                <br>
+                 <div>
+                    <table style="width:100%">
+                        <thead>
+                          <tr>
+                              <th data-field="id" style="font-size:20px" class="left-align">Game</th>
+                              <th data-field="name" style="font-size:20px" class="center-align">End Date</th>
+                              <th data-field="name" style="font-size:20px" class="right-align">Winnings</th>
+                              <th data-field="name" style="font-size:20px" class="right-align">Game Status</th>
+
+                          </tr>
+                        </thead>
+                        <tbody ng-repeat="game in games | orderBy:end">
+                          <tr value="{{game.currentStatus}}" ng-style="{'background-color': game.currentStatus === 'Completed'? 'null':'#4DD0E1'}">
+                            <td style="font-size:15px" class="left-align">{{game.name}}</td>
+                            <td style="font-size:15px" class="center-align">{{dateConverter(game.end)}}</td>
+                             <td style="font-size:15px" class="right-align" ng-style="{'color': game.winnings < 0 ? 'red':null}">{{ game.winnings }}</td>
+                            <td style="font-size:15px" class="right-align">{{ game.currentStatus }}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                 </div>
+                 <br><br>
+                 <h3>Summary Stats</h3>
+                 <table style="width:100%" style="background-color:#FFFEFA">
+
+                        <thead style="background-color:#FFFEFA">
+                          <tr>
+                              <th data-field="id" style="font-size:20px" class="left-align">Games Played</th>
+                              <th data-field="name" style="font-size:20px" class="center-align">Games Won</th>
+                              <th data-field="name" style="font-size:20px" class="right-align">Total Winnings</th>
+                          </tr>
+                        </thead>
+                        <tbody style="background-color:#FFFEFA">
+                          <tr value="{{game.currentStatus}}" >
+                            <td style="font-size:15px" class="left-align">{{games.length}}</td>
+                            <td style="font-size:15px" class="center-align">{{}}</td> <!-- we need to sort out our models before getting here -->
+                            <td style="font-size:15px" class="right-align">{{winnings}}</td>
+
+                          </tr>
+                        </tbody>
+                    </table>
+            </div>
+            </md-content>
+        </main>
+    </div>
+
+</html>
