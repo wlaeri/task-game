@@ -3,11 +3,8 @@ app.factory('UserFactory', function($state, $http){
     let UserFactory = {};
 
     UserFactory.getUserInfo = function(id){
-        console.log("Called getUserInfo")
         return $http.get('/api/user/' + id)
         .then(function(user){
-            console.log("Returned from get request with something")
-            console.log(user);
             return user.data
         })
     }
@@ -24,6 +21,11 @@ app.factory('UserFactory', function($state, $http){
         .then(function(updatedUser){
             return updatedUser.data
         })
+    }
+
+    UserFactory.autocomplete = function(str){
+        $http.get('/api/user/invite?username='+str)
+        .then(users=>users.data);
     }
 
         return UserFactory;

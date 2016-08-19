@@ -11,8 +11,7 @@ var Event = db.Event;
 router.get('/user/:id', function(req, res, next){
   let gmap;
   User.findById(req.params.id)
-  .tap(user=>console.log(user))
-  .then(user=>user.getGames({attributes:['id', 'name']}))
+  .then(user=>user.getGames({where:{status:{$not: "Completed"}}}, {include: [{model: Task},{model: Event}, {model: User}]}))
   .then(function(games){
     return games.map(function(e){
       return{id: e.dataValues.id, name: e.dataValues.name}
@@ -25,7 +24,6 @@ router.get('/user/:id', function(req, res, next){
 
 
 router.get('/:id', function(req, res, next){
-  console.log('Hello....give me something here. Please :(')
   Game.findById(req.params.id, {
     include: [{model: Task},{model: Event}, {model: User}]
             })
@@ -37,9 +35,19 @@ router.get('/:id', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
+  let invitedPlayers = req.body.players.invited.forEach(u=>u.id);
   Game.create(req.body.game)
-  .then(game=>game.setPlayers(req.body.players))
-  .then(game=> res.send(game))
+  .tap(game=>game.setInvitees(invitedPlayers))
+  .tap(game=>game.setPlayers(req.body.players.accepted))
+  .then(game=>game.setCommissioner(req.body.commissioner))
+  .tap(game=>{
+    let taskProms = req.body.tasks.map(taskObj=>Task.create(taskObj));
+    return Promise.all(taskProms).map(function(task, index) {
+        return task.setGame(game.id);
+    });
+  })
+  .tap(game=> res.send(game.id))
+  // .then(game=>) add email invites here
   .catch(next)
 })
 
