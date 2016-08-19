@@ -25,7 +25,7 @@ module.exports = db.define('game', {
         defaultValue: false
     },
     status: {
-        type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Complete'),
+        type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Completed'),
         defaultValue: 'Pending',
         get: function() {
             var now = new Date();

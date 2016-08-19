@@ -10,11 +10,14 @@ var Event = db.Event;
 
 
 //For use in autocomplete to invite players
-router.get('/invite', function(req,res, next){
+router.get('/invite/:username', function(req,res, next){
+  console.log(req.params.username);
   User.findAll({where:{
-    username: {$like:req.query.username}
-  }})
-  .then(users=>res.send(users))
+    username: {$like: req.params.username+'%'}
+  }, attributes:['username', 'id']})
+  .then(users=>{
+    console.log(users);
+    res.send(users)})
   .catch(next);
 })
 
