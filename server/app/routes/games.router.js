@@ -11,7 +11,6 @@ var Event = db.Event;
 router.get('/user/:id', function(req, res, next){
   let gmap;
   User.findById(req.params.id)
-  .tap(user=>console.log(user))
   .then(user=>user.getGames({where:{status:{$not: "Completed"}}}, {include: [{model: Task},{model: Event}, {model: User}]}))
   .then(function(games){
     return games.map(function(e){
