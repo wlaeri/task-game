@@ -25,7 +25,7 @@ module.exports = db.define('game', {
         defaultValue: false
     },
     status: {
-        type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Complete'),
+        type: Sequelize.ENUM('Pending', 'Confirmed', 'Active', 'Completed'),
         get: function() {
             var now = new Date();
             if (this.start > now && !(this.locked)) {
@@ -37,7 +37,7 @@ module.exports = db.define('game', {
             if (this.end > now) {
                 return 'Active';
             }
-            return 'Complete';
+            return 'Completed';
         }
     }
 });

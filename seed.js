@@ -94,7 +94,7 @@ var createGameUserAssociations = function(games) {
         var users = randomArrayGenerator(5, 10, 1, 100);
         return game.setCommissioner(users[0])
         .then(function() {
-            if (game.status === 'Active' || game.status === 'Complete') {
+            if (game.status === 'Active' || game.status === 'Completed') {
                 return game.setUsers(users, {
                     status: 'Confirmed'
                 });
