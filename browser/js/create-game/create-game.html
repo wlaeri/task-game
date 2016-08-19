@@ -7,28 +7,35 @@
                 <form name="newGameForm" style="color:black">
                     <div class="row">
                         <div class="col s3">
+                            <h6>{{comm}}</h6>
                         </div>
-                        <h6>{{comm}}</h6>
                         <div class="col s6">
                             <md-input-container class="md-block" layout-gt-sm="row">
                                 <label class="align-center">Game Name</label>
                                 <input name="game.name" ng-model="comm.game.name" required>
-                                <div ng-messages="newGameForm.gameName.$error">
+                                <div ng-messages="newGameForm.game.name.$error">
                                     <div ng-message="required">This field is required.</div>
                                 </div>
                             </md-input-container>
                         </div>
                         <div class="col s3">
+                            <md-input-container class="md-block" layout-gt-sm="row">
+                                <label class="align-center">Pledge</label>
+                                <input name="game.pledge" ng-model="comm.game.pledge" required>
+                                <div ng-messages="newGameForm.game.pledge.$error">
+                                    <div ng-message="required">This field is required.</div>
+                                </div>
+                            </md-input-container>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s3">
                         </div>
                         <div class="col s3" flex>
-                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime" placeholder="Start" min-date="date" ng-model="start" class=" md-input">
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime" placeholder="Start" min-date="date" ng-model="comm.game.start" class=" md-input">
                         </div>
                         <div class="col s3">
-                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime" placeholder="End" min-date="date" ng-model="end" class=" md-input">
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime" placeholder="End" min-date="date" ng-model="comm.game.end" class=" md-input">
                         </div>
                         <div class="col s3">
                         </div>
@@ -68,19 +75,31 @@
                     <div class="row">
                         <md-button style="color:#00B5CD" ng-click="addTask()">Add Task</md-button>
                     </div>
+                    <div style="margin-left:9px">
                     <h4>Players</h4>
-                    <p>{{players}}</p>
-                    <div class="row">
-                        <md-button style="color:#00B5CD" ng-click="addFriends()">Invite Friends</md-button>
                     </div>
-                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" ng-keyup="searchText.length>2 ? getMatches(searchText):null">
+                    <div layout="row">
+                    <ul style="color:black; margin-left:9px">
+                        <li>
+                            <p>{{comm.players.unconfirmed[0].username}}</p>
+                        </li>
+                        <li ng-repeat="player in comm.players.invited">
+                            <p>{{player.username}}{{$last? '' : ', '}}</p>
+                        </li>
+                    </ul>
+                    </div>
+                    <div class="row">
+                    <div class="col s3">
+                    <md-autocomplete style="color:black" md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" md-search-text-change="searchText.length>2 ? getMatches(searchText):null" md-selected-item-change="addPlayer(selectedItem); searchText='';">
                       <md-item-template>
-                        <span md-highlight-text="searchText">{{item.display}}</span>
+                        <span md-highlight-text="searchText">{{item.username}}</span>
                       </md-item-template>
                       <md-not-found>
                         No matches found.
                       </md-not-found>
-                </md-autocomplete>
+                    </md-autocomplete>
+                    </div>
+                </div>
                     <div>
                         <md-button type="submit" ng-click="create()" style="color:#FFFEFA;background-color:#00B5CD">Create Game</md-button>
                     </div>
