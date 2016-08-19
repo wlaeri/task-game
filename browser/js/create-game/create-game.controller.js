@@ -6,7 +6,7 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
     $scope.comm.commissioner = $scope.user.id;
     $scope.comm.players = {
         unconfirmed: [{
-            id: 'player1',
+            id: $scope.user.id,
             email: $scope.user.email}],
         invited: []
 
