@@ -24,7 +24,7 @@ app.factory('UserFactory', function($state, $http){
     }
 
     UserFactory.autocomplete = function(str){
-        $http.get('/api/user/invite?username='+str)
+        return $http.get('/api/user/invite/'+str)
         .then(users=>users.data);
     }
 

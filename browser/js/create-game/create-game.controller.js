@@ -45,7 +45,11 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
     $scope.getMatches = function(text) {
         console.log(text);
         UserFactory.autocomplete(text)
-        .then(users=>$scope.foundMatches = users)
+        .then(users=>{
+            $scope.foundMatches = users;
+            console.log(users);
+        }
+            )
         .catch(err=>$log.error)
 
     }

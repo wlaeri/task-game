@@ -73,7 +73,8 @@
                     <div class="row">
                         <md-button style="color:#00B5CD" ng-click="addFriends()">Invite Friends</md-button>
                     </div>
-                    <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" ng-keyup="searchText.length>2 ? getMatches(searchText):null">
+                    <h6 style="color:black">{{selectedItem}}</h6>
+                    <md-autocomplete style="color:black" md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" ng-keyup="searchText.length>2 ? getMatches(searchText):null">
                       <md-item-template>
                         <span md-highlight-text="searchText">{{item.display}}</span>
                       </md-item-template>
