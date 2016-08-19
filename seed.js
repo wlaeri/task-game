@@ -27,7 +27,8 @@ var Event = db.model('event');
 var Promise = require('sequelize').Promise;
 
 var seedDataUsers = require('./seedData/seed.users.js');
-var seedDataGames = require('./seedData/seed.games.js');
+var seedDataNotStartedGames = require('./seedData/seed.notStartedGames.js');
+var seedDataStartedGames = require('./seedData/seed.startedGames.js');
 var seedDataTasks = require('./seedData/seed.tasks.js');
 
 var seedUsers = function () {
@@ -44,11 +45,14 @@ var seedUsers = function () {
 
 var seedGames = function () {
 
-    var games = seedDataGames.games;
+    var notStartedGames = seedDataNotStartedGames.games;
+    var startedGames = seedDataStartedGames.games;
 
-    var creatingGames = games.map(function (gameObj) {
+    var creatingGames = notStartedGames.map(function (gameObj) {
         return Game.create(gameObj);
-    });
+    }).concat(startedGames.map(function(gameObj) {
+        return Game.create(gameObj);
+    }));
 
     return Promise.all(creatingGames);
 
@@ -86,12 +90,29 @@ function randomArrayGenerator(minLength, maxLength, minNum, maxNum) {
 }
 
 var createGameUserAssociations = function(games) {
-    // games is an array of all games in db
     var creatingAssociations = games.map(function(game) {
         var users = randomArrayGenerator(5, 10, 1, 100);
         return game.setCommissioner(users[0])
         .then(function() {
-            return game.setUsers(users);
+            if (game.status === 'Active' || game.status === 'Complete') {
+                return game.setUsers(users, {
+                    status: 'Confirmed'
+                });
+            }
+            if (game.status === 'Confirmed') {
+                if (Math.random() < 0.5) {
+                    return game.setUsers(users, { status: 'Unconfirmed' });
+                } else {
+                    return game.setUsers(users, { status: 'Confirmed' })
+                }
+            }
+            if (game.status === 'Pending') {
+                if (Math.random() < 0.5) {
+                    return game.setUsers(users, { status: 'Invited' });
+                } else {
+                    return game.setUsers(users, { status: 'Unconfirmed' });
+                }
+            }
         });
     });
 
@@ -102,7 +123,7 @@ var createTaskGameAssociations = function(tasks) {
     // tasks is an array of all tasks in db
     var count = 0;
     var creatingAssociations = tasks.map(function(task, index) {
-        if (index % 10 === 0) {
+        if (index % 5 === 0) {
             count++;
         }
         return task.setGame(count);
@@ -119,6 +140,9 @@ var createEvents = function(games) {
     var events, length;
 
     var creatingEvents = games.map(function(game) {
+        if (game.status === 'Pending' || game.status === 'Confirmed') {
+            return [];
+        }
         return Promise.all([game.getTasks(), game.getUsers()])
         .spread(function(gameTasks, gameUsers) {
             events = [];
