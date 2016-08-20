@@ -11,9 +11,11 @@ app.config(function($stateProvider){
   })
 })
 
-app.controller('GameOverviewCtrl', function($scope, gameObj){
+app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory){
 
     $scope.game = gameObj;
+
+    $scope.createCron = GameFactory.confirmGame;
 
 
 })
