@@ -20,7 +20,8 @@
             <h4 class="truncate" style="font-size:18px;color:#FFFEFA;" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.create({gameId: item.id})' : 'u.game({gameId: item.id})'}}">{{item.name}}</h4>
         </md-list-item>
         </md-list>
-        <md-button style="color:#FFFEFA; font-size:20px;margin: 10px" align="center" ui-sref="u.completed({user: user})">COMPLETED GAMES</md-button>
+        <md-button style="color:#FFFEFA; font-size:20px;margin: 10px" align="center">COMPLETED GAMES</md-button>
+        <md-button style="color:#FFFEFA; font-size:20px;margin: 10px" align="center" ng-click="allGames()">ALL Games</md-button>
         <md-button style="color:#FFFEFA; font-size:20px; margin:10px" align="center" ui-sref="u.account">ACCOUNT SETTINGS</md-button>
     </md-sidenav>
     <div layout="column" layout-fill>

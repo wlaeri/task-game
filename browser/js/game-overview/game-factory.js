@@ -33,5 +33,11 @@ app.factory('GameFactory', function($http) {
     .then(newEvent => newEvent.data);
   }
 
+  GameFactory.confirmGame = function(data){
+    console.log("In confirmGame route")
+    return $http.post('api/cron', data)
+    .then(res=>res)
+  }
+
   return GameFactory;
 })
