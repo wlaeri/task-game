@@ -29,8 +29,8 @@ schedule.scheduleJob(rule, function(){
 	var year = currentday.getYear().toString();
 	var month = currentday.getMonth().toString();
 	var day = currentday.getDay().toString();
-	var formattedDate = day+"/"+month+"/"+year;
-	var testDate = new Date(formattedDate);
+	var formattedCurrDate = day+"/"+month+"/"+year;
+	var testDate = new Date(formattedCurrDate);
 	console.log("formatted Date in router", testDate);
 	Cron.findAll({where: {startDay: testDate}})
 	.then(function(crons){

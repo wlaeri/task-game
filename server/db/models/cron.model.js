@@ -14,22 +14,36 @@ var Cron = db.define('cron', {
     },
     startDay: {
     	type: Sequelize.STRING
+    }, 
+    endDay: {
+        type: Sequelize.STRING
     }
 }, { 
 hooks: {
 	beforeCreate: function(cron){
-        cron.startDay = "";
-		console.log(cron.startDate);
-		var date = new Date(cron.startDate);
-		var year = date.getYear().toString();
-		var month = date.getMonth().toString();
-		var day = date.getDay().toString();
-        var formattedDate = day+"/"+month+"/"+year; 
-        var testDate = new Date(formattedDate);
-		console.log("formatted Date", testDate);
+        //reformatting endDate to extract just the day/month/year
+        console.log("cron.endDate:", cron.endDate)
+        var endDate = new Date(cron.endDate);
+        console.log("endDate", endDate);
+        var endYear = endDate.getYear().toString();
+        var endMonth = endDate.getMonth().toString();
+        var endDay = endDate.getDay().toString();
+        var onlyEndDay = endDay+"/"+endMonth+"/"+endYear; 
+        var formattedEndDay = new Date(onlyEndDay);
+        console.log("formatted End Date", formattedEndDay)
+        cron.endDay = formattedEndDay;
 
-
-		cron.startDay = testDate; 
+        //reformatting startDate to extract just the day/month/year
+		var startDate = new Date(cron.startDate);
+        console.log("cron.startDate:", cron.startDate);
+        console.log("startDate", startDate);
+		var startYear = startDate.getYear().toString();
+		var startMonth = startDate.getMonth().toString();
+		var startDay = startDate.getDay().toString();
+        var onlyStartDay = startDay+"/"+startMonth+"/"+startYear; 
+        var formattedStartDay = new Date(onlyStartDay);
+		console.log("formatted Start Date", formattedStartDay);
+		cron.startDay = formattedStartDay; 
 	}
 
 }
