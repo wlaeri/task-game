@@ -1,0 +1,16 @@
+<div>
+  <table>
+    <thead style="color:black">
+        <th data-field="gameName">Game</th>
+        <th data-field="startDate">Start Date</th>
+        <th data-field="endDate">End Date</th>
+    </thead>
+    <tbody style="color:black">
+        <tr ng-repeat="game in completedGames | orderBy:'end':true" ui-sref="u.game({gameId: game.id})">
+            <td>{{ game.name }}</td>
+            <td>{{ game.start }}</td>
+            <td>{{ game.end }}</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
