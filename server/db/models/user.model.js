@@ -64,6 +64,12 @@ module.exports = db.define('user', {
         }
     },
     hooks: {
+        beforeCreate: function(user){
+            if (!user.username){
+                user.username = user.email;
+            }
+        },
+
         beforeValidate: function (user) {
             if (user.changed('password')) {
                 user.salt = user.Model.generateSalt();

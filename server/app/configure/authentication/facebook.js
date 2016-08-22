@@ -11,10 +11,12 @@ module.exports = function (app, db) {
     var facebookCredentials = {
         clientID: facebookConfig.clientID,
         clientSecret: facebookConfig.clientSecret,
-        callbackURL: facebookConfig.callbackURL
+        callbackURL: facebookConfig.callbackURL, 
+        profileFields: ['email']
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
+        console.log("Facebook Profile", profile);
 
         User.findOne({
                 where: {
@@ -26,6 +28,7 @@ module.exports = function (app, db) {
                     return user;
                 } else {
                     return User.create({
+                        email: profile.emails[0].value,
                         facebook_id: profile.id
                     });
                 }
@@ -47,7 +50,7 @@ module.exports = function (app, db) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect: '/login'}),
         function (req, res) {
-            res.redirect('/');
+            res.redirect('/u/'+req.user.id);
         });
 
 };
