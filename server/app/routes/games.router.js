@@ -8,6 +8,20 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
+router.get('/user/:id/completed', function(req, res, next) {
+  User.findById(req.params.id)
+  .then(user => {
+    return user.getGames();
+  })
+  .then(games => {
+    return games.filter(game => {
+      return game.status === 'Completed';
+    }).map(game => {
+      return {id: game.id, name: game.name, start: game.start, end: game.end};
+    })
+  })
+  .then(games => res.send(games));
+})
 
 router.get('/user/:id', function(req, res, next){
   User.findById(req.params.id)
