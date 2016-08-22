@@ -5,7 +5,15 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
                 return AuthService.isAuthenticated();
             };
 
-    $scope.menuItems = usersGames;
+    $scope.menuItems = usersGames.filter(game => game.status !== 'Completed');
+
+    // awaiting usage
+    $scope.completedGames = usersGames.filter(game => game.status === 'Completed');
+
+    $scope.goToEdit = function(commissionerID, locked) {
+        return (commissionerID === $scope.user.id) && !locked;
+    }
+
     $scope.invite = function() {
         $mdDialog.show({
             templateUrl: 'js/invite-friends/invite-friends.html',

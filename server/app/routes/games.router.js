@@ -8,17 +8,24 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
+
 router.get('/user/:id', function(req, res, next){
-  let gmap;
   User.findById(req.params.id)
-  .then(user=>user.getGames({where:{status:{$not: "Completed"}}}, {include: [{model: Task},{model: Event}, {model: User}]}))
-  .then(function(games){
-    return games.map(function(e){
-      return{id: e.dataValues.id, name: e.dataValues.name}
-    })
+  .then(user => {
+    return user.getGames({
+      include: [
+        { model: Task },
+        { model: Event },
+        { model: User }
+      ]
+    });
   })
-  .tap(games=> console.log("&&&&&&&&finally", games))
-  .then(games=>res.send(games))
+  .then(games => {
+    return games.map(game => {
+      return { id: game.id, name: game.name, status: game.status, commissionerId: game.commissionerId, locked: game.locked };
+    });
+  })
+  .then(games => res.send(games))
   .catch(next);
 })
 
