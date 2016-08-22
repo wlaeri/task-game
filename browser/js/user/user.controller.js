@@ -1,5 +1,5 @@
-app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, usersGames, $mdDialog) {
-    $scope.user = $stateParams.user;
+app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, usersGames, $mdDialog, user) {
+    $scope.user = user;
 
     $scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
