@@ -1,6 +1,6 @@
 app.config(function($stateProvider){
   $stateProvider.state('u.game',{
-    url: 'game/overview/:gameId',
+    url: '/game/overview/:gameId',
     templateUrl: 'js/game-overview/user-games.html',
     controller: 'GameOverviewCtrl',
     resolve: {

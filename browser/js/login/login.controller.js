@@ -12,7 +12,7 @@ app.controller('LoginCtrl', function($scope, $mdDialog, $state, AuthService){
 
         AuthService.login(loginInfo)
         .then(function (user) {
-            $state.go('u.dash', {user: user});
+            $state.go('u.dash', {userId: user.id});
             return $mdDialog.hide();
         })
         .catch(function (err) {
