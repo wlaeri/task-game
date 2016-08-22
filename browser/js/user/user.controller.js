@@ -1,5 +1,5 @@
-app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, usersGames, $mdDialog) {
-    $scope.user = $stateParams.user;
+app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, usersGames, $mdDialog, user) {
+    $scope.user = user;
 
     $scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
@@ -8,7 +8,7 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
     $scope.menuItems = usersGames.filter(game => game.status !== 'Completed');
 
     // awaiting usage
-    $scope.completedGames = usersGames.filter(game => game.status === 'Completed');
+    // $scope.completedGames = usersGames.filter(game => game.status === 'Completed');
 
     $scope.goToEdit = function(commissionerID, locked) {
         return (commissionerID === $scope.user.id) && !locked;
