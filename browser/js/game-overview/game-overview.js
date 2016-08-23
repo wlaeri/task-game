@@ -14,6 +14,7 @@ app.config(function($stateProvider){
 app.controller('GameOverviewCtrl', function($scope, gameObj){
 
     $scope.game = gameObj;
+    console.log($scope.game.events);
 
 
 })

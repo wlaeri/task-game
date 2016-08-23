@@ -6,7 +6,8 @@ window.app = angular.module('Gamr', [
     'ngAnimate',
     'ngMaterial',
     'ngAria',
-    'ngMaterialDatePicker'
+    'ngMaterialDatePicker',
+    'nvd3'
 ]);
 
 app.config(function ($urlRouterProvider, $locationProvider) {

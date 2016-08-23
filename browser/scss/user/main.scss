@@ -1,6 +1,6 @@
 .md-sidenav-left {
   background-color: #4DD0E1;
-  height: 100%;
+  height: auto !important;
 }
 
 .tool-button{
@@ -40,4 +40,22 @@
   color: #FFFEFA;
   margin: 30px;
   font-size: 22px;
+}
+
+.content-text{
+  color:black;
+}
+
+.content-left{
+  border-left-width:30px;
+}
+
+.content-caption{
+  color:black;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.content-right{
+  text-align: right;
 }

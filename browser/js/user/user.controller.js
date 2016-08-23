@@ -5,6 +5,8 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
                 return AuthService.isAuthenticated();
             };
 
+    $scope.games = usersGames;
+
     $scope.menuItems = usersGames.filter(game => game.status !== 'Completed');
 
     // awaiting usage

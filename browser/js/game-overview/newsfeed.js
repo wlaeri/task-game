@@ -10,6 +10,7 @@ app.directive('tgNewsfeed', function(){
     link: function(scope){
 
       scope.events.forEach(e=> e.userName = scope.users.find(function(user){
+        console.log(e);
         return user.id == e.completedById;
       }).firstName);
 
