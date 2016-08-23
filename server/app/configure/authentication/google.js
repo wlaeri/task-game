@@ -9,14 +9,10 @@ module.exports = function (app, db) {
 
     var googleConfig = app.getValue('env').GOOGLE;
 
-    var googleCredentials = {
-        clientID: googleConfig.clientID,
-        clientSecret: googleConfig.clientSecret,
-        callbackURL: googleConfig.callbackURL
-    };
+    var googleCredentials = require('../../../../../googleCredentials.js')
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
-
+        console.log("Profile Info", profile, profile.name.givenName);
         User.findOne({
                 where: {
                     google_id: profile.id
@@ -27,6 +23,8 @@ module.exports = function (app, db) {
                     return user;
                 } else {
                     return User.create({
+                        firstName: profile.name.givenName,
+                        email: profile.emails[0].value,
                         google_id: profile.id
                     });
                 }
@@ -53,7 +51,7 @@ module.exports = function (app, db) {
     app.get('/auth/google/callback',
         passport.authenticate('google', {failureRedirect: '/login'}),
         function (req, res) {
-            res.redirect('/');
+            res.redirect('/u/'+ req.user.id);
         });
 
 };

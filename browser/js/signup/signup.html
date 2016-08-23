@@ -31,8 +31,14 @@
 
         <md-dialog-actions layout="row">
             <span flex></span>
+            <md-button style="background-color:#00B5CD">
+              <a href="/auth/google"class="google" type="submit" class="md-primary"><span style="color:#FFFEFA">Sign in with Google</span></a>
+            </md-button>
+            <md-button style="background-color:#00B5CD">
+              <a href="/auth/facebook"class="google" type="submit" class="md-primary"><span style="color:#FFFEFA">Facebook</span></a>
+            </md-button>
             <md-button style="background-color:#00B5CD" type="submit" class="md-primary"
-                       ng-class="{'md-raised md-hue-1': (signupForm.$dirty && signupForm.$valid) }"
+                       ng-class="{'md-raised md-hue-1': (signupForm.$valid) }"
                        aria-label="OK">
                 OK
             </md-button>
