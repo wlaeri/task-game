@@ -1,7 +1,15 @@
 const router = new require('express').Router();
 const nodemailer = require('nodemailer');
+const swig = require('swig');
+const path = require('path');
+
 
 router.post('/', function(req,res,next){
+    let friend = req.body.user.firstName + ' ' + req.body.user.lastName;
+    let template = swig.compileFile(path.join(__dirname, '/invite.html'));
+    let output = template({
+        friend: friend
+    });
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -12,9 +20,9 @@ router.post('/', function(req,res,next){
     let mailOptions = {
         from: '"GAMR" <gamr@gamr.life>', // sender address
         to: req.body.emails, // list of receivers
-        subject: req.body.user.firstName + ' ' + req.body.user.lastName + ' wants you to join GAMR', // Subject line
+        subject: friend + ' wants you to join GAMR', // Subject line
         text: 'Gamify everything. Sign up to play GAMR.', // plaintext body
-        html: '<h1>GAMR</h1><br><button>Sign Up</button>' // html body
+        html: output // html body
     };
     return transporter.sendMail(mailOptions, function(error, info){
         if(error){
