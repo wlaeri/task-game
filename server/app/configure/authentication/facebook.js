@@ -8,12 +8,7 @@ module.exports = function (app, db) {
 
     var facebookConfig = app.getValue('env').FACEBOOK;
 
-    var facebookCredentials = {
-        clientID: facebookConfig.clientID,
-        clientSecret: facebookConfig.clientSecret,
-        callbackURL: facebookConfig.callbackURL, 
-        profileFields: ['email']
-    };
+    var facebookCredentials = require('../../../../../facebookCredentials.js')
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
         console.log("Facebook Profile", profile);

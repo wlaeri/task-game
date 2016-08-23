@@ -9,11 +9,7 @@ module.exports = function (app, db) {
 
     var googleConfig = app.getValue('env').GOOGLE;
 
-    var googleCredentials = {
-        clientID: googleConfig.clientID,
-        clientSecret: googleConfig.clientSecret,
-        callbackURL: googleConfig.callbackURL
-    };
+    var googleCredentials = require('../../../../../googleCredentials.js')
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
         console.log("Profile Info", profile, profile.name.givenName);
