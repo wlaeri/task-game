@@ -72,7 +72,10 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
             return task
         });
         GameFactory.createGame($scope.comm)
-        .then(gameId=>$state.go('u.edit', {gameId:gameId}))
+        .then(gameId=> {
+            console.log(gameId);
+            $state.go('u.edit', {gameId:gameId.id})
+        })
     }
 
 })

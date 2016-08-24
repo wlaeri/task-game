@@ -8,6 +8,8 @@ const Game = db.Game;
 const Task = db.Task;
 const Event = db.Event;
 const GamePlayers = db.GamePlayers;
+const email = require('../emails');
+const Cron = db.Cron;
 
 
 router.get('/user/:id/active', function(req, res, next) {
@@ -71,15 +73,17 @@ router.get('/:id', function(req, res, next){
 
 router.post('/', function(req, res, next){
   let invitedPlayers = req.body.players.invited.map(u=>+u.id);
+
   console.log("Invited Players: ", invitedPlayers)
+
   Game.create(req.body.game)
-  .tap(game=>game.setUsers(invitedPlayers, {
+  .tap(game=>game.addUsers(invitedPlayers, {
     status: "Invited"
   }))
-  .tap(game=>game.setUsers(req.body.players.unconfirmed[0].id, {
+  .tap(game=>game.addUsers(req.body.players.unconfirmed[0].id, {
     status: "Unconfirmed"
   }))
-  .then(game=>game.setCommissioner(req.body.commissioner))
+  .tap(game=>game.setCommissioner(req.body.commissioner))
   .tap(game=>{
     let taskProms = req.body.tasks.map(taskObj=>Task.create(taskObj));
     Promise.all(taskProms)
@@ -89,8 +93,10 @@ router.post('/', function(req, res, next){
         })
     });
   })
-  .tap(game=> res.send(game.id))
-  // .then(game=>) add email invites here
+  .tap(game=> res.send({id: game.id}))
+  .then(game=> {
+    email.invitePlayers(game, req.user);
+  })
   .catch(next)
 })
 
@@ -152,9 +158,21 @@ router.put('/', function(req, res, next){
     delete updatedGame.events;
     return game.update(updatedGame)
   })
+  .tap(function(game) {
+    if (game.locked) {
+      Cron.create({
+        startDate: game.start,
+        endDate: game.end
+      })
+      .then(cron => {
+        cron.setGame(game.id);
+      })
+      .catch(next);
+    }
+  })
   .tap(function (updatedGame){
     console.log('*********** This is the updatedGame', updatedGame)
-    res.sendStatus(200);
+    res.send(updatedGame);
   })
   .catch(next);
 })

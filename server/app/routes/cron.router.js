@@ -5,7 +5,6 @@ var router = require('express').Router();
 var nodemailer = require('nodemailer');
 var express = require('express');
 var router = new express.Router();
-var nodemailer = require('nodemailer');
 
 var User = db.User;
 var Game = db.Game;
@@ -13,15 +12,10 @@ var Task = db.Task;
 var Event = db.Event;
 var Cron = db.Cron;
 
-
-
-var User = db.User;
-var Game = db.Game;
-var Task = db.Task;
-var Event = db.Event;
+var email = require('../emails');
 
 var rule = new schedule.RecurrenceRule();
-rule.hour = 2;
+rule.second = 0;
 
 schedule.scheduleJob(rule, function(){
 	console.log("Scheduling jobs")
@@ -34,39 +28,23 @@ schedule.scheduleJob(rule, function(){
 	console.log("formatted Date in router", testDate);
 	Cron.findAll({where: {startDay: testDate}})
 	.then(function(crons){
-		var scheduledCrons = []; 
+		var scheduledCrons = [];
 		console.log("Found crons that match:", crons)
 		for (var j = 0; j<crons.length; j++){
 			scheduledCrons.push(crons[j]);
 		}
-		for(var i = 0; i<scheduledCrons.length; i++){
-		var currentDate = new Date(Date.now()+20000);
+		for(let i = 0; i<scheduledCrons.length; i++){
+		var startDateTime = new Date(scheduledCrons[i].dataValues.startDate);
 		console.log("In the second for loop, scheduling child jobs");
 		console.log("scheduled Cron:", scheduledCrons[i].dataValues);
-		var emailStart = scheduledCrons[i].dataValues.startDate
-		schedule.scheduleJob(currentDate, function(){
-		  let transporter = nodemailer.createTransport({
-        	service: 'Gmail',
-        	auth: {
-            user: 'gamr12344321@gmail.com', // Your email id
-            pass: 'KevinSp@cey!' // Your password
-        	}
-    	  })
-    	  let mailOptions = {
-        	from: '"GAMR" <gamr@gamr.life>', // sender address
-        	to: "John.J.Henry4@gmail.com", // list of receivers
-        	subject: 'New Game', // Subject line
-        	text: 'Your game has begun on ' + emailStart, // plaintext body
-        	html: '<h1>GAMR</h1><br><button>Start Playing</button>' // html body
-    	};
-    	transporter.sendMail(mailOptions, function(error, info){
-        	if(error){
-            	return console.log(error);
-        	}else{
-            	console.log('Message sent: ' + info.response);
-        	}
-    	});
-			console.log("Cron created");
+		schedule.scheduleJob(startDateTime, function(){
+			console.log('Scheduled crons test:',scheduledCrons[i]);
+			scheduledCrons[i].getGame()
+			.then(game => {
+				console.log('&&&&&&*********#######',game);
+				email.startGame(game)
+			})
+			.catch(console.error)
 		})
 	};
 	})

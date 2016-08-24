@@ -21,7 +21,7 @@ app.controller('InviteFriendsCtrl', function($scope, $state, $mdDialog, $http){
     $scope.handleSubmit = function () {
         let emails = [];
         $scope.friends.forEach(friend => emails.push(friend.email));
-        $http.post('/api/invite', {
+        $http.post('/api/email/inviteFriends', {
             emails: emails,
             user: {
                 firstName: $scope.user.firstName,
