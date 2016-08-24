@@ -56,7 +56,13 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
         });
         $scope.comm.locked = true;
         GameFactory.updateGame($scope.comm)
-        .then(gameId=>$state.go('u.game', $scope.comm.id))
+        // .tap(game => {
+        //     GameFactory.confirmGame({
+        //         startDate: game.start,
+        //         endDate: game.end
+        //     })
+        // })
+        .then(gameId=>$state.go('u.game', {gameId: $scope.comm.id}))
     }
 
 })

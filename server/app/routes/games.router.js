@@ -8,7 +8,8 @@ const Game = db.Game;
 const Task = db.Task;
 const Event = db.Event;
 const GamePlayers = db.GamePlayers;
-const email = require('../emails')
+const email = require('../emails');
+const Cron = db.Cron;
 
 
 router.get('/user/:id/completed', function(req, res, next) {
@@ -143,9 +144,21 @@ router.put('/', function(req, res, next){
     delete updatedGame.events;
     return game.update(updatedGame)
   })
+  .tap(function(game) {
+    if (game.locked) {
+      Cron.create({
+        startDate: game.start,
+        endDate: game.end
+      })
+      .then(cron => {
+        cron.setGame(game.id);
+      })
+      .catch(next);
+    }
+  })
   .tap(function (updatedGame){
     console.log('*********** This is the updatedGame', updatedGame)
-    res.sendStatus(200);
+    res.send(updatedGame);
   })
   .catch(next);
 })
