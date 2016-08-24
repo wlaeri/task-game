@@ -13,6 +13,11 @@ app.factory('GameFactory', function($http) {
     .then(newGame => newGame.data);
   }
 
+  GameFactory.updateGame = function(data) {
+    return $http.put('api/games/', data)
+    .then(newGame => newGame.data);
+  }
+
   GameFactory.completeTask = function(data) {
     return $http.post('api/events', data)
     .then(newEvent => newEvent.data);
