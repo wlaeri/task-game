@@ -9,7 +9,7 @@ router.use('/user', require('./users.router'));
 
 router.use('/events', require('./events.router'));
 
-router.use('/invite', require('./invite.router'));
+router.use('/email', require('./email.router'));
 
 // Make sure this is after all of
 // the registered routes!
