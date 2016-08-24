@@ -1,12 +1,14 @@
-var express = require('express');
-var router = new express.Router();
+const express = require('express');
+const router = new express.Router();
 
-var db = require('../../db');
+const db = require('../../db');
 
-var User = db.User;
-var Game = db.Game;
-var Task = db.Task;
-var Event = db.Event;
+const User = db.User;
+const Game = db.Game;
+const Task = db.Task;
+const Event = db.Event;
+const GamePlayers = db.GamePlayers;
+
 
 router.get('/user/:id/completed', function(req, res, next) {
   User.findById(req.params.id)
@@ -46,7 +48,7 @@ router.get('/user/:id', function(req, res, next){
 
 router.get('/:id', function(req, res, next){
   Game.findById(req.params.id, {
-    include: [{model: Task},{model: Event}, {model: User}]
+    include: [{model: Task}, {model: Event}, {model: User}]
             })
   .then(game=> {
     console.log('******** Got to this point');
@@ -77,6 +79,71 @@ router.post('/', function(req, res, next){
   .tap(game=> res.send(game.id))
   // .then(game=>) add email invites here
   .catch(next)
+})
+
+router.put('/', function(req, res, next){
+  console.log(req.body);
+  let invitedPlayers = req.body.users.invited.map(u=>+u.id);
+
+  GamePlayers.findAll({
+    where: {
+      gameId: req.body.id
+    }
+  })
+  .then(function(gamePlayers){
+    let prevInvitedPlayers = gamePlayers.filter(gamePlayer => {
+      return gamePlayer.status === 'Invited';
+    })
+    .map(player => player.id)
+
+    let newInvites = invitedPlayers.filter(player =>{
+      return prevInvitedPlayers.indexOf(player) === -1;
+    })
+
+    return Game.findById(req.body.id, {
+      include: [{
+        model: Task
+      }]
+    })
+    .tap(function (game){
+      game.addUsers(newInvites, {status: 'Invited'})
+    })
+  })
+  .tap(function (game){
+    let newTasks = req.body.tasks.map(task => {
+      if (task.id) {
+        delete task.id;
+      }
+      if (!task.gameId) {
+        task.gameId = game.id
+      }
+      return task;
+    });
+    console.log(newTasks);
+    console.log('Here be the game as it exists prior to adding new tasks', game);
+    Task.destroy({
+      where: {
+        gameId: game.id
+      }
+    })
+    .then(function() {
+      return newTasks.map(task => {
+        Task.create(task);
+      })
+    })
+  })
+  .then(function (game){
+    let updatedGame = Object.assign({}, req.body);
+    delete updatedGame.users;
+    delete updatedGame.tasks;
+    delete updatedGame.events;
+    return game.update(updatedGame)
+  })
+  .tap(function (updatedGame){
+    console.log('*********** This is the updatedGame', updatedGame)
+    res.sendStatus(200);
+  })
+  .catch(next);
 })
 
 module.exports = router;

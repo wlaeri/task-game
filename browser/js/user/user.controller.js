@@ -10,8 +10,8 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
     // awaiting usage
     // $scope.completedGames = usersGames.filter(game => game.status === 'Completed');
 
-    $scope.goToEdit = function(commissionerID, locked) {
-        return (commissionerID === $scope.user.id) && !locked;
+    $scope.goToEdit = function(commissionerId, locked) {
+        return (commissionerId === $scope.user.id) && !locked;
     }
 
     $scope.invite = function() {
