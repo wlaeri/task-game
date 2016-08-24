@@ -5,11 +5,27 @@
 			<md-input-container>
 				New email: <input id="emailField" name="newEmail" ng-model="newEmail" required>
 			</md-input-container>
-			<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">
+			<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" ng-click="showConfirm()" value="Submit">
+		</form>
+	<br>
+	<md-button ng-click="openUsernameChange()">Set or Change Username</md-button>
+
+		<form ng-show="displayUsernameChange" ng-submit="updateUsername()" ng-model="username">
+			<p style="font-size:10px; align:center">Must be at least 7 characters</p>
+			<p style="color: green; float:right" ng-show="usernameAvailable&&usernameLength">Username Available</p>
+			<p style="color: red; float:right" ng-show="usernameAvailable&&!usernameLength">Username needs to be 7 characters</p>
+			<p style="color: red; float:right" ng-show="!usernameAvailable&&usernameLength">Username taken</p>
+			<md-input-container>
+				New Username: <input id="UsernameField" name="password1" ng-model="username.username" onkeyup="usernameTest()"required>
+			</md-input-container>
+			<br>
+		<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">	
 		</form>
 	<br>
 	<md-button ng-click="openPasswordChange()">Set or Change Password</md-button>
+
 		<form ng-show="displayPasswordChange" ng-submit="updatePassword()" ng-model="password">
+			<p style="font-size:10px; align:center">Must be at least 7 characters</p>
 			<p style="color: green; float:right" ng-show="passwordsMatch">Matching!</p>
 			<p style="color: red; float:right" ng-hide="passwordsMatch">Not Matching</p>
 			<md-input-container>

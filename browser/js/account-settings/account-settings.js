@@ -2,29 +2,135 @@ app.config(function($stateProvider){
   $stateProvider.state('u.account', {
     url: '/user/accountSettings/:id',
     templateUrl: 'js/account-settings/account-settings.html',
-    controller: 'AccountSettingsCtrl'
+    controller: 'AccountSettingsCtrl', 
+    resolve: { allUsernames: function(UserFactory){
+      return UserFactory.getAllUsernames().then(usernames=>usernames)
+    }
+    }
   });
 });
 
-app.controller('AccountSettingsCtrl', function($scope, UserFactory){
+app.controller('AccountSettingsCtrl', function($scope, $mdDialog, UserFactory, allUsernames){
+
+
+$scope.allUsernames = allUsernames;
+
+  $scope.validateEmail = function (email) 
+{
+    var re = /\S+@\S+\.\S+/;
+    console.log(re.test(email));
+    return re.test(email);
+};
+
+$scope.showConfirmEmail = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('')
+          .textContent('Your email has been successfully updated')
+          .ariaLabel('Lucky day')
+          .ok('OK');
+    $mdDialog.show(confirm)
+  };
+
+$scope.showConfirmUsername = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('')
+          .textContent('Your username has been successfully updated')
+          .ariaLabel('Lucky day')
+          .ok('OK');
+    $mdDialog.show(confirm)
+  };
+
+  $scope.showConfirmPassword = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('')
+          .textContent('Your password has been successfully updated')
+          .ariaLabel('Lucky day')
+          .ok('OK');
+    $mdDialog.show(confirm)
+  };
+
+  $scope.showRejectEmail = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('')
+          .textContent('Invalid Email. Please try again')
+          .ariaLabel('Nah')
+          .ok('OK');
+    $mdDialog.show(confirm)
+  };
+
+  $scope.showRejectPassword = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('')
+          .textContent('Your passwords do not match. Please retype your new password')
+          .ariaLabel('Nah')
+          .ok('OK');
+    $mdDialog.show(confirm)
+  };
+
+  $scope.showRejectPassword = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('')
+          .textContent('Your username is taken or does not meet our requirements. Please try again')
+          .ariaLabel('Nah')
+          .ok('OK');
+    $mdDialog.show(confirm)
+  };
 
   $scope.updatePassword = function(){
-  	UserFactory.updateUser($scope.user.id, {password: $scope.password1});
+    if (!$scope.passwordsMatch){
+      $scope.showRejectPassword()
+    }
+    else{
+      UserFactory.updateUser($scope.user.id, {password: $scope.password.password1}).then(function(newUser){
+        $scope.showConfirmPassword();
+      });
+    }
 }
+
+$scope.updateUsername = function(){
+  if(!$scope.usernamePasses){
+    $scope.showRejectPassword()
+  }
+  else {
+    UserFactory.updateUser($scope.user.id, {username: $scope.username.username}).then(function(newUser){
+        $scope.showConfirmUsername();
+      });
+  }
+
+}
+
+  $scope.updateEmail = function(){
+    var test = $scope.validateEmail($scope.newEmail);
+    console.log(test);
+    if(!test){
+      $scope.showRejectEmail();
+    }
+    else{
+        UserFactory.updateUser($scope.user.id, {email: $scope.newEmail})
+        .then(function(user){
+        $scope.showConfirmEmail();
+        })
+    }
+  }
 
   $scope.newEmail = '';
 
-  $scope.updateEmail = function(){
-    console.log($scope.newEmail);
-    UserFactory.updateUser($scope.user.id, {email: $scope.newEmail})
-  }
-
   $scope.displayEmailChange = false;
   $scope.displayPasswordChange = false; 
+  $scope.displayUsernameChange = false;
 
   $scope.password = {password1: '', password2: ''};
 
-  $scope.passwordsMatch = false
+  $scope.passwordsMatch = false;
+  $scope.usernameAvailable = false;
+  $scope.usernameLength = false;
+  $scope.username = {};
 
   $scope.matching = function(){
   //   var password1 = document.getElementById("passwordField1").value;
@@ -45,16 +151,39 @@ app.controller('AccountSettingsCtrl', function($scope, UserFactory){
       $scope.passwordsMatch = false;
     }
   }
-
+$scope.usernameTest = function(){
+  console.log("Username Test has been run", $scope.allUsernames);
+  if($scope.allUsernames.indexOf($scope.username.username) !== -1){
+    $scope.usernameAvailable = false
+  }
+  else if ($scope.username.username.length < 7){
+    $scope.usernameAvailable = true;
+    $scope.usernameLength = false;
+  }
+  else{
+    $scope.usernameAvailable = true;
+    $scope.usernameLength = true;
+  }
+}
   $scope.openPasswordChange = function(){
   	$scope.displayPasswordChange = !$scope.displayPasswordChange;
   }
   $scope.openEmailChange = function(){
     $scope.displayEmailChange = !$scope.displayEmailChange;
   }
+  $scope.openUsernameChange = function(){
+    $scope.displayUsernameChange = !$scope.displayUsernameChange;
+  }
 
-  $( "input" ).on('keyup', function() {
+  $( "#passwordField1" ).on('keyup', function() {
   $scope.matching();
-});
+  });
+  $( "#passwordField2" ).on('keyup', function() {
+  $scope.matching();
+  });
+  $( "#UsernameField" ).on('keyup', function() {
+  $scope.usernameTest();
+  });
+
 
 });
