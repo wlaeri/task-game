@@ -9,7 +9,7 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
         $scope.comm.tasks.push({
             elemId:'task'+newTaskNum,
             name: '',
-            decription: '',
+            description: '',
             points: ''
         });
     };
@@ -37,13 +37,16 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
     }
 
     $scope.update = function(){
+        // we need to make sure we are not sending back game status either
+        //perhap hit the api route with a game id
         $scope.comm.tasks = $scope.comm.tasks.map(task => {
             delete task.elemId;
             return task
         });
+        delete $scope.comm.status;
         console.log($scope.comm)
         GameFactory.updateGame($scope.comm)
-        .then(gameId=>$state.go('u.edit', {gameId:gameId.gameId}))
+        .then(gameId=>$state.go('u.edit', $scope.comm.id))
     }
 
     $scope.lock = function(){
@@ -53,7 +56,7 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
         });
         $scope.comm.locked = true;
         GameFactory.updateGame($scope.comm)
-        .then(gameId=>$state.go('u.game', {gameId:gameId}))
+        .then(gameId=>$state.go('u.game', $scope.comm.id))
     }
 
 })

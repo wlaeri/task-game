@@ -100,14 +100,37 @@ router.put('/', function(req, res, next){
       return prevInvitedPlayers.indexOf(player) === -1;
     })
 
-    return Game.findById(req.body.id)
+    return Game.findById(req.body.id, {
+      include: [{
+        model: Task
+      }]
+    })
     .tap(function (game){
       game.addUsers(newInvites, {status: 'Invited'})
     })
   })
   .tap(function (game){
-    let taskIds = req.body.tasks.map(task => task.id);
-    game.setTasks(taskIds);
+    let newTasks = req.body.tasks.map(task => {
+      if (task.id) {
+        delete task.id;
+      }
+      if (!task.gameId) {
+        task.gameId = game.id
+      }
+      return task;
+    });
+    console.log(newTasks);
+    console.log('Here be the game as it exists prior to adding new tasks', game);
+    Task.destroy({
+      where: {
+        gameId: game.id
+      }
+    })
+    .then(function() {
+      return newTasks.map(task => {
+        Task.create(task);
+      })
+    })
   })
   .then(function (game){
     let updatedGame = Object.assign({}, req.body);
@@ -116,10 +139,11 @@ router.put('/', function(req, res, next){
     delete updatedGame.events;
     return game.update(updatedGame)
   })
-  .then(function (updatedGame){
-    console.log(updatedGame)
-    res.send({id: updatedGame.id});
+  .tap(function (updatedGame){
+    console.log('*********** This is the updatedGame', updatedGame)
+    res.sendStatus(200);
   })
+  .catch(next);
 })
 
 module.exports = router;
