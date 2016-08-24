@@ -59,14 +59,15 @@ router.get('/:id', function(req, res, next){
 
 router.post('/', function(req, res, next){
   let invitedPlayers = req.body.players.invited.map(u=>+u.id);
+  console.log(invitedPlayers);
   Game.create(req.body.game)
-  .tap(game=>game.setUsers(invitedPlayers, {
+  .tap(game=>game.addUsers(invitedPlayers, {
     status: "Invited"
   }))
-  .tap(game=>game.setUsers(req.body.players.unconfirmed[0].id, {
+  .tap(game=>game.addUsers(req.body.players.unconfirmed[0].id, {
     status: "Unconfirmed"
   }))
-  .then(game=>game.setCommissioner(req.body.commissioner))
+  .tap(game=>game.setCommissioner(req.body.commissioner))
   .tap(game=>{
     let taskProms = req.body.tasks.map(taskObj=>Task.create(taskObj));
     Promise.all(taskProms)
@@ -76,7 +77,7 @@ router.post('/', function(req, res, next){
         })
     });
   })
-  .tap(game=> res.send(game.id))
+  .then(game=> res.send({id: game.id}))
   // .then(game=>) add email invites here
   .catch(next)
 })
