@@ -1,7 +1,24 @@
-<div>
-
-<h3>Social Media Integrations</h3>
-<h3>Payment Options</h3>
-<md-button>Email</md-button>
-<md-button>Password</md-button>
+<div style="color:#00B5CD">
+	<h4>Hi {{user.firstName}}. Update your account settings here </h4>
+	<md-button ng-click="openEmailChange()">Update Email</md-button>
+		<form ng-show="displayEmailChange" ng-submit="updateEmail()">
+			<md-input-container>
+				New email: <input id="emailField" name="newEmail" ng-model="newEmail" required>
+			</md-input-container>
+			<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">
+		</form>
+	<br>
+	<md-button ng-click="openPasswordChange()">Set or Change Password</md-button>
+		<form ng-show="displayPasswordChange" ng-submit="updatePassword()" ng-model="password">
+			<p style="color: green; float:right" ng-show="passwordsMatch">Matching!</p>
+			<p style="color: red; float:right" ng-hide="passwordsMatch">Not Matching</p>
+			<md-input-container>
+				New password: <input id="passwordField1" name="password1" ng-model="password.password1" onkeyup="matching()"required>
+			</md-input-container>
+			<md-input-container>
+				Retype password: <input id="passwordField2" name="password2" ng-model="password.password2" onkeyup="matching()"required>
+			</md-input-container>
+			<br>
+		<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">	
+		</form>
 </div>
