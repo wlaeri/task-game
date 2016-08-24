@@ -2,7 +2,7 @@
 <!-- <md-slider ng-model="gameType" -->
 <div class="row" layout="row">
     <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events"/>
-    <div class="col s9">
+    <div class="col s12">
         <table class='table responsive' style="width:80%; display:inline-block">
             <caption style="color:black;font-size:24px; font-weight:bold">{{game.name}}</caption>
             <col width="3%">
@@ -18,9 +18,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="task in game.tasks" style="color:black" ui-sref="u.task({task: task})">
+                <tr ng-repeat="task in game.tasks" class="content-text" ui-sref="u.task({task: task})">
                     <td></td>
-                    <td style="border-left-width:30px">{{ task.name }}</td>
+                    <td class="content-left">{{ task.name }}</td>
                     <td>{{task.description}}</span>
                     </td>
                     <td>{{task.points}}</td>

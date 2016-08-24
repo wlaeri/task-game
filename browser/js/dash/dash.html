@@ -1,1 +1,18 @@
-<h1> I am the dash. Fear me.</h1>
+<div>
+    <h1>{{user.username +"'s games"}}</h1>
+    <!-- <h4 style="color:black">{{data3}}</h4> -->
+        <md-content class="md-padding" layout="row">
+   <div>
+            <md-card ng-repeat="game in gameData" >
+                <md-card-title>
+                    <md-card-title-text class="content-caption">{{game.name}}</md-card-title-text>
+                </md-card-title>
+                <md-card-content layout="row">
+                <div style="width:50%"><nvd3 options="pieChartOptions" data="game.pieChartData"style="height:45vh"></nvd3></div>
+               <div style="width:50%"><nvd3 options="barChartOptions" data="game.barChartData"></nvd3></div>
+                </md-card-content>
+            </md-card>
+    </div>
+        </md-content>
+</div>
+

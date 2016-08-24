@@ -1,5 +1,5 @@
 <table class="responsive" flex class='table' style="width:75%; align-self:center; display:inline-block">
-        <caption style="color:black;font-size:24px; font-weight:bold">Newsfeed</caption>
+        <caption class="content-caption">Newsfeed</caption>
         <col width="3%">
         <col width="25%">
         <col width="5%">
@@ -20,11 +20,11 @@
       </tr>
         </thead>
         <tbody>
-            <tr flex ng-repeat="event in events" style="color:black">
+            <tr flex ng-repeat="event in events" class="content-text">
                 <td></td>
                 <td>{{event.createdAt}}</td>
                 <td></td>
-                <td style="border-left-width:30px">{{ event.userName }}</td>
+                <td class="content-left">{{ event.userName }}</td>
                 <td></td>
                 <td>{{event.task}}</td>
                 <td></td>
