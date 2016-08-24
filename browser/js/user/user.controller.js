@@ -34,6 +34,7 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
         });
     }
     $scope.dashBoard = function(){
+        console.log("Going to dash...");
         $state.go('u.dash')
     }
 })
