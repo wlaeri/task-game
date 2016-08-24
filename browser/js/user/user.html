@@ -1,7 +1,7 @@
-<div layout="row">
-<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left" style="background-color:#4DD0E1; height:100vh" md-is-locked-open="$mdMedia('gt-sm')">
-        <div style="align-self:center">
-            <svg style="align-self:center" class="center-align" version="1.0" xmlns="http://www.w3.org/2000/svg" width="108pt" height="108pt" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
+<div layout="row" flex style="height: 100%">
+<md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2" md-component-id="left"md-is-locked-open="$mdMedia('gt-sm')">
+        <div class="logo">
+            <svg class="center-align logo" version="1.0" xmlns="http://www.w3.org/2000/svg" width="108pt" height="108pt" viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet">
                 <metadata>
                 </metadata>
                 <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#FFFEFA" stroke="none">
@@ -13,28 +13,30 @@
                 </g>
             </svg>
         </div>
-        <div style="align-self:center; color:#FFFEFA; font-size:40px; font-weight:bold">GAMR</div>
-        <md-button class="md-raised" align="center" style="background-color:#00B5CD;color:#FFFEFA; margin:30px; font-size:22px" ui-sref="u.create">Create Game</md-button>
-        <div style="color:#FFFEFA;font-size:20px;" align="center">CURRENT GAMES</div>
+        <div id="GAMRtitle">GAMR</div>
+        <md-button class="md-raised" id="new-game" align="center" ui-sref="u.create">Create Game</md-button>
+        <md-content flex role="navigation" style="background-color: #4DD0E1">
+        <div class="sidenav-title" align="center">CURRENT GAMES</div>
         <md-list-item ng-repeat="item in menuItems">
-            <h4 class="truncate" style="font-size:18px;color:#FFFEFA;" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.edit({gameId: item.id})' : 'u.game({gameId: item.id})'}}">{{item.name}}</h4>
+            <h4 class="truncate current-game" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.create({gameId: item.id})' : 'u.game({gameId: item.id})'}}">{{item.name}}</h4>
         </md-list-item>
         </md-list>
-        <md-button style="color:#FFFEFA; font-size:20px;margin: 10px" align="center" ui-sref="u.completed({user: user})">COMPLETED GAMES</md-button>
-        <md-button style="color:#FFFEFA; font-size:20px; margin:10px" align="center" ui-sref="u.account">ACCOUNT SETTINGS</md-button>
+        <md-button class="sidenav-title md-accent" align="center" ui-sref="u.completed({user: user})">COMPLETED GAMES</md-button>
+        <md-button class="sidenav-title md-accent" align="center" ui-sref="u.account">ACCOUNT SETTINGS</md-button>
+        </md-content>
     </md-sidenav>
     <div layout="column" layout-fill>
-        <header style="background-color:#FFFEFA;">
-            <md-toolbar layout="row" layout-align="end" style="background-color:#00B5CD">
+        <header class="md-accent">
+            <md-toolbar layout="row" layout-align="end" class="tool-bar">
                 <ul>
-                <md-button style="font-size:20px; color:#FFFEFA" ng-click="dashBoard()">Dashboard</md-button>
-                <md-button style="font-size:20px; color:#FFFEFA" ng-click="invite()">Invite Friends</md-button>
-                <md-button style="align-self:right; display:inline; font-size:20px; color:#FFFEFA;" ng-click="logout()" ng-show="isLoggedIn()">Logout</md-button>
+                <md-button class="md-accent tool-button" ng-click="dashBoard()">Dashboard</md-button>
+                <md-button class="md-accent tool-button" ng-click="invite()">Invite Friends</md-button>
+                <md-button class="md-accent tool-button" ng-show="isLoggedIn()">Logout</md-button>
                 </ul>
             </md-toolbar>
         </header>
         <main class="md-padding" layout="row" flex>
-            <md-content flex id="content" style="color:#FFFEFA">
+            <md-content flex id="content" class="md-accent">
                 <div class="fade-view" ui-view>
                 </div>
             </md-content>
