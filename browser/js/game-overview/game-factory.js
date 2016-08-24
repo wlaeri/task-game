@@ -23,6 +23,11 @@ app.factory('GameFactory', function($http) {
     .then(games=>games.data);
   }
 
+  GameFactory.getActiveGames = function(id) {
+      return $http.get('api/games/user/' + id + '/active')
+      .then(games => games.data);
+    }
+
   GameFactory.getCompletedGames = function(id) {
     return $http.get('api/games/user/' + id + '/completed')
     .then(games => games.data);

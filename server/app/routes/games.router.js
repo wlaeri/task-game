@@ -8,6 +8,20 @@ var Game = db.Game;
 var Task = db.Task;
 var Event = db.Event;
 
+router.get('/user/:id/active', function(req, res, next) {
+  User.findById(req.params.id)
+  .then(user => {
+    return user.getGames({include: [{model: Task},{model: Event}, {model: User}]});
+  })
+  .then(games => {
+    return games.filter(game => {
+      return game.status === 'Active';
+    })})
+  .then(games => res.send(games))
+  .catch(next);
+});
+
+
 router.get('/user/:id/completed', function(req, res, next) {
   User.findById(req.params.id)
   .then(user => {
@@ -20,7 +34,8 @@ router.get('/user/:id/completed', function(req, res, next) {
       return {id: game.id, name: game.name, start: game.start, end: game.end};
     })
   })
-  .then(games => res.send(games));
+  .then(games => res.send(games))
+  .catch(next);
 })
 
 router.get('/user/:id', function(req, res, next){
@@ -48,15 +63,13 @@ router.get('/:id', function(req, res, next){
   Game.findById(req.params.id, {
     include: [{model: Task},{model: Event}, {model: User}]
             })
-  .then(game=> {
-    console.log('******** Got to this point');
-    res.send(game)
-  })
+  .then(game=> res.send(game))
   .catch(next);
 })
 
 router.post('/', function(req, res, next){
   let invitedPlayers = req.body.players.invited.map(u=>+u.id);
+  console.log("Invited Players: ", invitedPlayers)
   Game.create(req.body.game)
   .tap(game=>game.setUsers(invitedPlayers, {
     status: "Invited"
