@@ -10,9 +10,9 @@
         <path d="M257 1925 c-4 -17 -9 -70 -13 -120 -41 -578 656 -1106 1676 -1269 265 -42 371 -50 680 -50 309 0 415 8 680 50 1075 172 1781 745 1667 1354 l-12 65 -28 -72 c-40 -102 -137 -244 -231 -337 -345 -344 -923 -573 -1648 -652 -211 -24 -647 -24 -856 0 -679 75 -1210 271 -1576 583 -141 121 -255 280 -323 453 l-10 25 -6 -30z" />
       </g>
     </svg>
-    <h3 style="margin-left: 10px; color:#FFFEFA"class="navbar title">GAMR</h3>
+    <h3 style="margin-left: 10px; text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.60); color: #FFFEFA"class="navbar title">GAMR</h3>
     <span flex></span>
-    <md-button class="md-primary" style="background-color:#00B5CD; color:#FFFEFA; font-size: 20px; margin-right: 10%" ng-click="login()"> Log In </md-button>
+    <md-button class="md-primary" style="background-color:#00B5CD; color:#FFFEFA; font-size: 20px; margin-right: 10%; text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.60)" ng-click="login()"> Log In </md-button>
   </md-toolbar>
   <!-- <script>
     $(document).ready(function() {
@@ -26,16 +26,21 @@
     <a class="carousel-item" href="#three!"><img src="background3.jpg"></a>
     <div class="carousel-fixed-item center"></div> -->
   <div style="position:relative;height:70vh">
-    <div id="main-image">
-      <div style="display:block; margin-left: auto; margin-right:auto;margin-top: 10vh" class="md-primary md-raised">
+    <div class="fullscreen-bg">
+      <video loop muted autoplay poster="Super_Cleaners-C5H7WDZX7oQ.jpg" class="fullscreen-bg__video center">
+        <source src="edit.mp4" type="video/mp4">
+        <source src="edit.ogv" type="video/ogg">
+      </video>
+
+      <div style="display:block; margin-left: auto; margin-right:auto;margin-top: 20vh; position:absolute; width: 100%; text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.90);" class="md-primary md-raised">
         <h1 class="header center teal-text text-lighten-2" style="color: #FFFEFA !important">Gamify everything.</h1>
       </div>
 
-      <div style="display:block; margin-left: auto; margin-right:auto; margin-top: 40px" class="md-primary md-raised">
-        <h5 class="header center light" style="color: #FFFEFA !important">A universal gamification app for everyday life. </h5>
+      <div style="display:block; margin-left: auto; margin-right:auto; margin-top: 50vh; position:relative; width: 100%; text-shadow: 0px 2px 3px rgba(0, 0, 0, 1); font-size: 30px;" class="md-primary md-raised">
+        <h5 class="header center light" style="color: #FFFEFA !important;">A universal gamification app for everyday life. </h5>
       </div>
 
-      <md-button style="display:block; margin-left: auto; margin-right:auto; margin-top: 10%; font-size: 20px; background-color:#00B5CD;min-height:60px; min-width:120px; color:#FFFEFA" class="md-raised" ng-click="signup()"> Sign Up </md-button>
+      <md-button style="display:block; margin-left: auto; margin-right:auto; margin-top: 10vh; font-size: 20px; background-color:#00B5CD;min-height:60px; min-width:120px; text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.60); color:#FFFEFA" class="md-primary md-raised center" ng-click="signup()"> Sign Up </md-button>
     </div>
   </div>
 
@@ -43,7 +48,7 @@
     <div style="min-height:60px; min-width:100%; background-color:#00B5CD">
     </div>
     <div style="min-height:120px; min-height:25vh; min-width:100%; background-color:#00D4EB">
-      <div class="center" style="color:#FFFEFA; padding-top:60px"> © 2016 GAMR
+      <div class="center" style="color:#FFFEFA; padding-top:30px; text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.90)"> © 2016 GAMR
       <div>
     </div>
   </footer>
