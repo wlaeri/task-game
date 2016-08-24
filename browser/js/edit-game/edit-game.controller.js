@@ -43,7 +43,7 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
         });
         console.log($scope.comm)
         GameFactory.updateGame($scope.comm)
-        .then(gameId=>$state.go('u.edit', {gameId:gameId}))
+        .then(gameId=>$state.go('u.edit', {gameId:gameId.gameId}))
     }
 
     $scope.lock = function(){

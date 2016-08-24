@@ -1,12 +1,14 @@
-var express = require('express');
-var router = new express.Router();
+const express = require('express');
+const router = new express.Router();
 
-var db = require('../../db');
+const db = require('../../db');
 
-var User = db.User;
-var Game = db.Game;
-var Task = db.Task;
-var Event = db.Event;
+const User = db.User;
+const Game = db.Game;
+const Task = db.Task;
+const Event = db.Event;
+const GamePlayers = db.GamePlayers;
+
 
 router.get('/user/:id/completed', function(req, res, next) {
   User.findById(req.params.id)
@@ -80,33 +82,44 @@ router.post('/', function(req, res, next){
 })
 
 router.put('/', function(req, res, next){
-  let invitedPlayers = req.body.players.invited.map(u=>+u.id);
+  console.log(req.body);
+  let invitedPlayers = req.body.users.invited.map(u=>+u.id);
 
   GamePlayers.findAll({
     where: {
-      gameId: req.body.game.id
+      gameId: req.body.id
     }
   })
-  Game.create(req.body.game)
-  .tap(game=>game.setUsers(invitedPlayers, {
-    status: "Invited"
-  }))
-  .tap(game=>game.setUsers(req.body.players.unconfirmed[0].id, {
-    status: "Unconfirmed"
-  }))
-  .then(game=>game.setCommissioner(req.body.commissioner))
-  .tap(game=>{
-    let taskProms = req.body.tasks.map(taskObj=>Task.create(taskObj));
-    Promise.all(taskProms)
-    .then(function(tasks){
-        return tasks.map(function(task) {
-          return task.setGame(game.id);
-        })
-    });
+  .then(function(gamePlayers){
+    let prevInvitedPlayers = gamePlayers.filter(gamePlayer => {
+      return gamePlayer.status === 'Invited';
+    })
+    .map(player => player.id)
+
+    let newInvites = invitedPlayers.filter(player =>{
+      return prevInvitedPlayers.indexOf(player) === -1;
+    })
+
+    return Game.findById(req.body.id)
+    .tap(function (game){
+      game.addUsers(newInvites, {status: 'Invited'})
+    })
   })
-  .tap(game=> res.send(game.id))
-  // .then(game=>) add email invites here
-  .catch(next)
+  .tap(function (game){
+    let taskIds = req.body.tasks.map(task => task.id);
+    game.setTasks(taskIds);
+  })
+  .then(function (game){
+    let updatedGame = Object.assign({}, req.body);
+    delete updatedGame.users;
+    delete updatedGame.tasks;
+    delete updatedGame.events;
+    return game.update(updatedGame)
+  })
+  .then(function (updatedGame){
+    console.log(updatedGame)
+    res.send({id: updatedGame.id});
+  })
 })
 
 module.exports = router;
