@@ -1,5 +1,5 @@
 {
-  "name": "GAMR",
+  "name": "gamr",
   "description": "Universal gamification app.",
   "main": "server/start.js",
   "authors": [
