@@ -1,0 +1,22 @@
+{
+  "name": "GAMR",
+  "description": "Universal gamification app.",
+  "main": "server/start.js",
+  "authors": [
+    "Will Laeri <wlaeri@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wlaeri/task-game",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material-datetimepicker": "^1.4.0",
+    "angular-nvd3": "^1.0.9"
+  }
+}
