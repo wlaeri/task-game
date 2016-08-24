@@ -12,42 +12,42 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
 
     };
 
-    $scope.friends = [{
-        id: 'friend1',
-        email: $scope.user.email
-    }];
+    // $scope.friends = [{
+    //     id: 'friend1',
+    //     email: $scope.user.email
+    // }];
 
     $scope.comm.tasks = [{
-        id: 'task1',
+        elemId: 'task0',
         name: '',
         decription: '',
         points: ''
     }];
 
     $scope.addTask = function() {
-        let newTaskNum = $scope.comm.tasks.length + 1;
+        let newTaskNum = $scope.comm.tasks.length;
         $scope.comm.tasks.push({
-            id:'task'+newTaskNum,
+            elemId:'task'+newTaskNum,
             name: '',
             decription: '',
             points: ''
         });
     };
 
-    $scope.removeTask = function(taskId) {
-        $scope.comm.tasks = $scope.comm.tasks.filter(e=>e.id !== taskId);
+    $scope.removeTask = function(elemId) {
+        $scope.comm.tasks = $scope.comm.tasks.filter(e=>e.elemId !== elemId);
     };
 
-    $scope.addFriends = function() {
-        // $state.go('u.create.friends', {
-        //     friends: $scope.players
-        // });
-        $mdDialog.show({
-            templateUrl: 'js/add-friends/add-friends.html',
-            controller: 'AddFriendsCtrl',
-            scope: $scope
-        });
-    }
+    // $scope.addFriends = function() {
+    //     // $state.go('u.create.friends', {
+    //     //     friends: $scope.players
+    //     // });
+    //     $mdDialog.show({
+    //         templateUrl: 'js/add-friends/add-friends.html',
+    //         controller: 'AddFriendsCtrl',
+    //         scope: $scope
+    //     });
+    // }
     $scope.getMatches = function(text) {
         console.log(text);
         UserFactory.autocomplete(text)
@@ -67,8 +67,12 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
     }
 
     $scope.create = function(){
+        $scope.comm.tasks = $scope.comm.tasks.map(task => {
+            delete task.elemId;
+            return task
+        });
         GameFactory.createGame($scope.comm)
-        .then(gameId=>$state.go('u.game', {gameId:gameId}))
+        .then(gameId=>$state.go('u.edit', {gameId:gameId}))
     }
 
 })
