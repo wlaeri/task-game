@@ -8,6 +8,7 @@ const Game = db.Game;
 const Task = db.Task;
 const Event = db.Event;
 const GamePlayers = db.GamePlayers;
+const email = require('../emails')
 
 
 router.get('/user/:id/completed', function(req, res, next) {
@@ -77,8 +78,10 @@ router.post('/', function(req, res, next){
         })
     });
   })
-  .then(game=> res.send({id: game.id}))
-  // .then(game=>) add email invites here
+  .tap(game=> res.send({id: game.id}))
+  .then(game=> {
+    email.invitePlayers(game, req.user);
+  })
   .catch(next)
 })
 

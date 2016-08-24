@@ -30,12 +30,13 @@ function inviteFriends (sender, receivers){
     });
 }
 
-function invitePlayers (gameObj){
+function invitePlayers (gameObj, commissioner){
     let gameName = gameObj.name;
-    let commissioner = gameObj.users.commissioner;
-    let template = swig.compileFile(path.join(__dirname, '/gameInvite.html'));
+    commissioner = commissioner.firstName + ' ' + commissioner.lastName;
+    let template = swig.compileFile(path.join(__dirname, '/invitePlayers.html'));
     let output = template({
-        game: gameObj
+        game: gameObj,
+        commissioner: commissioner
     });
     let transporter = nodemailer.createTransport({
         service: 'Gmail',
