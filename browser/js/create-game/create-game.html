@@ -91,7 +91,7 @@
                     <div class="col s3">
                     <md-autocomplete style="color:black" md-selected-item="selectedItem" md-search-text="searchText" md-items="item in foundMatches" md-item-text="item.username" md-search-text-change="searchText.length>2 ? getMatches(searchText):null" md-selected-item-change="addPlayer(selectedItem); searchText='';">
                       <md-item-template>
-                        <span md-highlight-text="searchText">{{item.username}}</span>
+                        <span style="color:black">{{item.username}}</span>
                       </md-item-template>
                       <md-not-found>
                         No matches found.

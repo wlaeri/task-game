@@ -31,12 +31,12 @@
                 <ul>
                 <md-button class="md-accent tool-button" ng-click="dashBoard()">Dashboard</md-button>
                 <md-button class="md-accent tool-button" ng-click="invite()">Invite Friends</md-button>
-                <md-button class="md-accent tool-button" ng-show="isLoggedIn()">Logout</md-button>
+                <md-button class="md-accent tool-button" ng-show="isLoggedIn()" ng-click="logout()">Logout</md-button>
                 </ul>
             </md-toolbar>
         </header>
         <main class="md-padding" layout="row" flex>
-            <md-content flex id="content" class="md-accent">
+            <md-content flex id="content" style="overflow:hidden" class="md-accent">
                 <div class="fade-view" ui-view>
                 </div>
             </md-content>
