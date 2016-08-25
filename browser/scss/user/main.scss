@@ -31,8 +31,10 @@
 }
 
 .current-game{
+  width: 100%;
   font-size: 18px;
-  color: #FFFEFA
+  color: #FFFEFA !important;
+  text-align: left !important;
 }
 
 #new-game{
