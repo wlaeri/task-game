@@ -20,7 +20,7 @@
         <md-list>
         <div ng-repeat="item in menuItems">
             <md-list-item>
-                <a md-ink-ripple="#F0FDFF" class="md-button active current-game" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.create({gameId: item.id})' : 'u.game({gameId: item.id})'}}"><div>{{item.name}}</div></a>
+                <a md-ink-ripple="#F0FDFF" class="md-button active current-game" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.edit({gameId: item.id})' : 'u.game({gameId: item.id})'}}"><div>{{item.name}}</div></a>
             </md-list-item>
         </div>
         </md-list>
