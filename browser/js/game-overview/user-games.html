@@ -1,10 +1,25 @@
 <div>
 <!-- <md-slider ng-model="gameType" -->
 <div class="row" layout="row">
-    <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events"/>
-    <div class="col s12">
-        <table class='table responsive' style="width:80%; display:inline-block">
-            <caption style="color:black;font-size:24px; font-weight:bold">{{game.name}}</caption>
+    <md-container flex="100">
+    <md-card>
+        <md-card-header>
+            <md-card-header-text layout-align="center center" class="md-title">{{ game.name }}</md-card-header-text>
+        </md-card-header>
+    <md-card-content>
+    </md-card-content>
+    </md-card>
+    </md-container>
+</div>
+<div class="row" layout="row">
+    <md-container flex="80">
+        <md-content>
+        <md-card>
+        <md-card-header>
+            <md-card-header-text layout-align="center center" class="md-title">Tasks</md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+        <table>
             <col width="3%">
             <col width="30%">
             <col width="60%">
@@ -27,10 +42,33 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+        </md-card-content>
+        </md-card>
+        </md-content>
+    </md-container>
+    <md-container flex="20">
+    <md-card style="position:fixed">
+    <md-card-header>
+        <md-card-header-text layout-align="center center" class="md-title">Leaderboard</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
+    <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events"/>
+    </md-card-content>
+    </md-card>
+    </md-container>
 </div>
-<md-divider></md-divider>
-<md-container layout="row" layout-align="center center">
+<div class="row" layout="row">
+<md-container layout="row" layout-align="center center" flex="80">
+    <md-content>
+    <md-card>
+    <md-card-header>
+        <md-card-header-text layout-align="center center" class="md-title">Newsfeed</md-card-header-text>
+    </md-card-header>
+    <md-card-content>
     <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events"/>
+    </md-card-content>
+    </md-card>
+    </md-content>
 </md-container>
+</div>
 </div>

@@ -104,6 +104,8 @@ router.put('/', function(req, res, next){
   console.log(req.body);
   let invitedPlayers = req.body.users.invited.map(u=>+u.id);
 
+  // filter players by status in the where
+
   GamePlayers.findAll({
     where: {
       gameId: req.body.id
@@ -140,6 +142,10 @@ router.put('/', function(req, res, next){
     });
     console.log(newTasks);
     console.log('Here be the game as it exists prior to adding new tasks', game);
+
+    // errors can fall through the cracks here
+    // move to class or instance methods on model
+
     Task.destroy({
       where: {
         gameId: game.id
