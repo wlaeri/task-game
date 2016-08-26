@@ -1,29 +1,92 @@
-<div style="line-height=20px; color:#00B5CD" class="center-align" >
-        <div style="font-size:20px">{{task.name}} </div>
-            <p style="font-size:15px">Description: {{task.description}}<br> Points: {{task.points}} {{eventTest}}</p>
+<main layout="row">
+<md-container layout="column" flex="60" layout-xs="row">
+    <md-content id="content" style="color:#FFFEFA">
+    <md-card>
+    <md-card-content>
+        <div layout="row">
+            <div flex style="color:black;font-size:24px; font-weight:bold">
+                {{task.name}}
+            </div>
         </div>
-        <br>
-        <div class="center-align"flex id="content">
-                 <md-button class="md-primary md-raised"  ng-click="showConfirm($event)" style="align: center; color:#FFFEFA; background-color:#00B5CD; bottom: 5px; right: 5px;">complete task</md-button>
-            <!-- <ui-view></ui-view> -->
+        <div layout="row">
+            <div flex>
+                Points: {{task.points}}
+            </div>
         </div>
-            <h4 class="center-align"style="color:#00B5CD">Recent history</h4>
-           <table class="center-align" align="center" style="max-width: 300px">
-        <thead>
-          <tr>
-              <th data-field="id" style="font-size:20px; color:#00B5CD" class="left-align">Completed On</th>
-              <th data-field="name" style="font-size:20px; color:#00B5CD" class="right-align" ng-click="testEventObj()"}>Player</th>
-          </tr>
-        </thead>
+        <div layout="row">
+            <div flex>
+                {{task.description}} <br>
+            </div>
+        </div>
+        <div layout="row">
+            <md-button type="submit" ng-click="showConfirm($event)" style="color:#FFFEFA;background-color:#00B5CD;display:block;margin:0 auto">Complete Task</md-button>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
 
-        <tbody ng-repeat="event in events | orderBy:createdAt:true | limitTo:5">
-          <tr>
-            <td style="font-size:15px; color:#00B5CD" class="left-align">{{event.createdAt}}</td>
-            <td style="font-size:15px; color:#00B5CD" class="right-align">{{event.name}}</td>
-          </tr>
-        </tbody>
-      </table><!-- 
-        <main class="md-padding" layout="column" flex>  -->
-            
-       <!--  </main> -->
-    </div>
+    <md-content>
+    <md-card>
+    <md-card-content>
+        <table class='table responsive' style="width:100%">
+            <caption class="content-caption">Recent History</caption>
+            <col width="3%">
+            <col width="45%">
+            <col width="45%">
+            <col width="7%">
+            <thead style="color:black">
+                <tr>
+                    <th></th>
+                    <th>Time</th>
+                    <th>User</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="event in events | orderBy:createdAt:true | limitTo:5">
+                <tr>
+                    <td></td>
+                    <td>{{ event.createdAt }}</td>
+                    <td>{{ event.name }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </md-card-content>
+    </md-card>
+    </md-content>
+</md-container>
+
+<md-container layout="column" flex="40" xs-layout="row">
+    <md-content>
+    <md-card>
+    <md-card-content>
+        <table class='table responsive' style="width:100%">
+            <caption class="content-caption">Recent History</caption>
+            <col width="3%">
+            <col width="45%">
+            <col width="45%">
+            <col width="7%">
+            <thead style="color:black">
+                <tr>
+                    <th></th>
+                    <th>Time</th>
+                    <th>User</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="event in events | orderBy:createdAt:true | limitTo:5">
+                <tr>
+                    <td></td>
+                    <td>{{ event.createdAt }}</td>
+                    <td>{{ event.name }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </md-card-content>
+    </md-card>
+    </md-content>
+</md-container>
+</main>
+
+

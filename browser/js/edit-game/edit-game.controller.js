@@ -4,6 +4,8 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
 
     $scope.comm = Comm;
 
+    console.log($scope.comm);
+
     $scope.addTask = function() {
         let newTaskNum = $scope.comm.tasks.length;
         $scope.comm.tasks.push({

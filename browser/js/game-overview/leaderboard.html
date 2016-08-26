@@ -1,17 +1,15 @@
-<div class="col s2 offset-s8" style="position:fixed; opacity:1; background-color:#FFFEFA">
-        <table class="responsive" flex class='table' style="width:30%;display:inline-block; opacity:1">
-            <caption class="content-caption">Leaderboard</caption>
-            <col width="5%">
-            <col width="85%">
-            <col width="10%">
-            <thead style="color:black">
-            </thead>
-            <tbody>
-                <tr flex ng-repeat="player in players" class="content-text">
-                    <td></td>
-                    <td>{{player.firstName+" "+player.lastName}}</td>
-                    <td class="content-right">{{ player.points }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<table class="responsive" flex class='table' style="width:100%"">
+    <caption class="content-caption">Leaderboard</caption>
+    <col width="5%">
+    <col width="85%">
+    <col width="10%">
+    <thead style="color:black">
+    </thead>
+    <tbody>
+        <tr flex ng-repeat="player in players" class="content-text">
+            <td></td>
+            <td>{{player.firstName+" "+player.lastName}}</td>
+            <td class="content-right">{{ player.points }}</td>
+        </tr>
+    </tbody>
+</table>

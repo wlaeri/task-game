@@ -1,10 +1,32 @@
-<div>
-<!-- <md-slider ng-model="gameType" -->
-<div class="row" layout="row">
-    <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events"/>
-    <div class="col s12">
-        <table class='table responsive' style="width:80%; display:inline-block">
-            <caption style="color:black;font-size:24px; font-weight:bold">{{game.name}}</caption>
+<main layout="row">
+<md-container layout="column" flex="75" layout-xs="row">
+    <md-content id="content" style="color:#FFFEFA">
+    <md-card>
+    <md-card-content>
+        <div layout="row" layout-xs="column">
+            <div flex style="color:black;font-size:24px; font-weight:bold" class="align-center">
+                {{game.name}}
+            </div>
+        </div>
+        <div layout="row" layout-xs="column">
+            <div flex class="align-center">
+                Pledge: ${{game.pledge}}
+            </div>
+            <div flex class="align-center">
+                Start: {{game.start | date: 'MM/dd HH:mm'}}
+            </div>
+            <div flex class="align-center">
+                End: {{game.end | date: 'MM/dd HH:mm'}}
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
+
+    <md-content>
+    <md-card>
+    <md-card-content>
+        <table class='table responsive' style="width:100%; display:inline-block">
             <col width="3%">
             <col width="30%">
             <col width="60%">
@@ -21,16 +43,33 @@
                 <tr ng-repeat="task in game.tasks" class="content-text" ui-sref="u.task({task: task})">
                     <td></td>
                     <td class="content-left">{{ task.name }}</td>
-                    <td>{{task.description}}</span>
-                    </td>
+                    <td>{{task.description}}</td>
                     <td>{{task.points}}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
-<md-divider></md-divider>
-<md-container layout="row" layout-align="center center">
-    <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events"/>
+    </md-card-content>
+    </md-card>
+    </md-content>
+
+    <md-content>
+    <md-card>
+    <md-card-content>
+        <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events">
+        </tg-newsfeed>
+    </md-card-content>
+    </md-card>
+    </md-content>
 </md-container>
-</div>
+
+<md-container layout="column" flex="25" layout-xs="row">
+    <md-content id="content" style="color:#FFFEFA">
+    <md-card>
+    <md-card-content>
+        <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events">
+        </tg-leaderboard>
+    </md-card-content>
+    </md-card>
+    </md-content>
+</md-container>
+</main>
