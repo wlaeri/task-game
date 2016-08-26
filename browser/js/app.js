@@ -10,11 +10,12 @@ window.app = angular.module('Gamr', [
     'nvd3'
 ]);
 
-app.config(function ($urlRouterProvider, $locationProvider) {
+app.config(function ($urlRouterProvider, $locationProvider, $stateProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
-    $urlRouterProvider.otherwise('/');
+
+    $urlRouterProvider.otherwise('/home');
     // Trigger page refresh when accessing an OAuth route
     $urlRouterProvider.when('/auth/:provider', function () {
         window.location.reload();
@@ -115,7 +116,6 @@ app.config(function($mdThemingProvider){
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {
-
     // The given state requires an authenticated user.
     var destinationStateRequiresAuth = function (state) {
         return state.data && state.data.authenticate;
@@ -124,6 +124,14 @@ app.run(function ($rootScope, AuthService, $state) {
     // $stateChangeStart is an event fired
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+        if(toState.name==="home"){
+            AuthService.getLoggedInUser()
+                .then(user=>{
+                    console.log("User from AS: ", user);
+                    if(user) $state.go('u.dash', {userId: user.id});
+                    else return;
+                });
+        }
         if (!destinationStateRequiresAuth(toState)) {
             // The destination state does not require authentication
             // Short circuit with return.
@@ -135,7 +143,6 @@ app.run(function ($rootScope, AuthService, $state) {
             // Short circuit with return.
             return;
         }
-
         // Cancel navigating to new state.
         event.preventDefault();
 
