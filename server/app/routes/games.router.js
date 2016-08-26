@@ -62,7 +62,6 @@ router.get('/user/:id', function(req, res, next){
   .catch(next);
 })
 
-
 router.get('/:id', function(req, res, next){
   Game.findById(req.params.id, {
     include: [{model: Task}, {model: Event}, {model: User}]
@@ -70,6 +69,8 @@ router.get('/:id', function(req, res, next){
   .then(game=> res.send(game))
   .catch(next);
 })
+
+// creates a game
 
 router.post('/', function(req, res, next){
   Game.create(req.body.game)
@@ -85,11 +86,13 @@ router.post('/', function(req, res, next){
   .catch(next)
 })
 
+// updates all facets of a game on lock or update
+
 router.put('/', function(req, res, next){
   GamePlayers.findAll({ where: { gameId: req.body.id }})
   .then(gamePlayers => {
     return Game.findById(req.body.id, { include: [{ model: Task }] })
-    .tap(game => game.addPlayersGameUpdate(req.body.users, gamePlayers))
+    .tap(game => game.addPlayersGameUpdate(req.body.users, gamePlayers, req.body.locked, req.body.commissionerId))
   })
   .tap(game => game.updateTasks(req.body.tasks))
   .then(game => game.updateGameFromReqBody(req.body))

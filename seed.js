@@ -92,25 +92,31 @@ function randomArrayGenerator(minLength, maxLength, minNum, maxNum) {
 var createGameUserAssociations = function(games) {
     var creatingAssociations = games.map(function(game) {
         var users = randomArrayGenerator(5, 10, 1, 100);
-        return game.setCommissioner(users[0])
+        var commissioner = users.shift();
+        return game.setCommissioner(commissioner)
         .then(function() {
             if (game.status === 'Active' || game.status === 'Completed') {
                 return game.setUsers(users, {
                     status: 'Confirmed'
-                });
+                })
+                .then(() => game.addUsers(commissioner, { status: 'Confirmed' }))
             }
             if (game.status === 'Confirmed') {
                 if (Math.random() < 0.5) {
-                    return game.setUsers(users, { status: 'Unconfirmed' });
+                    return game.setUsers(users, { status: 'Unconfirmed' })
+                    .then(() => game.addUsers(commissioner, { status: 'Confirmed' }));
                 } else {
                     return game.setUsers(users, { status: 'Confirmed' })
+                    .then(() => game.addUsers(commissioner, { status: 'Confirmed' }));
                 }
             }
             if (game.status === 'Pending') {
                 if (Math.random() < 0.5) {
-                    return game.setUsers(users, { status: 'Invited' });
+                    return game.setUsers(users, { status: 'Invited' })
+                    .then(() => game.addUsers(commissioner, { status: 'Unconfirmed' }))
                 } else {
-                    return game.setUsers(users, { status: 'Unconfirmed' });
+                    return game.setUsers(users, { status: 'Unconfirmed' })
+                    .then(() => game.addUsers(commissioner, { status: 'Unconfirmed' }))
                 }
             }
         });
