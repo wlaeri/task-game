@@ -24,7 +24,6 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
         });
     }
     $scope.logout = function() {
-        console.log("In the logout function on scope.")
         AuthService.logout()
         .then(function () {
             $state.go('home');
@@ -34,7 +33,6 @@ app.controller('UserCtrl', function($scope, $state, $stateParams, AuthService, u
         });
     }
     $scope.dashBoard = function(){
-        console.log("Going to dash...");
         $state.go('u.dash')
     }
 })

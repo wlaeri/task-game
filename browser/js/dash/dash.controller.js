@@ -1,10 +1,33 @@
-app.controller('DashCtrl', function($scope, gameData){
+app.controller('DashCtrl', function($scope, gameData, GameFactory, $log){
 console.log("Got to Dash Ctrl: ", gameData);
 
 
 $scope.gameData = gameData;
 
-$scope.test = function(){console.log("Testing")};
+$scope.acceptInvite = function(game){
+  console.log("Accept Invite: ", game);
+  GameFactory.acceptInvite($scope.user.id, game)
+  .catch($log);
+}
+
+$scope.areConfirmed = function(){
+  return $scope.games.some(g=>g.status=="Confirmed");
+}
+
+$scope.arePending = function(){
+  return $scope.games.some(g=>g.status=="Pending");
+}
+
+$scope.isUnconfirmed = function(game){
+  console.log("isUnconfirmed: ", game)
+  return game.playerStatus=="Unconfirmed"
+}
+
+$scope.isInvited = function(game){
+  console.log("isInvited: ", game)
+  return game.playerStatus=="Invited";
+}
+
 
 $scope.pieChartOptions = {
     chart: {

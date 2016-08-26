@@ -1,51 +1,70 @@
-<main layout="row">
-<md-container layout="column" flex="75" layout-xs="row">
-    <md-content ng-repeat="game in gameData">
-    <md-card>
-    <md-card-content>
-        <div layout="row" layout-xs="column">
-            <div flex style="color:black;font-size:24px; font-weight:bold" class="align-center">
-                {{game.name}}
-            </div>
+<div>
+    <h1>{{user.username +"'s games"}}</h1>
+    <md-content class="md-padding" layout="column">
+        <div>
+            <md-card>
+            <md-card-title>
+            <md-card-title-text class="content-caption">Upcoming Games</md-card-title-text>
+            </md-card-title>
+            <md-card-content>
+            <table ng-if="areConfirmed()">
+            <caption>Confirmed Games</caption>
+            <th>Game Name</th>
+            <th>Starts</th>
+            <th></th>
+            <tbody>
+            <tr ng-repeat="game in games | filter:{status:'Confirmed'}">
+              <td>{{game.name}}</td>
+              <td>{{game.timeTil}}</td>
+              <td ng-if="isUnconfirmed(game)"><md-button class="md-button md-ink-ripple" ng-click="acceptInvite(game.id)" >Accept Invite</md-button></td>
+              </tr>
+              </tbody>
+              </table>
+            <table ng-if="arePending()">
+            <caption>Draft Games</caption>
+            <th>Game Name</th>
+            <th>Starts</th>
+            <th></th>
+            <tbody>
+            <tr ng-repeat="game in games | filter:{status:'Pending'}">
+              <td>{{game.name}}</td>
+              <td>{{game.timeTil}}</td>
+              <td><md-button class="md-button md-ink-ripple" ng-click="acceptInvite(game.id)" ng-if="isInvited(game)">Accept Invite</md-button></td>
+              </tr>
+              </tbody>
+              </table>
+            </md-card-content>
+            </md-card>
+            <md-content ng-repeat="game in gameData | orderBy:'end' ">
+            <md-card>
+                    <md-card-content>
+                        <div layout="row" layout-xs="column">
+                            <div flex style="color:black;font-size:24px; font-weight:bold" class="align-center">
+                                {{game.name}}
+                            </div>
+                        </div>
+                        <div layout="row" layout-xs="column">
+                            <div flex class="align-center">
+                                Pledge: ${{game.pledge}}
+                            </div>
+                            <div flex class="align-center">
+                                Ends: {{game.timeLeft}}
+                            </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            <md-card>
+            <md-card-header>
+                <md-card-content layout="row">
+                    <div style="width:50%">
+                        <nvd3 options="pieChartOptions" data="game.pieChartData" style="height:45vh"></nvd3>
+                    </div>
+                    <div style="width:50%">
+                        <nvd3 options="barChartOptions" data="game.barChartData"></nvd3>
+                    </div>
+                </md-card-content>
+            </md-card>
+            </md-content>
         </div>
-        <div layout="row" layout-xs="column">
-            <div flex class="align-center">
-                Pledge: ${{game.pledge}}
-            </div>
-            <div flex class="align-center">
-                Start: {{game.start | date: 'MM/dd HH:mm'}}
-            </div>
-            <div flex class="align-center">
-                End: {{game.end | date: 'MM/dd HH:mm'}}
-            </div>
-        </div>
-    </md-card-content>
-    </md-card>
-
-    <md-card>
-    <md-card-content>
-        <div layout="row" layout-xs="column">
-            <div flex>
-                <nvd3 options="pieChartOptions" data="game.pieChartData">
-                </nvd3>
-            </div>
-            <div flex>
-                <nvd3 options="barChartOptions" data="game.barChartData">
-                </nvd3>
-            </div>
-        </div>
-    </md-card-content>
-    </md-card>
     </md-content>
-</md-container>
-
-<md-container layout="column" flex="25" layout-xs="row">
-    <md-content id="content" style="color:#FFFEFA">
-    <md-card>
-    <md-card-content>
-        This is where the game invites could go if there are any.
-    </md-card-content>
-    </md-card>
-    </md-content>
-</md-container>
-</main>
+</div>
