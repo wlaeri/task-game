@@ -15,7 +15,7 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
     $scope.task = $stateParams.task;
 
     $scope.events = events.map(function(event){
-        event.createdAt = $scope.convertDate(event.createdAt) 
+        event.createdAt = $scope.convertDate(event.createdAt)
         return event;
     })
     // .map(function(event){
@@ -27,14 +27,14 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
     // ).then(function(eventArray){
     //     $scope.eventNames = eventArray;
     //     $scope.eventNames.map(function(event){
-    //     event.createdAt = $scope.convertDate(event.createdAt) 
+    //     event.createdAt = $scope.convertDate(event.createdAt)
     //     return event;
     // })
     //     return eventArray
     // });
 
     // $scope.updatedEventDates = $scope.events.map(function(event){
-    //     event.createdAt = $scope.convertDate(event.createdAt) 
+    //     event.createdAt = $scope.convertDate(event.createdAt)
     //     return event;
     // });
 
