@@ -25,7 +25,17 @@ app.factory('GameFactory', function($http) {
 
   GameFactory.getUsersGames = function(id){
     return $http.get('api/games/user/'+id)
-    .then(games=>games.data);
+    .then(games=>games.data)
+    .then(games=>{
+      games.forEach(game=>game.timeTil = moment(game.start).fromNow())
+      return games;
+    }
+      );
+  }
+
+  GameFactory.acceptInvite = function(user, game){
+    return $http.get('api/email/acceptInvite', {params:{'user':user,'game':game}})
+    .then(game=>game.data);
   }
 
   GameFactory.getActiveGames = function(id) {
