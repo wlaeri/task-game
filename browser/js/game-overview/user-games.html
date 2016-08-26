@@ -1,25 +1,32 @@
-<div>
-<!-- <md-slider ng-model="gameType" -->
-<div class="row" layout="row">
-    <md-container flex="100">
+<main layout="row">
+<md-container layout="column" flex="75" layout-xs="row">
+    <md-content id="content" style="color:#FFFEFA">
     <md-card>
-        <md-card-header>
-            <md-card-header-text layout-align="center center" class="md-title">{{ game.name }}</md-card-header-text>
-        </md-card-header>
     <md-card-content>
+        <div layout="row" layout-xs="column">
+            <div flex style="color:black;font-size:24px; font-weight:bold" class="align-center">
+                {{game.name}}
+            </div>
+        </div>
+        <div layout="row" layout-xs="column">
+            <div flex class="align-center">
+                Pledge: ${{game.pledge}}
+            </div>
+            <div flex class="align-center">
+                Start: {{game.start | date: 'MM/dd HH:mm'}}
+            </div>
+            <div flex class="align-center">
+                End: {{game.end | date: 'MM/dd HH:mm'}}
+            </div>
+        </div>
     </md-card-content>
     </md-card>
-    </md-container>
-</div>
-<div class="row" layout="row">
-    <md-container flex="80">
-        <md-content>
-        <md-card>
-        <md-card-header>
-            <md-card-header-text layout-align="center center" class="md-title">Tasks</md-card-header-text>
-        </md-card-header>
-        <md-card-content>
-        <table>
+    </md-content>
+
+    <md-content>
+    <md-card>
+    <md-card-content>
+        <table class='table responsive' style="width:100%; display:inline-block">
             <col width="3%">
             <col width="30%">
             <col width="60%">
@@ -36,39 +43,91 @@
                 <tr ng-repeat="task in game.tasks" class="content-text" ui-sref="u.task({task: task})">
                     <td></td>
                     <td class="content-left">{{ task.name }}</td>
-                    <td>{{task.description}}</span>
-                    </td>
+                    <td>{{task.description}}</td>
                     <td>{{task.points}}</td>
                 </tr>
             </tbody>
         </table>
-        </md-card-content>
-        </md-card>
-        </md-content>
-    </md-container>
-    <md-container flex="20">
-    <md-card style="position:fixed">
-    <md-card-header>
-        <md-card-header-text layout-align="center center" class="md-title">Leaderboard</md-card-header-text>
-    </md-card-header>
-    <md-card-content>
-    <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events"/>
     </md-card-content>
     </md-card>
-    </md-container>
-</div>
-<div class="row" layout="row">
-<md-container layout="row" layout-align="center center" flex="80">
-    <md-content>
+    </md-content>
+
+    <md-content ng-show="game.events.length">
     <md-card>
-    <md-card-header>
-        <md-card-header-text layout-align="center center" class="md-title">Newsfeed</md-card-header-text>
-    </md-card-header>
     <md-card-content>
-    <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events"/>
+        <div layout="row" layout-xs="column">
+            <div flex>
+                <nvd3 options="pieChartOptions" data="game.pieChartData">
+                </nvd3>
+            </div>
+            <div flex>
+                <nvd3 options="barChartOptions" data="game.barChartData">
+                </nvd3>
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
+
+    <md-content ng-show="game.events.length">
+    <md-card>
+    <md-card-content>
+        <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events">
+        </tg-newsfeed>
     </md-card-content>
     </md-card>
     </md-content>
 </md-container>
-</div>
-</div>
+
+<md-container layout="column" flex="25" layout-xs="row">
+    <md-content id="content" style="color:#FFFEFA">
+    <md-card>
+    <md-card-content ng-if="game.status === 'Active'">
+        <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events">
+        </tg-leaderboard>
+    </md-card-content>
+    <md-card-content ng-if="game.status !== 'Active'">
+        <div style="margin-left:9px" class="center-align">
+            <p style="color:black;font-size:24px; font-weight:bold">Players</p>
+        </div>
+        <div ng-show="confirmed.length">
+            <div style="margin-left:9px">
+                <p style="font-weight:bold">Locked</p>
+            </div>
+            <div>
+                <ul ng-repeat="player in confirmed">
+                    <li layout="row" style="padding-left:10px">
+                        {{player.firstName + ' ' + player.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-show="unconfirmed.length">
+            <div style="margin-left:9px">
+                <p style="font-weight:bold">Joined</p>
+            </div>
+            <div>
+                <ul ng-repeat="player in unconfirmed">
+                    <li layout="row" style="padding-left:10px">
+                        {{player.firstName + ' ' + player.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-show="invited.length">
+            <div style="margin-left:9px">
+                <p style="font-weight:bold">Invited</p>
+            </div>
+            <div>
+                <ul ng-repeat="player in invited">
+                    <li layout="row" style="padding-left:10px">
+                        {{player.firstName + ' ' + player.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
+</md-container>
+</main>
