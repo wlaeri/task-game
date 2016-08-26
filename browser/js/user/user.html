@@ -17,9 +17,12 @@
         <md-button class="md-raised" id="new-game" align="center" ui-sref="u.create">Create Game</md-button>
         <md-content flex role="navigation" style="background-color: #4DD0E1">
         <div class="sidenav-title" align="center">CURRENT GAMES</div>
-        <md-list-item ng-repeat="item in menuItems">
-            <h4 class="truncate current-game" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.create({gameId: item.id})' : 'u.game({gameId: item.id})'}}">{{item.name}}</h4>
-        </md-list-item>
+        <md-list>
+        <div ng-repeat="item in menuItems">
+            <md-list-item>
+                <a md-ink-ripple="#F0FDFF" class="md-button active current-game" ui-sref="{{ goToEdit(item.commissionerId, item.locked) ? 'u.edit({gameId: item.id})' : 'u.game({gameId: item.id})'}}"><div>{{item.name}}</div></a>
+            </md-list-item>
+        </div>
         </md-list>
         <md-button class="sidenav-title md-accent" align="center" ui-sref="u.completed({user: user})">COMPLETED GAMES</md-button>
         <md-button class="sidenav-title md-accent" align="center" ui-sref="u.account">ACCOUNT SETTINGS</md-button>

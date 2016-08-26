@@ -1,6 +1,6 @@
 app.config(function($stateProvider){
   $stateProvider.state('u.account', {
-    url: '/user/accountSettings/:id',
+    url: '/accountSettings/:id',
     templateUrl: 'js/account-settings/account-settings.html',
     controller: 'AccountSettingsCtrl', 
     resolve: { allUsernames: function(UserFactory){

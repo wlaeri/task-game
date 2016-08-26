@@ -54,7 +54,7 @@ app.factory('GameFactory', function($http) {
                       barData[0].values.push(barObj);
                   })
                   game.barChartData = barData;
-
+                  game.timeLeft = moment(game.end).fromNow();
               });
               return games;
           });
