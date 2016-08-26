@@ -1,33 +1,34 @@
-<table class="responsive" flex class='table' style="align-self:center; display:inline-block">
-        <col width="3%">
-        <col width="25%">
-        <col width="5%">
-        <col width="10%">
-        <col width="2%">
-        <col width="50%">
-        <col width="5%">
-        <thead style="color:black">
-                  <tr>
-      <th></th>
-        <th>Time</th>
-        <th></th>
-        <th>User</th>
-        <th></th>
-        <th>Task Completed</th>
-        <th></th>
-        <th>Points</th>
-      </tr>
-        </thead>
-        <tbody>
-            <tr flex ng-repeat="event in events" class="content-text">
-                <td></td>
-                <td>{{event.createdAt}}</td>
-                <td></td>
-                <td class="content-left">{{ event.userName }}</td>
-                <td></td>
-                <td>{{event.task}}</td>
-                <td></td>
-                <td>{{event.points}}</td>
-            </tr>
-        </tbody>
-    </table>
+<table class="responsive" flex class='table' style="width:100%">
+    <caption class="content-caption">Newsfeed</caption>
+    <col width="3%">
+    <col width="25%">
+    <col width="5%">
+    <col width="10%">
+    <col width="2%">
+    <col width="50%">
+    <col width="5%">
+    <thead style="color:black">
+        <tr>
+            <th></th>
+            <th>Time</th>
+            <th></th>
+            <th>User</th>
+            <th></th>
+            <th>Task</th>
+            <th></th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr flex ng-repeat="event in events" class="content-text">
+            <td></td>
+            <td>{{event.createdAt | date: 'MM/dd HH:mm'}}</td>
+            <td></td>
+            <td class="content-left">{{ event.userName }}</td>
+            <td></td>
+            <td>{{event.task}}</td>
+            <td></td>
+            <td>{{event.points}}</td>
+        </tr>
+    </tbody>
+</table>

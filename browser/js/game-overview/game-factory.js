@@ -70,7 +70,6 @@ app.factory('GameFactory', function($http) {
           });
   }
 
-
   GameFactory.getCompletedGames = function(id) {
     return $http.get('api/games/user/' + id + '/completed')
     .then(games => games.data);

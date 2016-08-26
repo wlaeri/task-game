@@ -1,6 +1,6 @@
 <div>
     <h1>{{user.username +"'s games"}}</h1>
-    <md-content class="md-padding" layout="row">
+    <md-content class="md-padding" layout="column">
         <div>
             <md-card>
             <md-card-title>
@@ -35,12 +35,26 @@
               </table>
             </md-card-content>
             </md-card>
-            <md-card ng-repeat="game in gameData | orderBy:'end' ">
-                <md-card-header-text>
-                    <div class="md-title content-caption">{{game.name}}</div>
-                    <div class="md-subhead">Ends {{game.timeLeft}}</div>
-                </md-card-header-text>
-                </md-card-header>
+            <md-content ng-repeat="game in gameData | orderBy:'end' ">
+            <md-card>
+                    <md-card-content>
+                        <div layout="row" layout-xs="column">
+                            <div flex style="color:black;font-size:24px; font-weight:bold" class="align-center">
+                                {{game.name}}
+                            </div>
+                        </div>
+                        <div layout="row" layout-xs="column">
+                            <div flex class="align-center">
+                                Pledge: ${{game.pledge}}
+                            </div>
+                            <div flex class="align-center">
+                                Ends: {{game.timeLeft}}
+                            </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            <md-card>
+            <md-card-header>
                 <md-card-content layout="row">
                     <div style="width:50%">
                         <nvd3 options="pieChartOptions" data="game.pieChartData" style="height:45vh"></nvd3>
@@ -50,6 +64,7 @@
                     </div>
                 </md-card-content>
             </md-card>
+            </md-content>
         </div>
     </md-content>
 </div>

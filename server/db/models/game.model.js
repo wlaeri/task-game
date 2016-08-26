@@ -3,7 +3,8 @@
 let db = require('../_db');
 let Sequelize = require('sequelize');
 let Task = require('./task.model.js');
-let Cron = require('./cron.model.js')
+let Cron = require('./cron.model.js');
+let GamePlayers = require('./GamePlayers.model.js');
 
 module.exports = db.define('game', {
     name: {
@@ -50,10 +51,24 @@ module.exports = db.define('game', {
             .tap(() => this.addUsers(commissioner, { status: 'Unconfirmed'}))
             .tap(() => this.setCommissioner(commissioner));
         },
-        addPlayersGameUpdate: function(usersObj, currGPs) {
+        addPlayersGameUpdate: function(usersObj, currGPs, isLocked, commissioner) {
             let alreadyInvited = currGPs.filter(gp => gp.status === 'Invited').map(gp => gp.id);
             let newInvites = usersObj.invited.map(user => user.id).filter(user => alreadyInvited.indexOf(user) === -1 );
-            this.addUsers(newInvites, { status: 'Invited' });
+            this.addUsers(newInvites, { status: 'Invited' })
+            .then(() => {
+                if (isLocked) {
+                    return GamePlayers.findOne({
+                        where: {
+                            gameId: this.id,
+                            userId: commissioner
+                        }
+                    })
+                    .then(gp => {
+                        gp.update({ status: 'Confirmed' });
+                        return gp;
+                    })
+                } else { return; }
+            })
         },
         updateTasks: function(incomingTasks) {
             Promise.all(incomingTasks.map(task => {
