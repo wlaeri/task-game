@@ -52,7 +52,24 @@
     </md-card>
     </md-content>
 
-    <md-content>
+    <md-content ng-show="game.events.length">
+    <md-card>
+    <md-card-content>
+        <div layout="row" layout-xs="column">
+            <div flex>
+                <nvd3 options="pieChartOptions" data="game.pieChartData">
+                </nvd3>
+            </div>
+            <div flex>
+                <nvd3 options="barChartOptions" data="game.barChartData">
+                </nvd3>
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
+
+    <md-content ng-show="game.events.length">
     <md-card>
     <md-card-content>
         <tg-newsfeed users="game.users" tasks="game.tasks" events="game.events">
@@ -65,9 +82,50 @@
 <md-container layout="column" flex="25" layout-xs="row">
     <md-content id="content" style="color:#FFFEFA">
     <md-card>
-    <md-card-content>
+    <md-card-content ng-if="game.status === 'Active'">
         <tg-leaderboard players="game.users" tasks="game.tasks" events="game.events">
         </tg-leaderboard>
+    </md-card-content>
+    <md-card-content ng-if="game.status !== 'Active'">
+        <div style="margin-left:9px" class="center-align">
+            <p style="color:black;font-size:24px; font-weight:bold">Players</p>
+        </div>
+        <div ng-show="confirmed.length">
+            <div style="margin-left:9px">
+                <p style="font-weight:bold">Locked</p>
+            </div>
+            <div>
+                <ul ng-repeat="player in confirmed">
+                    <li layout="row" style="padding-left:10px">
+                        {{player.firstName + ' ' + player.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-show="unconfirmed.length">
+            <div style="margin-left:9px">
+                <p style="font-weight:bold">Joined</p>
+            </div>
+            <div>
+                <ul ng-repeat="player in unconfirmed">
+                    <li layout="row" style="padding-left:10px">
+                        {{player.firstName + ' ' + player.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-show="invited.length">
+            <div style="margin-left:9px">
+                <p style="font-weight:bold">Invited</p>
+            </div>
+            <div>
+                <ul ng-repeat="player in invited">
+                    <li layout="row" style="padding-left:10px">
+                        {{player.firstName + ' ' + player.lastName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
     </md-card-content>
     </md-card>
     </md-content>

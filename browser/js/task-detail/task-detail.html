@@ -1,11 +1,16 @@
 <main layout="row">
-<md-container layout="column" flex="60" layout-xs="row">
+<md-container layout="column" flex="75" layout-xs="row">
     <md-content id="content" style="color:#FFFEFA">
     <md-card>
     <md-card-content>
         <div layout="row">
             <div flex style="color:black;font-size:24px; font-weight:bold">
                 {{task.name}}
+            </div>
+        </div>
+        <div layout="row">
+            <div flex>
+                {{task.game}}
             </div>
         </div>
         <div layout="row">
@@ -19,13 +24,13 @@
             </div>
         </div>
         <div layout="row">
-            <md-button type="submit" ng-click="showConfirm($event)" style="color:#FFFEFA;background-color:#00B5CD;display:block;margin:0 auto">Complete Task</md-button>
+            <md-button type="submit" ng-click="showConfirm($event)" style="color:#FFFEFA;background-color:#00B5CD;display:block;margin:0 auto; margin-top:20px">Complete Task</md-button>
         </div>
     </md-card-content>
     </md-card>
     </md-content>
 
-    <md-content>
+    <md-content ng-show="events.length">
     <md-card>
     <md-card-content>
         <table class='table responsive' style="width:100%">
@@ -45,7 +50,7 @@
             <tbody ng-repeat="event in events | orderBy:createdAt:true | limitTo:5">
                 <tr>
                     <td></td>
-                    <td>{{ event.createdAt }}</td>
+                    <td>{{ event.createdAt | date: 'MM/dd HH:mm'}}</td>
                     <td>{{ event.name }}</td>
                     <td></td>
                 </tr>
@@ -56,8 +61,8 @@
     </md-content>
 </md-container>
 
-<md-container layout="column" flex="40" xs-layout="row">
-    <md-content>
+<md-container layout="column" flex="25" xs-layout="row">
+    <md-content ng-show="events.length">
     <md-card>
     <md-card-content>
         <table class='table responsive' style="width:100%">
@@ -77,7 +82,7 @@
             <tbody ng-repeat="event in events | orderBy:createdAt:true | limitTo:5">
                 <tr>
                     <td></td>
-                    <td>{{ event.createdAt }}</td>
+                    <td>{{ event.createdAt  | date: 'MM/dd HH:mm'}}</td>
                     <td>{{ event.name }}</td>
                     <td></td>
                 </tr>
