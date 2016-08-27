@@ -140,9 +140,11 @@ var socket = io.connect();
     </md-content>
 
     <md-content>
-<div>
+<div ng-show="!openMessages" ng-click="openMessageBox()"><b>Open Messages</b></div>
+<div ng-show="openMessages">
+    <div ng-click="openMessageBox()">Close X</div>
     <ul> <b>Messages</b>
-        <li ng-repeat="line in content">{{line.username}}: {{line.message}}
+        <li ng-repeat="line in content">{{line.username}}: {{line.message}} ({{line.createdAt | date: 'HH:mm'}})</li>
     </ul>
     <div id="chat-input">
                         <form>

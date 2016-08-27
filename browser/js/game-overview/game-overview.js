@@ -23,7 +23,8 @@ app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messag
   console.log($scope.content);
 
     socket.on('connect', function () {
-    console.log('You have connected to the server!')
+    console.log('You have connected to the server!');
+    socket.emit('adduser', $scope.user.id, $scope.game.id)
   })
 
   socket.on('updatechat', function (data) {
@@ -31,12 +32,18 @@ app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messag
     $scope.content.push(data)
     })
 
-  $scope.message = 'Test';
+  $scope.message = '';
+
+  $scope.openMessages = false;
+
+  $scope.openMessageBox = function(){
+    $scope.openMessages = !($scope.openMessages)
+  };
 
   $scope.sendMessage = function (){
 
     GameFactory.sendMessage({gameId: $scope.game.id, username: $scope.user.username, message: $scope.message})
-    .then($scope.content.push({gameId: $scope.gameId, username: $scope.user.username, message: $scope.message}));
+    .then($scope.content.push({gameId: $scope.gameId, username: $scope.user.username, message: $scope.message, createdAt: Date.now()}));
 
     $scope.socketEmit($scope.message);
 

@@ -14,10 +14,11 @@ module.exports = function (server) {
     	console.log("Socket is now connected, wowzers")
         // Now have access to socket, wowzers!
 
-        socket.on('adduser', function(userId, chatId){
-        	socket.room = chatId;
-        	socket.join(chatId);
-        	connectedUser.push(userIid);
+        socket.on('adduser', function(userId, gameId){
+            console.log("***new User", userId, "has connected to game: ", gameId);
+        	socket.room = gameId;
+        	socket.join(gameId);
+        	connectedUsers.push(userId);
         })
 
         socket.on('send:message', function(data){
