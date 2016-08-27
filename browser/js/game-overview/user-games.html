@@ -1,3 +1,12 @@
+ <script>
+var socket = io.connect();
+
+    socket.on('message', function(data){
+    console.log(data.message);
+    });
+
+</script>
+
 <main layout="row">
 <md-container layout="column" flex="75" layout-xs="row">
     <md-content id="content" style="color:#FFFEFA">
@@ -129,5 +138,20 @@
     </md-card-content>
     </md-card>
     </md-content>
+
+    <md-content>
+<div>
+    <ul> <b>Messages</b>
+        <li ng-repeat="line in content">{{line.username}}: {{line.message}}
+    </ul>
+    <div id="chat-input">
+                        <form>
+                        <input id="m" ng-model="message" name="message" autocomplete="off" /><button ng-click="sendMessage()">Send</button>
+                        </form>
+                    </div>
+                </div>
+
+</div>
+<md-content>
 </md-container>
 </main>

@@ -86,5 +86,55 @@ app.factory('GameFactory', function($http) {
     .then(res=>res)
   }
 
+  GameFactory.sendMessage = function(data){
+    console.log("message", data)
+    return $http.post('api/games/message', data)
+    .then(res=>res.data);
+  }
+
+  GameFactory.getMessages = function(id){
+    console.log("get message function", id);
+    return $http.get('api/games/messages/' + id)
+    .then(res=>res.data);
+    }
+
   return GameFactory;
 })
+
+
+// GameFactory.loadChat = function(gameId){
+//   return $http.get('api/chat', gameId)
+//   .then(chat=>chat.data);
+// }
+
+// app.factory('socket', function($rootScope){
+//   var socket = io.connect();
+//     return {
+//         on: function (eventName, callback) {
+//             socket.on(eventName, function () {
+//                 var args = arguments;
+//                 $rootScope.$apply(function () {
+//                     callback.apply(socket, args);
+//                 });
+//             });
+//         },
+//         emit: function (eventName, data, callback) {
+//             socket.emit(eventName, data, function () {
+//                 var args = arguments;
+//                 $rootScope.$apply(function () {
+//                     if (callback) {
+//                         callback.apply(socket, args);
+//                     }
+//                 });
+//             })
+//         },
+//       removeAllListeners: function (eventName, callback) {
+//           socket.removeAllListeners(eventName, function() {
+//               var args = arguments;
+//               $rootScope.$apply(function () {
+//                 callback.apply(socket, args);
+//               });
+//           }); 
+//       }
+//     };
+// });

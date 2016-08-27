@@ -8,9 +8,24 @@ module.exports = function (server) {
 
     io = socketio(server);
 
-    io.on('connection', function () {
+    var connectedUsers = [];
+
+    io.on('connection', function (socket) {
+    	console.log("Socket is now connected, wowzers")
         // Now have access to socket, wowzers!
+
+        socket.on('adduser', function(userId, chatId){
+        	socket.room = chatId;
+        	socket.join(chatId);
+        	connectedUser.push(userIid);
+        })
+
+        socket.on('send:message', function(data){
+        	socket.broadcast.to(socket.room).emit('updates', data)
+        })
     });
+
+
     
     return io;
 
