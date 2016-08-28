@@ -14,7 +14,7 @@ app.config(function($stateProvider){
   })
 })
 
-app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messages){
+app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messages, socket){
 
   $scope.game = gameObj;
 
