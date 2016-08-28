@@ -15,7 +15,7 @@ var Cron = db.Cron;
 var email = require('../emails');
 
 var rule = new schedule.RecurrenceRule();
-rule.second = 0;
+rule.hour = 1;
 
 schedule.scheduleJob(rule, function(){
 	console.log("Scheduling jobs")
