@@ -28,8 +28,8 @@ app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messag
   })
 
   socket.on('updatechat', function (data) {
-    console.log(data);
-    $scope.content.push(data)
+    console.log("chat updated", data);
+    $scope.content.push({username: data.username, message: data.content, createdAt: Date.now()});
     })
 
   $scope.message = '';
@@ -55,6 +55,7 @@ app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messag
     console.log("sending message");
     socket.emit('send:message', {
       content: $scope.message,
+      username: $scope.user.username,
       me: false 
     })
 

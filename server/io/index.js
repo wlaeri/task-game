@@ -22,7 +22,8 @@ module.exports = function (server) {
         })
 
         socket.on('send:message', function(data){
-        	socket.broadcast.to(socket.room).emit('updates', data)
+            console.log("message received**", data);
+        	socket.broadcast.to(socket.room).emit('updatechat', data);
         })
     });
 
