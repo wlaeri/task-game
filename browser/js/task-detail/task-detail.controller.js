@@ -18,39 +18,6 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
         event.createdAt = $scope.convertDate(event.createdAt)
         return event;
     })
-    // .map(function(event){
-    //     return UserFactory.getUserInfo(event.completedById)
-    //     .then(function(user){
-    //         event.name = user.firstName + " " + user.lastName;
-    //         return event});
-    // })
-    // ).then(function(eventArray){
-    //     $scope.eventNames = eventArray;
-    //     $scope.eventNames.map(function(event){
-    //     event.createdAt = $scope.convertDate(event.createdAt)
-    //     return event;
-    // })
-    //     return eventArray
-    // });
-
-    // $scope.updatedEventDates = $scope.events.map(function(event){
-    //     event.createdAt = $scope.convertDate(event.createdAt)
-    //     return event;
-    // });
-
-    // $scope.eventDates = $scope.events.map(function(event){
-    //     event.date = $scope.convertDate(event.date);
-    //     return event.date;
-    // })
-
-    // $scope.completeTask = GameFactory.completeTask(info);
-
-    // $scope.events1 = events
-
-    $scope.testEventObj = function(){
-        console.log("***** events ", $scope.events)
-        // console.log("events1 ", events1)
-    }
 
     $scope.testEventObj();
 
@@ -69,8 +36,11 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
       $scope.status = 'Completed';
       console.log($scope.status);
       GameFactory.completeTask({completedById: $scope.user.id, taskId: $scope.task.id, gameId: $scope.task.gameId})
-      .then(task=>task);
-    }, function() {
+      .then(task=>{
+        task.name = $scope.user.firstName + " "+$scope.user.lastName;
+        $scope.events.push(task)}
+        ); }
+    , function() {
       $scope.status = 'Not Completed';
       console.log($scope.status);
     });

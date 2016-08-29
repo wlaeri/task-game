@@ -3,9 +3,36 @@
 app.factory('GameFactory', function($http) {
   var GameFactory = {};
 
+  let makeChartData = function(game) {
+      let pieData = [];
+      game.users.forEach(user => {
+          user.points = game.events.filter(event => event.completedById === user.id)
+              .map(event => game.tasks.find(task => task.id === event.taskId).points)
+              .reduce((prev, curr) => prev + curr, 0);
+          let pieObj = { key: user.username, y: user.points }
+          pieData.push(pieObj);
+      });
+
+      game.pieChartData = pieData;
+
+      let total = pieData.reduce((prev, curr) => prev + curr.y, 0);
+      let barData = [{ label: "Over-Under", values: [] }];
+      pieData.forEach(e => {
+          let barObj = {};
+          if (total) barObj.value = (game.pledge * game.users.length) * (e.y / total) - game.pledge;
+          else barObj.value = 0;
+          barObj.label = e.key;
+          barData[0].values.push(barObj);
+      })
+      game.barChartData = barData;
+      game.timeLeft = moment(game.end).fromNow();
+      return game;
+  };
+
+
   GameFactory.getGame = function(id) {
     return $http.get('api/games/' + id)
-    .then(game => game.data);
+    .then(game => makeChartData(game.data));
   };
 
   GameFactory.createGame = function(data) {
@@ -42,31 +69,7 @@ app.factory('GameFactory', function($http) {
       return $http.get('api/games/user/' + id + '/active')
           .then(games => games.data)
           .then(games => {
-              games.forEach(game => {
-                  let pieData = [];
-                  game.users.forEach(user => {
-                      user.points = game.events.filter(event => event.completedById === user.id)
-                          .map(event => game.tasks.find(task => task.id === event.taskId).points)
-                          .reduce((prev, curr) => prev + curr, 0);
-                      let pieObj = { key: user.username, y: user.points }
-                      pieData.push(pieObj);
-                  });
-
-                  game.pieChartData = pieData;
-
-                  let total = pieData.reduce((prev, curr) => prev + curr.y, 0);
-                  let barData = [{ label: "Over-Under", values: [] }];
-                  pieData.forEach(e => {
-                      let barObj = {};
-                      if (total) barObj.value = (game.pledge * game.users.length) * (e.y / total) - game.pledge;
-                      else barObj.value = 0;
-                      barObj.label = e.key;
-                      barData[0].values.push(barObj);
-                  })
-                  game.barChartData = barData;
-                  game.timeLeft = moment(game.end).fromNow();
-              });
-              return games;
+              return games.map(g => makeChartData(g));
           });
   }
 
