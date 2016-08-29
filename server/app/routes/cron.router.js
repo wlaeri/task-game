@@ -60,7 +60,7 @@ return temp;
 
 
 var rule = new schedule.RecurrenceRule();
-rule.second = 0;
+rule.hour = 1;
 
 schedule.scheduleJob(rule, function(){
 	console.log("Scheduling jobs")

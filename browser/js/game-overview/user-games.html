@@ -1,3 +1,12 @@
+ <script>
+var socket = io.connect();
+
+    socket.on('message', function(data){
+    console.log(data.message);
+    });
+
+</script>
+
 <main layout="row">
 <md-container layout="column" flex="75" layout-xs="row">
     <md-content id="content" style="color:#FFFEFA">
@@ -129,5 +138,58 @@
     </md-card-content>
     </md-card>
     </md-content>
+
+<!--     <md-content>
+    <md-card>
+    <md-card-content>
+        <div ng-show="!openMessages" ng-click="openMessageBox()"><b>Open Messages</b></div>
+        <div ng-show="openMessages">
+            <div class="right-align" style="font-weight:bold" ng-click="openMessageBox()">X</div>
+            <ul> <b>Messages</b>
+                <li ng-repeat="line in content">{{line.username}}: {{line.message}} ({{line.createdAt | date: 'HH:mm'}})</li>
+            </ul>
+            <div id="chat-input">
+            <form>
+            <input id="m" ng-model="message" name="message" autocomplete="off" /><button ng-click="sendMessage()">Send</button>
+            </form>
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content> -->
+
+    <md-content>
+    <md-card style="background-color:#4DD0E1; color:#FFFEFA;">
+    <md-card-content>
+        <div layout=row>
+            <div flex layout=column class="left-align"><b>Messages</b></div>
+            <div flex layout=column ng-show="!openMessages" class="right-align" ng-click="openMessageBox()">
+                <b>Open</b>
+            </div>
+            <div flex layout=column ng-show="openMessages" class="right-align" ng-click="openMessageBox()">
+                <b>Close</b>
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
+
+    <md-content style="margin-top:-15px;">
+    <md-card>
+    <md-card-content ng-show="openMessages" style="margin-top:-25px;">
+            <ul>
+                <li ng-repeat="line in content">{{line.username}}: {{line.message}} ({{line.createdAt | date: 'HH:mm'}})</li>
+            </ul>
+            <div id="chat-input">
+            <form>
+            <input id="m" ng-model="message" name="message" autocomplete="off" /><button ng-click="sendMessage()">Send</button>
+            </form>
+            </div>
+        </div>
+    </md-card-content>
+    </md-card>
+    </md-content>
+
+
 </md-container>
 </main>

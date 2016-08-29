@@ -10,7 +10,7 @@ const Event = db.Event;
 const GamePlayers = db.GamePlayers;
 const email = require('../emails');
 const Cron = db.Cron;
-
+const Message = db.Message;
 
 router.get('/user/:id/active', function(req, res, next) {
   User.findById(req.params.id)
@@ -99,6 +99,25 @@ router.put('/', function(req, res, next){
   })
   .tap(updatedGame => res.send(updatedGame))
   .catch(next);
+})
+
+router.post('/message', function(req, res, next){
+  console.log("req.body", req.body),
+  Message.create(req.body)
+  .then(message=> {
+    res.send(message);
+  }) 
+  .catch(next);
+})
+
+router.get('/messages/:id', function(req, res, next){
+  console.log("in chat route, req.body", req.params.id)
+  Message.findAll({where:{gameId: req.params.id}})
+  .then(messages=> {
+    console.log("Found messages", messages);
+    res.send(messages)
+
+  })
 })
 
 module.exports = router;
