@@ -69,8 +69,12 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
       $scope.status = 'Completed';
       console.log($scope.status);
       GameFactory.completeTask({completedById: $scope.user.id, taskId: $scope.task.id, gameId: $scope.task.gameId})
-      .then(task=>task);
-    }, function() {
+      .then(task=>{
+        task.name = $scope.user.firstName + " "+$scope.user.lastName;
+        console.log(task);
+        $scope.events.push(task)}
+        ); }
+    , function() {
       $scope.status = 'Not Completed';
       console.log($scope.status);
     });
