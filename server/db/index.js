@@ -6,6 +6,7 @@ db.Game = require('./models/game.model.js');
 db.Task = require('./models/task.model.js');
 db.Event = require('./models/event.model.js');
 db.Cron = require('./models/cron.model.js');
+db.Message = require('./models/messages.model.js');
 
 db.Thread = require('./models/thread.model.js');
 db.GamePlayers = require('./models/GamePlayers.model.js');
@@ -38,6 +39,10 @@ db.Event.belongsTo(db.Task);
 
 db.Game.belongsToMany(db.Thread, {through: 'threadGames'});
 
+db.Message.belongsTo(db.User, {as: 'author'});
+db.Message.belongsTo(db.Game);
+// db.Chat.hasMany(db.Message);
+// db.Chat.belongsTo(db.Game);
 
 module.exports = db;
 

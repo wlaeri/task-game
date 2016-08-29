@@ -10,146 +10,155 @@ const GamePlayers = db.model('GamePlayers');
 const nodemailer = require('nodemailer');
 const Promise = require('sequelize').Promise;
 
-let gameId = 102;
-let pledge;
-let gameTitle;
+function wrapUp(gameIdObj) {
+
+ console.log("In wrap up function:", gameIdObj)
+ let gameId = gameIdObj;
+ let pledge, gameTitle;
 
 Game.findOne({
-  where: {
-    id: gameId
-  },
-  include: [{
-    model: User
-  }]
+ where: {
+   id: gameId
+ },
+ include: [{
+   model: User
+ }]
 })
 .then(function(game) {
-  pledge = game.pledge;
-  gameTitle = game.name;
-  return game.users.filter(function(player) {
-    return player.GamePlayers.status === 'Confirmed';
-  });
+ // console.log("*** game in wrapup function", game.dataValues)
+ pledge = game.dataValues.pledge;
+ gameTitle = game.dataValues.name;
+ return game.dataValues.users.filter(function(player) {
+   return player.GamePlayers.status === 'Confirmed';
+ });
 })
 .then(function(players) {
 
-  let totals = {};
+ let totals = {};
 
-  for (let i = 0; i < players.length; i++) {
-    totals[players[i].username] = {
-      email: players[i].email,
-      total: 0
-    };
-  }
-  console.log(totals);
+ for (let i = 0; i < players.length; i++) {
+   totals[players[i].username] = {
+     email: players[i].email,
+     total: 0
+   };
+ }
+ console.log("totals*", totals);
 
-  return Event.findAll({
-    where: {
-      gameId: gameId
-    },
-    include: [{
-      model: Task
-    }, {
-      model: User,
-      as: 'completedBy'
-    }]
-  })
-  .then(function(events) {
-    events.forEach(function(event) {
-      console.log(event.task.points);
-      totals[event.completedBy.username].total += (+event.task.points);
-    });
+ return Event.findAll({
+   where: {
+     gameId: gameId
+   },
+   include: [{
+     model: Task
+   }, {
+     model: User,
+     as: 'completedBy'
+   }]
+ })
+ .then(function(events) {
+   events.forEach(function(event) {
+     console.log(event.task.points);
+     totals[event.completedBy.username].total += (+event.task.points);
+   });
 
-    return totals;
-  })
+   return totals;
+ })
 })
 .then(function(totals) {
-  let balances = [];
+ let balances = [];
 
-  for (let key in totals) {
-    balances.push({ player: key, balance: totals[key].total });
-  }
+ for (let key in totals) {
+   balances.push({ player: key, balance: totals[key].total });
+ }
 
-  let grandTotal = balances.reduce((prev, curr) => prev + curr.balance, 0);
-  let numPlayers = balances.length;
-  let pot = pledge * numPlayers;
+ let grandTotal = balances.reduce((prev, curr) => prev + curr.balance, 0);
+ let numPlayers = balances.length;
+ let pot = pledge * numPlayers;
 
-  balances = balances.map(player => {
-    player.balance = (+(player.balance / grandTotal * pot - pledge).toFixed(2)) * 100;
-    return player;
-  }).sort((a,b) => {
-    return a.balance - b.balance;
-  });
+ balances = balances.map(player => {
+   player.balance = (+(player.balance / grandTotal * pot - pledge).toFixed(2)) * 100;
+   return player;
+ }).sort((a,b) => {
+   return a.balance - b.balance;
+ });
 
-  let transactions = [];
+ let transactions = [];
 
-  let payer = 0;
-  let payee = balances.length - 1;
+ let payer = 0;
+ let payee = balances.length - 1;
 
-  while (balances[payer].balance < 0 && payer !== payee) {
-    if(balances[payer].balance * -1 > balances[payee].balance) {
-      transactions.push({
-        from: balances[payer].player,
-        to: balances[payee].player,
-        amount: balances[payee].balance
-      });
-      balances[payer].balance += balances[payee].balance;
-      balances[payee].balance = 0;
-      payee--;
-    }
-    else {
-      transactions.push({
-        from: balances[payer].player,
-        to: balances[payee].player,
-        amount: balances[payer].balance * -1
-      });
-      balances[payee].balance += balances[payer].balance;
-      balances[payer].balance = 0;
-      payer++;
-    }
-  }
+ console.log("balances", balances)
 
-  transactions = transactions.map(t => {
-    t.amount = (t.amount / 100).toFixed(2);
-    return t;
-  })
+ while (balances[payer].balance < 0 && payer !== payee) {
+   if(balances[payer].balance * -1 > balances[payee].balance) {
+     transactions.push({
+       from: balances[payer].player,
+       to: balances[payee].player,
+       amount: balances[payee].balance
+     });
+     balances[payer].balance += balances[payee].balance;
+     balances[payee].balance = 0;
+     payee--;
+   }
+   else {
+     transactions.push({
+       from: balances[payer].player,
+       to: balances[payee].player,
+       amount: balances[payer].balance * -1
+     });
+     balances[payee].balance += balances[payer].balance;
+     balances[payer].balance = 0;
+     payer++;
+   }
+ }
 
-  console.log(transactions);
+ transactions = transactions.map(t => {
+   t.amount = (t.amount / 100).toFixed(2);
+   return t;
+ })
 
-  var summary = transactions.map(t => {
-    return t.from + ' pays ' + t.to + ' $' + t.amount;
-  }).join('\n');
+ console.log('***transactions', transactions);
 
-  summary = 'Here is the wrap-up for ' + gameTitle + ':\n' + summary + '\nThank you for playing a Gamr game!';
+ var summary = transactions.map(t => {
+   return t.from + ' pays ' + t.to + ' $' + t.amount;
+ }).join('\n');
 
-  let sendingTo = [];
+ summary = 'Here is the wrap-up for ' + gameTitle + ':\n' + summary + '\nThank you for playing a Gamr game!';
 
-  // for (let key in totals) {
-  //   sendingTo.push(totals[key].email);
-  // }
+ let sendingTo = [];
 
-  sendingTo.push('gamr12344321@gmail.com');
+ // for (let key in totals) {
+ //   sendingTo.push(totals[key].email);
+ // }
 
-  console.log(summary);
-  let transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            user: 'gamr12344321@gmail.com', // Your email id
-            pass: 'KevinSp@cey!' // Your password
-        }
-    });
-    let mailOptions = {
-        from: '"GAMR" <gamr@gamr.life>', // sender address
-        to: sendingTo, // list of receivers
-        subject: 'Game results for: ' + gameTitle, // Subject line
-        text: summary // plaintext body
-         // html body
-    };
-    return transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-            return console.log(error);
-        }else{
-            return console.log('Message sent: ' + info.response);
-        }
-    });
+ sendingTo.push('gamr12344321@gmail.com');
 
-  return;
+ console.log(summary);
+ let transporter = nodemailer.createTransport({
+       service: 'Gmail',
+       auth: {
+           user: 'gamr12344321@gmail.com', // Your email id
+           pass: 'KevinSp@cey!' // Your password
+       }
+   });
+   let mailOptions = {
+       from: '"GAMR" <gamr@gamr.life>', // sender address
+       to: 'John.J.Henry4@gmail.com', // list of receivers
+       subject: 'Game results for: ' + gameTitle, // Subject line
+       text: summary // plaintext body
+        // html body
+   };
+   return transporter.sendMail(mailOptions, function(error, info){
+       if(error){
+           return console.log(error);
+       }else{
+           return console.log('Message sent: ' + info.response);
+       }
+   });
+
+ return;
 })
+
+}
+
+module.exports = wrapUp;

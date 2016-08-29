@@ -6,14 +6,62 @@ app.config(function($stateProvider){
     resolve: {
       gameObj: function($stateParams, GameFactory){
         return GameFactory.getGame($stateParams.gameId);
-    }
+    }, 
+      messages: function($stateParams, GameFactory){
+        return GameFactory.getMessages($stateParams.gameId)
+      }
   }
   })
 })
 
-app.controller('GameOverviewCtrl', function($scope, gameObj){
+app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messages, socket){
 
   $scope.game = gameObj;
+
+  $scope.content = messages;
+
+  console.log($scope.content);
+
+    socket.on('connect', function () {
+    console.log('You have connected to the server!');
+    socket.emit('adduser', $scope.user.id, $scope.game.id)
+  })
+
+  socket.on('updatechat', function (data) {
+    console.log("chat updated", data);
+    $scope.content.push({username: data.username, message: data.content, createdAt: Date.now()});
+    })
+
+  $scope.message = '';
+
+  $scope.openMessages = false;
+
+  $scope.openMessageBox = function(){
+    $scope.openMessages = !($scope.openMessages)
+  };
+
+  $scope.sendMessage = function (){
+
+    GameFactory.sendMessage({gameId: $scope.game.id, username: $scope.user.username, message: $scope.message})
+    .then($scope.content.push({gameId: $scope.gameId, username: $scope.user.username, message: $scope.message, createdAt: Date.now()}));
+
+    $scope.socketEmit($scope.message);
+
+    $scope.message = '';
+
+  }
+
+  $scope.socketEmit = function (){
+    console.log("sending message");
+    socket.emit('send:message', {
+      content: $scope.message,
+      username: $scope.user.username,
+      me: false 
+    })
+
+   $scope.message = '';
+  }
+
   console.log($scope.game);
 
   $scope.confirmed = $scope.game.users.filter(user => user.GamePlayers.status === "Confirmed");
@@ -86,5 +134,6 @@ app.controller('GameOverviewCtrl', function($scope, gameObj){
           }
       }
   };
+
 
 })
