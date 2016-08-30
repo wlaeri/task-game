@@ -5,6 +5,8 @@ $scope.gameData = gameData;
 
 $scope.acceptInvite = function(game){
   GameFactory.acceptInvite($scope.user.id, game)
+  .then(game=> $scope.games.forEach(g => {if(g.id==game.gameId) g.playerStatus="Unconfirmed"})
+  )
   .catch($log);
 }
 
