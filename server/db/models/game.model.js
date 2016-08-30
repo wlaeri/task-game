@@ -21,7 +21,7 @@ module.exports = db.define('game', {
     },
     pledge: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        defaultValue: 0
     },
     locked: {
         type: Sequelize.BOOLEAN,
@@ -46,10 +46,13 @@ module.exports = db.define('game', {
 }, {
     instanceMethods: {
         addPlayersSetComm: function(users, commissioner) {
+            //Sets players status within the GamePlayers table as part of this game
+            //Returns all of the users on the game
             let invited = users.invited.map(user => user.id);
-            this.addUsers(invited, { status: 'Invited' })
+            return this.addUsers(invited, { status: 'Invited' })
             .tap(() => this.addUsers(commissioner, { status: 'Unconfirmed'}))
-            .tap(() => this.setCommissioner(commissioner));
+            .tap(() => this.setCommissioner(commissioner))
+            .then(() => this.getUsers())
         },
         addPlayersGameUpdate: function(usersObj, currGPs, isLocked, commissioner) {
             let alreadyInvited = currGPs.filter(gp => gp.status === 'Invited').map(gp => gp.id);

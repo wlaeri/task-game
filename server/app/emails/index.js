@@ -30,9 +30,9 @@ function inviteFriends (sender, receivers){
     });
 }
 
-function invitePlayers (gameObj, userObj, commissioner){
+function invitePlayers (gameObj, userObj, commissionerObj){
     let gameName = gameObj.name;
-    commissioner = commissioner.firstName + ' ' + commissioner.lastName;
+    let commissioner = commissionerObj.firstName + ' ' + commissionerObj.lastName;
     let template = swig.compileFile(path.join(__dirname, '/invitePlayers.html'));
     let output = template({
         game: gameObj,
@@ -48,7 +48,7 @@ function invitePlayers (gameObj, userObj, commissioner){
     });
     let mailOptions = {
         from: '"GAMR" <gamr@gamr.life>', // sender address
-        to: "gamr12344321@gmail.com", // list of receivers
+        to: 'john.j.henry4@gmail.com', // list of receivers
         subject: commissioner + ' would like you to join ' + gameName, // Subject line
         text: commissioner + ' would like you to join ' + gameName, // plaintext body
         html: output // html body

@@ -71,16 +71,28 @@ router.get('/:id', function(req, res, next){
 // creates a game
 
 router.post('/', function(req, res, next){
+  let players, commissioner, game;
   Game.create(req.body.game)
-  .tap(game => game.addPlayersSetComm(req.body.players, req.body.players.unconfirmed[0].id))
-  .tap(game=>{
+  .then(g => {
+    game = g;
+    return game.addPlayersSetComm(req.body.players, req.body.players.unconfirmed[0].id)
+  })
+  .then(users => players = users)
+  .then(()=>{
     Promise.all(req.body.tasks.map(taskObj => {
       taskObj.gameId = game.id;
       Task.create(taskObj)
     }));
   })
-  .tap(game=> res.send({id: game.id}))
-  .then(game=> email.invitePlayers(game, req.user))
+  .tap(() => res.send({id: game.id}))
+  .then(() => {
+    commissioner = players.filter(player => {
+      return player.id == game.commissionerId;
+    })[0];
+    players.forEach(player => {
+      email.invitePlayers(game, player, commissioner)
+    })
+  })
   .catch(next)
 })
 
@@ -106,7 +118,7 @@ router.post('/message', function(req, res, next){
   Message.create(req.body)
   .then(message=> {
     res.send(message);
-  }) 
+  })
   .catch(next);
 })
 
