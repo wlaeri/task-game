@@ -2,7 +2,7 @@ app.config(function($stateProvider){
   $stateProvider.state('u.account', {
     url: '/accountSettings/:id',
     templateUrl: 'js/account-settings/account-settings.html',
-    controller: 'AccountSettingsCtrl', 
+    controller: 'AccountSettingsCtrl',
     resolve: { allUsernames: function(UserFactory){
       return UserFactory.getAllUsernames().then(usernames=>usernames)
     }
@@ -15,7 +15,7 @@ app.controller('AccountSettingsCtrl', function($scope, $mdDialog, UserFactory, a
 
 $scope.allUsernames = allUsernames;
 
-  $scope.validateEmail = function (email) 
+  $scope.validateEmail = function (email)
 {
     var re = /\S+@\S+\.\S+/;
     console.log(re.test(email));
@@ -122,7 +122,7 @@ $scope.updateUsername = function(){
   $scope.newEmail = '';
 
   $scope.displayEmailChange = false;
-  $scope.displayPasswordChange = false; 
+  $scope.displayPasswordChange = false;
   $scope.displayUsernameChange = false;
 
   $scope.password = {password1: '', password2: ''};
@@ -165,6 +165,11 @@ $scope.usernameTest = function(){
     $scope.usernameLength = true;
   }
 }
+
+  $scope.connectDwolla = function(){
+    console.log("Dwolla!");
+    UserFactory.connectDwolla;
+  }
   $scope.openPasswordChange = function(){
   	$scope.displayPasswordChange = !$scope.displayPasswordChange;
   }

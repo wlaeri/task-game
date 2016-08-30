@@ -36,5 +36,9 @@ app.factory('UserFactory', function($state, $http){
         .then(users=>users.data);
     }
 
+    UserFactory.connectDwolla = function(){
+        return $http.get('/auth/dwolla');
+    }
+
         return UserFactory;
 })
