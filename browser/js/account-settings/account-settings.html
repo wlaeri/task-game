@@ -19,7 +19,7 @@
 				New Username: <input id="UsernameField" name="password1" ng-model="username.username" onkeyup="usernameTest()"required>
 			</md-input-container>
 			<br>
-		<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">	
+		<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">
 		</form>
 	<br>
 	<md-button ng-click="openPasswordChange()">Set or Change Password</md-button>
@@ -35,6 +35,8 @@
 				Retype password: <input id="passwordField2" name="password2" ng-model="password.password2" onkeyup="matching()"required>
 			</md-input-container>
 			<br>
-		<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">	
+		<input style="color:#FFFEFA; background-color:#00B5CD"type="submit" value="Submit">
 		</form>
+    <br>
+    <md-button ng-click="connectDwolla()">Connect to Dwolla for Payments</md-button>
 </div>

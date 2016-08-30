@@ -127,7 +127,6 @@ app.run(function ($rootScope, AuthService, $state) {
         if(toState.name==="home"){
             AuthService.getLoggedInUser()
                 .then(user=>{
-                    console.log("User from AS: ", user);
                     if(user) $state.go('u.dash', {userId: user.id});
                     else return;
                 });

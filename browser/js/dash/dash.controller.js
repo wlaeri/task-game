@@ -1,11 +1,9 @@
 app.controller('DashCtrl', function($scope, gameData, GameFactory, $log){
-console.log("Got to Dash Ctrl: ", gameData);
 
 
 $scope.gameData = gameData;
 
 $scope.acceptInvite = function(game){
-  console.log("Accept Invite: ", game);
   GameFactory.acceptInvite($scope.user.id, game)
   .catch($log);
 }
@@ -19,12 +17,10 @@ $scope.arePending = function(){
 }
 
 $scope.isUnconfirmed = function(game){
-  console.log("isUnconfirmed: ", game)
   return game.playerStatus=="Unconfirmed"
 }
 
 $scope.isInvited = function(game){
-  console.log("isInvited: ", game)
   return game.playerStatus=="Invited";
 }
 

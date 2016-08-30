@@ -26,7 +26,5 @@ app.controller('UserGameCtrl', function($scope, $mdSidenav, $mdMedia) {
     $scope.tasks.push({name: 'Task', points: (Math.floor(Math.random() * 10) + 1), time: (new Date(new Date() - (Math.floor(Math.random() * 1e9) + 1)).toString().split(" ").slice(0,5).join(" "))});
   }
   $scope.totalPoints = $scope.tasks.reduce((prev, curr) => prev + curr.points, 0);
-  console.log($scope.tasks);
   $scope.elipses = ($scope.menuItems.length>4);
-  console.log($scope.elipses);
 });

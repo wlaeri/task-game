@@ -1,6 +1,5 @@
 app.controller('AddFriendsCtrl', function($scope, $state, $mdDialog){
 
-    console.log('$scope.friends', $scope.friends);
 
     $scope.addFriend = function(email) {
         let newFriendNum = $scope.friends.length + 1;
@@ -16,12 +15,10 @@ app.controller('AddFriendsCtrl', function($scope, $state, $mdDialog){
     };
 
     $scope.handleSubmit = function () {
-        //$state.go('u.create', {players: $scope.friends});
         return $mdDialog.hide();
     }
 
     $scope.handleCancel = function () {
-        //$state.go('u.create');
         return $mdDialog.hide();
     };
 

@@ -5,7 +5,7 @@ app.config(function ($stateProvider) {
         controller: 'EditGameCtrl',
         resolve: {
             Comm: function(GameFactory, $stateParams){
-                console.log($stateParams.gameId);
+
                 return GameFactory.getGame($stateParams.gameId)
                 .then(function(gameObj){
                     let invited = gameObj.users.filter(user => {

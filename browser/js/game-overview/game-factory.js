@@ -84,19 +84,16 @@ app.factory('GameFactory', function($http) {
   }
 
   GameFactory.confirmGame = function(data){
-    console.log("In confirmGame route")
     return $http.post('api/cron', data)
     .then(res=>res)
   }
 
   GameFactory.sendMessage = function(data){
-    console.log("message", data)
     return $http.post('api/games/message', data)
     .then(res=>res.data);
   }
 
   GameFactory.getMessages = function(id){
-    console.log("get message function", id);
     return $http.get('api/games/messages/' + id)
     .then(res=>res.data);
     }
@@ -132,7 +129,7 @@ app.factory('socket', function($rootScope){
               $rootScope.$apply(function () {
                 callback.apply(socket, args);
               });
-          }); 
+          });
       }
     };
 });

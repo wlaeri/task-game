@@ -3,10 +3,8 @@ app.factory('UserFactory', function($state, $http){
     let UserFactory = {};
 
     UserFactory.getAllUsernames = function(){
-        console.log("In get All Usernames")
         return $http.get('api/user/allUsernames')
         .then(function(userNames){
-            console.log("returned from get all userNames with:", userNames.data)
             return userNames.data;
         })
     }
@@ -34,6 +32,10 @@ app.factory('UserFactory', function($state, $http){
     UserFactory.autocomplete = function(str){
         return $http.get('/api/user/invite/'+str)
         .then(users=>users.data);
+    }
+
+    UserFactory.connectDwolla = function(){
+        return $http.get('/auth/dwolla');
     }
 
         return UserFactory;

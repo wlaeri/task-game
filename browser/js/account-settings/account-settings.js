@@ -2,7 +2,7 @@ app.config(function($stateProvider){
   $stateProvider.state('u.account', {
     url: '/accountSettings/:id',
     templateUrl: 'js/account-settings/account-settings.html',
-    controller: 'AccountSettingsCtrl', 
+    controller: 'AccountSettingsCtrl',
     resolve: { allUsernames: function(UserFactory){
       return UserFactory.getAllUsernames().then(usernames=>usernames)
     }
@@ -15,10 +15,9 @@ app.controller('AccountSettingsCtrl', function($scope, $mdDialog, UserFactory, a
 
 $scope.allUsernames = allUsernames;
 
-  $scope.validateEmail = function (email) 
+  $scope.validateEmail = function (email)
 {
     var re = /\S+@\S+\.\S+/;
-    console.log(re.test(email));
     return re.test(email);
 };
 
@@ -107,7 +106,6 @@ $scope.updateUsername = function(){
 
   $scope.updateEmail = function(){
     var test = $scope.validateEmail($scope.newEmail);
-    console.log(test);
     if(!test){
       $scope.showRejectEmail();
     }
@@ -122,7 +120,7 @@ $scope.updateUsername = function(){
   $scope.newEmail = '';
 
   $scope.displayEmailChange = false;
-  $scope.displayPasswordChange = false; 
+  $scope.displayPasswordChange = false;
   $scope.displayUsernameChange = false;
 
   $scope.password = {password1: '', password2: ''};
@@ -133,16 +131,7 @@ $scope.updateUsername = function(){
   $scope.username = {};
 
   $scope.matching = function(){
-  //   var password1 = document.getElementById("passwordField1").value;
-  //   var password2 = document.getElementById("passwordField2").value
-  //   console.log('password1', password1, 'password2', password2);
-  //   if (password1 === password2 && password1.length>6){
-  //      $scope.passwordsMatch = true;
-  //   }
-  //   else{
-  //     $scope.passwordsMatch = false;
-  //   }
-  // }
+
 
   	if ($scope.password.password1 === $scope.password.password2 && $scope.password.password1.length>6){
   		 $scope.passwordsMatch = true;
@@ -152,7 +141,6 @@ $scope.updateUsername = function(){
     }
   }
 $scope.usernameTest = function(){
-  console.log("Username Test has been run", $scope.allUsernames);
   if($scope.allUsernames.indexOf($scope.username.username) !== -1){
     $scope.usernameAvailable = false
   }
@@ -165,6 +153,10 @@ $scope.usernameTest = function(){
     $scope.usernameLength = true;
   }
 }
+
+  $scope.connectDwolla = function(){
+    UserFactory.connectDwolla();
+  }
   $scope.openPasswordChange = function(){
   	$scope.displayPasswordChange = !$scope.displayPasswordChange;
   }
