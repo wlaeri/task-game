@@ -18,7 +18,6 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
         return event;
     })
 
-    $scope.testEventObj();
 
     $scope.status = null;
 

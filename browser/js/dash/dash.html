@@ -65,7 +65,7 @@
     <tr ng-repeat="game in games | filter:{status:'Pending'} | orderBy:'start'">
       <td>{{game.name}}</td>
       <td>{{game.timeTil}}</td>
-      <td><button ng-click="acceptInvite(game.id)">JOIN</button></td>
+      <td><button ng-if="isInvited(game)" ng-click="acceptInvite(game.id)">JOIN</button></td>
       </tr>
       </tbody>
       </table>
