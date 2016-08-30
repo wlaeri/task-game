@@ -49,11 +49,9 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
     //     });
     // }
     $scope.getMatches = function(text) {
-        console.log(text);
         UserFactory.autocomplete(text)
         .then(users=>{
             $scope.foundMatches = users;
-            console.log(users);
         }
             )
         .catch(err=>$log.error)
@@ -73,7 +71,6 @@ app.controller('CreateGameCtrl', function($scope, $mdDialog, $state, UserFactory
         });
         GameFactory.createGame($scope.comm)
         .then(gameId=> {
-            console.log(gameId);
             $state.go('u.edit', {gameId:gameId.id})
         })
     }

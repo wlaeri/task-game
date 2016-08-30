@@ -6,7 +6,7 @@ app.config(function($stateProvider){
     resolve: {
       gameObj: function($stateParams, GameFactory){
         return GameFactory.getGame($stateParams.gameId);
-    }, 
+    },
       messages: function($stateParams, GameFactory){
         return GameFactory.getMessages($stateParams.gameId)
       }
@@ -20,15 +20,12 @@ app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messag
 
   $scope.content = messages;
 
-  console.log($scope.content);
 
     socket.on('connect', function () {
-    console.log('You have connected to the server!');
     socket.emit('adduser', $scope.user.id, $scope.game.id)
   })
 
   socket.on('updatechat', function (data) {
-    console.log("chat updated", data);
     $scope.content.push({username: data.username, message: data.content, createdAt: Date.now()});
     })
 
@@ -52,17 +49,15 @@ app.controller('GameOverviewCtrl', function($scope, gameObj, GameFactory, messag
   }
 
   $scope.socketEmit = function (){
-    console.log("sending message");
     socket.emit('send:message', {
       content: $scope.message,
       username: $scope.user.username,
-      me: false 
+      me: false
     })
 
    $scope.message = '';
   }
 
-  console.log($scope.game);
 
   $scope.confirmed = $scope.game.users.filter(user => user.GamePlayers.status === "Confirmed");
   $scope.unconfirmed = $scope.game.users.filter(user => user.GamePlayers.status === "Unconfirmed");

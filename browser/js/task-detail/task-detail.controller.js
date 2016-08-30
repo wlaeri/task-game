@@ -7,7 +7,6 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
         var Month = YearMonthDay[1];
         var Day = YearMonthDay[2];
         var time = SequelizeDate.slice(SequelizeDate.indexOf("T")+1,-8);
-        console.log(time);
         // return YearMonthDay + " " + time;
         return Month + "/" + Day + "/" + Year + " " + time;
     };
@@ -34,7 +33,6 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
           .cancel('No, I have not');
     $mdDialog.show(confirm).then(function() {
       $scope.status = 'Completed';
-      console.log($scope.status);
       GameFactory.completeTask({completedById: $scope.user.id, taskId: $scope.task.id, gameId: $scope.task.gameId})
       .then(task=>{
         task.name = $scope.user.firstName + " "+$scope.user.lastName;
@@ -42,7 +40,6 @@ app.controller('TaskDeetsCtrl', function($scope, $rootScope, $mdSidenav, $mdMedi
         ); }
     , function() {
       $scope.status = 'Not Completed';
-      console.log($scope.status);
     });
   };
 })

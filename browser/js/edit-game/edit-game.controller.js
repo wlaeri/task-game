@@ -4,7 +4,6 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
 
     $scope.comm = Comm;
 
-    console.log($scope.comm);
 
     $scope.addTask = function() {
         let newTaskNum = $scope.comm.tasks.length;
@@ -21,11 +20,9 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
     };
 
     $scope.getMatches = function(text) {
-        console.log(text);
         UserFactory.autocomplete(text)
         .then(users=>{
             $scope.foundMatches = users;
-            console.log(users);
         }
             )
         .catch(err=>$log.error)
@@ -46,7 +43,6 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
             return task
         });
         delete $scope.comm.status;
-        console.log($scope.comm)
         GameFactory.updateGame($scope.comm)
         .then(gameId=>$state.go('u.edit', $scope.comm.id))
     }
@@ -58,12 +54,7 @@ app.controller('EditGameCtrl', function($scope, $mdDialog, $state, UserFactory, 
         });
         $scope.comm.locked = true;
         GameFactory.updateGame($scope.comm)
-        // .tap(game => {
-        //     GameFactory.confirmGame({
-        //         startDate: game.start,
-        //         endDate: game.end
-        //     })
-        // })
+
         .then(gameId=>$state.go('u.game', {gameId: $scope.comm.id}))
     }
 
