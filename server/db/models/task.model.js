@@ -10,8 +10,7 @@ module.exports = db.define('task', {
         allowNull: false
     },
     description: {
-        type: Sequelize.TEXT,
-        allowNull: false
+        type: Sequelize.TEXT
     },
     points: {
         type: Sequelize.INTEGER,
