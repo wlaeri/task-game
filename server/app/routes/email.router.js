@@ -47,25 +47,23 @@ router.post('/lockGame', function(req,res,next){
 });
 
 router.get('/confirmGame', function(req, res, next){
-    let email = req.query.email;
+    let user = req.query.user;
     let game = req.query.game;
 
-    User.findOne({
+    GamePlayers.findOne({
         where: {
-            email: email
+            userId: user,
+            gameId: game
         }
     })
-    .then(function(user){
-        return GamePlayer.findOne({
-            where: {
-                userId: user.id,
-                gameId: game.id
-            }
+    .then(function(gamePlayer){
+        return gamePlayer.update({
+            status: 'Confirmed'
         });
     })
     .then(function(gamePlayer){
         return gamePlayer.update({
-            status: Confirmed
+            status: "Confirmed"
         });
     })
     .then(function(updatedGamePlayer){

@@ -52,7 +52,7 @@
     <tr ng-repeat="game in games | filter:{status:'Confirmed'} | orderBy:'start'">
       <td>{{game.name}}</td>
       <td>{{game.timeTil}}</td>
-      <td ng-if="isUnconfirmed(game)"><button ng-click="acceptInvite(game.id)">JOIN</button></td>
+      <td ng-if="isUnconfirmed(game)"><button ng-click="confirmJoinGame(game.id)">CONFIRM</button></td>
       </tr>
       </tbody>
       </table>
