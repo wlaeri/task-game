@@ -98,6 +98,11 @@ app.factory('GameFactory', function($http) {
     .then(res=>res.data);
     }
 
+  GameFactory.confirmJoinGame = function(user, game){
+    return $http.get('api/email/confirmGame', {params:{'user': user, 'game':game}})
+    .then(game=>game.data);
+  }
+
   return GameFactory;
 })
 

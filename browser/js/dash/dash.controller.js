@@ -10,6 +10,15 @@ $scope.acceptInvite = function(game){
   .catch($log);
 }
 
+$scope.confirmJoinGame = function(game){
+    GameFactory.confirmJoinGame($scope.user.id, game)
+    .then(game=> $scope.games.forEach(g=> {
+        console.log("Success!");
+    if(g.id==game.gameId) g.playerStatus="Confirmed";
+    }))
+    .catch($log);
+}
+
 $scope.areConfirmed = function(){
   return $scope.games.some(g=>g.status=="Confirmed");
 }
